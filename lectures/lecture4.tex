@@ -1,0 +1,25 @@
+\section{January 17, 2024}
+
+\begin{theorem}[Skorohod Representation Theorem]
+Let \( \{\mu_n\} \) and \( \mu \) be probability measures on \( (\mathbb{R}, \mathcal{R}) \) such that \( \mu_n \Rightarrow \mu \). Then there exists a probability space \( (\Omega, \mathcal{F}, P) \) and random variables \( (Y_n)_n \) on this space such that
+\footnote{Recall:
+\[ (P \circ X^{-1})(A) \stackrel{\text{def}}{=} P(X^{-1}(A)) \text{ where } X^{-1}(A) = \{\omega \in \Omega; X(\omega) \in A\} \]}:
+\begin{itemize}
+    \item The distribution of \( Y_n \) is \( \mu_n \) for all \( n \), i.e., \( P \circ Y_n^{-1} = \mu_n \) for all \( n \).
+    \item Distribution of \( Y \) is \( \mu \).
+    \item \( Y_n(\omega) \rightarrow Y(\omega) \) for all \( \omega \in \Omega \).
+\end{itemize}
+
+\end{theorem}
+\textbf{Proof:} Omitted.
+
+
+\begin{theorem}[Continuous Mapping Theorem]
+Let \( h: \mathbb{R} \to \mathbb{R} \) be a measurable function and \( D_h \) be the discontinuity points of \( h \). Let \( \{\mu_n\}, \mu \) be probability measures on \( (\mathbb{R}, \mathcal{R}) \) such that \( \mu_n \Rightarrow \mu \). Assume that \( \mu(D_h) = 0 \). Then 
+\[ \mu_n \circ h^{-1} \Rightarrow \mu \circ h^{-1}. \]
+Recall:
+\[ h: \mathbb{R} \to \mathbb{R} \quad \mu \circ h^{-1}(A) \stackrel{\text{def}}{=} \mu(h^{-1}(A)) \]
+where 
+\[ h^{-1}(A) = \{ x \in \mathbb{R}; h(x) \in A \}. \]\footnote{
+\textbf{Remark:} Note that \( D_h \in \mathcal{R} \). See the proof in the textbook.}
+\end{theorem}
