@@ -1,0 +1,69 @@
+\section{January 10, 2024}
+\subsection{Weak Convergence}
+Recall (from MAT5170) let $(\Omega, \mathcal{F}, P)$ be a prob. space, and $X : \Omega \rightarrow \mathbb{R}$ r.v. i.e. 
+\[\{X \in A\} = \{ \omega \in \Omega; X(\omega) \in A \} \in \mathcal{F} \text{ for any } A \in \mathcal{R}\]
+Here $\mathcal{R}$ is the class of Borel sets of $\mathbb{R}$.
+
+\begin{itemize}
+  \item The law of $X$ is a prob. measure on $(\mathbb{R}, \mathcal{R})$ given by:
+  \[\mu(A):= \mu_X(A) \stackrel{\text{def}}{=} P(X \in A) \quad \forall A \in \mathcal{R}\]
+
+  \item The distribution function (c.d.f) of $X$ is a function $F=F_X : \mathbb{R} \rightarrow [0,1]$ given by:
+  \[F(x) = P(X \leq x) \text{ for all } x \in \mathbb{R}\]
+  \[= \mu((-\infty, x])\]
+  where $\mu$ is the law of $X$
+\end{itemize}
+
+Note that:
+\[\mu((-\infty, x)) = F(x^-) = \lim_{y \nearrow x} F(y)\]
+\[\mu(\{x\}) = F(x) - F(x^-) \text{ the jump of } F \text{ at } x\]
+
+Properties of $F$:
+\begin{enumerate}
+  \item $F$ is non-decreasing
+  \item $F$ is right-continuous
+  \item $\lim_{x \to -\infty} F(x) = 0$, $\lim_{x \to \infty} F(x) = 1$
+\end{enumerate}
+
+\begin{definition}[Convergence in Distribution]
+Let $(X_n)_{n}$ be a sequence of random variables defined on probability spaces $(\Omega_n, \mathcal{F}_n, P_n)$ and $X$ be a random variable defined on the probability space $(\Omega, \mathcal{F}, P)$. We say that $(X_n)$ converges in distribution to $X$, denoted as $X_n \xRightarrow{d} X$ or $X_n \xrightarrow{d} X$, if for all points $x \in \mathbb{R}$ at which $F_X(x) = P(X \leq x)$ is continuous, we have
+\[
+F_{X_n}(x) = P_n(X_n \leq x) \rightarrow F_X(x) \quad \text{as} \quad n \rightarrow \infty.\footnote{This implies that the cumulative distribution functions (c.d.f.'s) satisfy $F_{X_n}(x) \rightarrow F_X(x)$, and for the associated probability measures $\mu_n, \mu$, we have $\mu_n((-\infty, x]) \rightarrow \mu((-\infty, x])$ for all $x$ such that $\mu(\{x\}) = 0$.}
+\]
+
+\end{definition}
+
+
+\textbf{Remark:} If \( \mu_n(-\infty, x] = P_n(X_n \leq x) \) and \( \mu(-\infty, x] = P(X \leq x) \) then \( \mu_n \Rightarrow \mu \).
+
+\begin{example}[Example 25.1]
+Let \( X_n \) be a sequence of random variables in \( \mathcal{F} \) with \( P(X_n = 1) \). Define
+\[
+X_n =
+\begin{cases}
+n & \text{on } -n,\\
+0 & \text{otherwise}.
+\end{cases}
+\]
+The c.d.f. of \( X_n \) is:
+\[
+F_n(x) = P(X_n \leq x) =
+\begin{cases}
+0 & \text{if } x < n,\\
+1 & \text{if } x \geq n.
+\end{cases}
+\]
+For any \( x \in \mathbb{R} \) fixed,
+\[
+\lim_{n \to \infty} F_n(x) =
+\begin{cases}
+1 & \text{if } n > x,\\
+0 & \text{otherwise}.
+\end{cases}
+= 0.
+\]
+So we will be tempted to say that \( F_n \Rightarrow F \) where \( F(x) = 0 \) for all \( x \).
+But \( F \) is \textbf{not} a distribution function! (since \( \lim_{x \to \infty} F(x) \neq 1 \))
+
+Therefore, we cannot say \( F_n \Rightarrow F \).
+\end{example}

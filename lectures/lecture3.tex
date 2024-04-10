@@ -1,37 +1,12 @@
 \section{January 15, 2024}
-\subsection{Weak Convergence}
-Recall (from MAT5170) let $(\Omega, \mathcal{F}, P)$ be a prob. space, and $X : \Omega \rightarrow \mathbb{R}$ r.v. i.e. 
-\[\{X \in A\} = \{ \omega \in \Omega; X(\omega) \in A \} \in \mathcal{F} \text{ for any } A \in \mathcal{R}\]
-Here $\mathcal{R}$ is the class of Borel sets of $\mathbb{R}$.
-
-\begin{itemize}
-  \item The law of $X$ is a prob. measure on $(\mathbb{R}, \mathcal{R})$ given by:
-  \[\mu(A):= \mu_X(A) \stackrel{\text{def}}{=} P(X \in A) \quad \forall A \in \mathcal{R}\]
-
-  \item The distribution function (c.d.f) of $X$ is a function $F=F_X : \mathbb{R} \rightarrow [0,1]$ given by:
-  \[F(x) = P(X \leq x) \text{ for all } x \in \mathbb{R}\]
-  \[= \mu((-\infty, x])\]
-  where $\mu$ is the law of $X$
-\end{itemize}
-
-Note that:
-\[\mu((-\infty, x)) = F(x^-) = \lim_{y \nearrow x} F(y)\]
-\[\mu(\{x\}) = F(x) - F(x^-) \text{ the jump of } F \text{ at } x\]
-
-Properties of $F$:
-\begin{enumerate}
-  \item $F$ is non-decreasing
-  \item $F$ is right-continuous
-  \item $\lim_{x \to -\infty} F(x) = 0$, $\lim_{x \to \infty} F(x) = 1$
-\end{enumerate}
 
 \begin{definition}[Convergence in Distribution]
-    Let \( X_n: \Omega_n \rightarrow \mathbb{R} \) be a r.v. defined on prob. space \( (\Omega_n, \mathcal{F}_n, P_n) \), and \( X: \Omega \rightarrow \mathbb{R} \) defined on prob. space \( (\Omega, \mathcal{F}, P) \). We say that \( (X_n) \) converges in distribution to \( X \) if
-
+Let \( X_n: \Omega_n \rightarrow \mathbb{R} \) be a random variable defined on probability space \( (\Omega_n, \mathcal{F}_n, P_n) \), and \( X: \Omega \rightarrow \mathbb{R} \) be defined on probability space \( (\Omega, \mathcal{F}, P) \). We say that \( (X_n)_n \) converges in distribution to \( X \) if
 \[
 F_{X_n}(x) = P_n(X_n \leq x) \rightarrow P(X \leq x) = F_X(x) \quad \text{for all points} \quad x \in \mathbb{R} \quad \text{s.t.} \quad P(X = x) = 0
 \]
-We write \( X_n \xRightarrow{d} X \) or \( X_n \xrightarrow{d} X \).
+We write \( X_n \Rightarrow X \) or \( X_n \xrightarrow{d} X \).
+
+\textbf{Remark:} If \( \mu_n(-\infty, x] = P_n(X_n \leq x) \) and \( \mu(-\infty, x] = P(X \leq x) \), then \( \mu_n \Rightarrow \mu \).
 \end{definition}
 
-\textbf{Remark:} If \( \mu_n(-\infty, x] = P_n(X_n \leq x) \) and \( \mu(-\infty, x] = P(X \leq x) \) then \( \mu_n \Rightarrow \mu \).cr
