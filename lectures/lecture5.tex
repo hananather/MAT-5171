@@ -1,0 +1,110 @@
+\newpage
+\section{January 22, 2024}
+\subsection{Intergration to the limit}
+\begin{theorem}[25.11]
+If \( X_n \xrightarrow{d} X \), then \( E(|X_n|) \) is bounded above by \( \liminf E(|X_n|) \). If \( X_n \xrightarrow{d} X \), then \( E(|X_n|) \leq \liminf_{n \to \infty} E(|X_n|) \).
+\end{theorem}
+
+\begin{proof}
+Let \( \mu_n \) be the law of \( X_n \). Then \( \mu_n \rightarrow \mu \) where \( \mu \) is the law of \( X \).
+
+By Skorohod Representation Theorem, there exists a probability space \( (\Omega', \mathcal{F}', P') \) and random variables \( \{Y_n, Y\} \) on this space such that:
+\begin{align*}
+P \circ Y_n^{-1} &= \mu_n \text{ and } \\
+P \circ Y^{-1} &= \mu,
+\end{align*}
+and \( Y_n(\omega) \rightarrow Y(\omega) \) for all \( \omega \in \Omega' \).
+By Fatou's Lemma, \( E'(|Y|) \leq \liminf_{n \to \infty} E'(|Y_n|) \). (Here \( E' \) is expectation w.r.t. \( P' \))
+But \( E(|X|) = E'(|Y|) \) and \( E(|X_n|) = E'(|Y_n|) \) for all \( n \).
+Let \( \mu_n \) be the law of \( X_n \) and \( \mu \) the law of \( X \). By the Skorohod Representation Theorem, there exists a probability space \( (\Omega', \mathcal{F}', P') \) and random variables \( \{Y_n\} \) and \( Y \) on this space such that \( Y_n \) converges to \( Y \) almost surely and the law of \( Y_n \) under \( P' \) is \( \mu_n \) and the law of \( Y \) under \( P' \) is \( \mu \). By Fatou's Lemma, \( E'(|Y|) \leq \liminf E'(|Y_n|) \). Here \( E' \) denotes expectation with respect to \( P' \). But \( E(|X_n|) = E'(|Y_n|) \) and \( E(|X|) = E'(|Y|) \).
+\end{proof}
+\begin{moral}
+The Fatou Lemma (Thm 16.3) states that if \( \{f_n\} \) are non-negative measurable functions, then \( \int \liminf f_n d\mu \leq \liminf \int f_n d\mu \).
+\end{moral}
+
+
+Recall (MAT5170) Fatou's Lemma (Thm.16.3). Let \((\Omega, \mathcal{F}, \mu)\) be a measure space such that \(\mu(\Omega) < \infty\). Assume \((f_n)\) are measurable \(\mathbb{R}\)-valued functions such that \(f_n \to f\) almost everywhere (w.r.t. \(\mu\)).
+
+If \((f_n)\) is uniformly integrable and \(f\) is integrable, then
+\[
+\int_{\Omega} f_n d\mu \to \int_{\Omega} f d\mu.
+\]
+
+\begin{theorem}[15.12]
+If \(X_n \xrightarrow{d} X\) and \((X_n)\) is uniformly integrable, then \(X\) is integrable and \(E(X_n) \to E(X)\).
+\end{theorem}
+
+\begin{proof}
+Let \(\mu_n\) be the law of \(X_n\) and \(\mu\) the law of \(X\). Then \(\mu_n \to \mu\). By Skorohod Representation Theorem, there exists a probability space \((\Omega', \mathcal{F}', P')\) and random variables \(Y_n, Y\) on this space such that the law of \(Y_n\) under \(P'\) is \(\mu_n\) and the law of \(Y\) under \(P'\) is \(\mu\), and \(Y_n(\omega) \to Y(\omega)\) for all \(\omega \in \Omega'\).
+
+By Fatou's Lemma, since \(E(|X_n|)\) is uniformly integrable, it is bounded, hence \(E(X_n) \to E(X)\).
+\end{proof}
+
+Recall (MAT5170) Fatou's Lemma (Thm.16.3). Let \((\Omega, \mathcal{F}, \mu)\) be a measure space such that \(\mu(\Omega) < \infty\). Assume \((f_n)\) are measurable \(\mathbb{R}\)-valued functions such that \(f_n \to f\) almost everywhere (w.r.t. \(\mu\)).
+
+If \((f_n)\) is uniformly integrable and \(f\) is integrable, then
+\[
+\int_{\Omega} f_n d\mu \to \int_{\Omega} f d\mu.
+\]
+
+\begin{theorem}[15.12]
+If \(X_n \xrightarrow{d} X\) and \((X_n)\) is uniformly integrable, then \(X\) is integrable and \(E(X_n) \to E(X)\).
+\end{theorem}
+
+\begin{proof}
+By Skorohod Representation Theorem (as in the proof of Th.25.11), there exists a probability space \((\Omega', \mathcal{F}', P')\) and random variables \(Y_n, Y\) on \((\Omega', \mathcal{F}', P')\) such that
+\begin{itemize}
+    \item the law of \(Y_n\) is \(\mu_n\) (where \(\mu_n\) is the law of \(X_n\)),
+    \item the law of \(Y\) is \(\mu\) (where \(\mu\) is the law of \(X\)),
+    \item \(Y_n(\omega) \rightarrow Y(\omega)\) for all \(\omega \in \Omega'\).
+\end{itemize}
+Note that \(Y_n\) are uniformly integrable since
+\[
+    \int_{\Omega'} |Y_n| dP' = \int_{\{|Y| > \alpha\}} |Y_n| dP' = \int_{\{|X| > \alpha\}} |X_n| dP = \int_{\Omega} |X_n| dP
+\]
+when \(|Y_n| > \alpha\).
+
+Change of variables (Th.16.13)
+\[
+    \int_{\Omega} f(X) dP = \int_{\mathbb{R}} f(z) d(P \circ X^{-1})(z) = \int_{\mathbb{R}} f d\mu
+\]
+By Theorem 16.14, \(E'(Y_n) \rightarrow E'(Y)\).
+This gives us the desired conclusion since:
+\[
+    E'(Y_n) = E(X_n) \text{ for all } n \text{ and } E'(Y) = E(X).
+\]
+Here \(E'\) is expectation with respect to \(P'\).
+\end{proof}
+
+
+\subsection{Characteristic Functions}
+\begin{definition}
+a) Let \(\mu\) be a probability measure on \((\mathbb{R}, \mathcal{R})\). The characteristic function of \(\mu\) is:
+\[\varphi(t) = \int_{-\infty}^{\infty} e^{itx} \mu(dx) = \int_{-\infty}^{\infty} \cos(tx)\mu(dx) + i \int_{-\infty}^{\infty} \sin(tx)\mu(dx)\]
+for all \( t \in \mathbb{R} \).
+\newline
+(Recall: \( e^{it} \) is defined as \( \cos t + i \sin t \) for all \( t \in \mathbb{R} \).)
+
+b) Let \( X: \Omega \rightarrow \mathbb{R} \) be a random variable on a probability space \((\Omega, \mathcal{F}, P)\). Let \(\mu\) be the law of \(X\). Then the characteristic function of \(X\) is:
+\[\varphi(t) = E(e^{itX}) = \int_{\mathbb{R}} e^{itx} dP = \int_{\mathbb{R}} e^{itx} \mu(dx)\]
+\end{definition}
+
+
+
+\textbf{Observation:} Since \( \lvert e^{itx} \rvert^2 = \cos^2(tx) + \sin^2(tx) = 1 \), 
+\[
+\lvert \varphi(t) \rvert = \left\lvert \int_{\mathbb{R}} e^{itx} \mu(dx) \right\rvert \leq \int_{\mathbb{R}} \lvert e^{itx} \rvert \mu(dx) = \mu(\mathbb{R}) = 1.
+\]
+
+\begin{enumerate}
+  \item \(\varphi(0) = E(e^{i \cdot 0}) = E(1) = 1\)
+  
+  \item \(\varphi\) is uniformly continuous on \(\mathbb{R}\):
+  \begin{align*}
+  \lvert \varphi(t+\varepsilon) - \varphi(t) \rvert &= \left\lvert \int_{\mathbb{R}} (e^{i(t+\varepsilon)x} - e^{itx}) \mu(dx) \right\rvert \\
+  &\leq \int_{\mathbb{R}} \lvert e^{i(t+\varepsilon)x} - e^{itx} \rvert \mu(dx) \\
+  &= \int_{\mathbb{R}} \lvert e^{itx} \rvert \cdot \lvert e^{i\varepsilon x} - 1 \rvert \mu(dx) \\
+  &= \int_{\mathbb{R}} \lvert e^{i\varepsilon x} - 1 \rvert \mu(dx) \to 0 \quad \text{by Bounded Convergence Theorem since} \\
+  &\lvert e^{i\varepsilon x} - 1 \rvert \leq \lvert e^{i\varepsilon x} \rvert + 1 = 2 \quad \text{for all } x \text{ as } \varepsilon \to 0.
+  \end{align*}
+\end{enumerate}

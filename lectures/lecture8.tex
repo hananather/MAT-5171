@@ -1,0 +1,292 @@
+\newpage
+\section{February 7, 2024}
+
+\subsection{Section 33: Conditional Probability (continued)}
+
+\begin{example}
+    
+If \( P(B) > 0 \), \(\mathcal{G} = \sigma(\{B\}) \rightarrow \{\emptyset, \Omega, B, B^c\}\)
+
+\[
+f(\omega) = 
+\begin{cases} 
+P(A \mid B) & \text{if } \omega \in B \\
+P(A \mid B^c) & \text{if } \omega \in B^c 
+\end{cases}
+\]
+
+We prove that \( f \) satisfies conditions (i) and (ii) from the definition of \( P(A \mid \mathcal{G}) \), i.e.,
+\begin{itemize}
+    \item[(i)] \( f \) is \(\mathcal{G}\)-measurable (we checked this last time)
+    \item[(ii)] \(\int_G f \, dP = P(A \cap G) \quad \forall G \in \mathcal{G} \)
+\end{itemize}
+\[
+\int_G f \, dP = P(A \cap G) \quad \forall G \in \mathcal{G} \tag{1}
+\]
+
+Last time, we checked that (1) holds for \( G = \emptyset \) and \( G = \Omega \).
+
+Assume that \( G = B \). Then
+\[
+\int_B f \, dP = \int_B \left( P(A \mid B) \mathbf{1}_B + P(A \mid B^c) \mathbf{1}_{B^c} \right) dP 
+\]
+\[
+= \int_B P(A \mid B) dP = P(A \mid B) P(B) = \frac{P(A \cap B)}{P(B)} P(B)
+\]
+\[
+= P(A \cap B)
+\]
+This proves (1) for \( G = B \).
+
+The fact that (1) also holds for \( G = B^c \) is similar (exercise).
+
+\end{example}
+
+
+\begin{example}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(A \in \mathcal{F}\), and \(\mathcal{G} = \sigma(\{B_i\}_{i \geq 1})\), where \(\{B_i\}_{i \geq 1}\) is a partition of \(\Omega\), \(B_i \in \mathcal{F}\), \(P(B_i) > 0\) for all \(i \geq 1\). We claim that
+
+\[
+P(A \mid \mathcal{G}) = \sum_{i \geq 1} P(A \mid B_i) \mathbf{1}_{B_i} \quad \text{a.s.} \tag{2}
+\]
+
+We prove (2): Let \(f = \sum_{i \geq 1} P(A \mid B_i) \mathbf{1}_{B_i}\). We check that \(f\) satisfies conditions (i) and (ii) from the definition of \(P(A \mid \mathcal{G})\).
+
+\textbf{Condition (i):} \(f\) is \(\mathcal{G}\)-measurable since \(\mathbf{1}_{B_i}\) is \(\mathcal{G}\)-measurable for all \(i \geq 1\).
+
+\textbf{Condition (ii):} We have to check that
+
+\[
+\int_G f \, dP = P(A \cap G) \quad \forall G \in \mathcal{G} \tag{1}
+\]
+
+Note that \(\mathcal{G} = \left\{\bigcup_{j \in I} B_j \mid I \subseteq \{1, 2, \ldots\}\right\}\). Taking \(G = \bigcup_{j \in I} B_j\), we have
+
+\[
+\int_G f \, dP = \sum_{j \in I} \int_{B_j} f \, dP = \sum_{j \in I} \int_{B_j} P(A \mid B_j) dP = \sum_{j \in I} P(A \mid B_j) P(B_j)
+\]
+\[
+= \sum_{j \in I} P(A \cap B_j) = P\left(A \cap \left(\bigcup_{j \in I} B_j\right)\right) = P(A \cap G)
+\]
+
+This proves (1).
+\end{example}
+
+
+\begin{example}
+    
+
+If \( A \in \mathcal{G} \), then \( P(A \mid \mathcal{G}) = \mathbf{1}_A \) a.s.
+
+Recall:
+\[
+\mathbf{1}_A(\omega) =
+\begin{cases} 
+1 & \text{if } \omega \in A \\
+0 & \text{if } \omega \notin A 
+\end{cases}
+\]
+
+\textbf{Proof:} We show that \(\mathbf{1}_A\) satisfies conditions (i) and (ii) from the definition of \(P(A \mid \mathcal{G})\).
+
+(i) \(\mathbf{1}_A\) is \(\mathcal{G}\)-measurable since \(A \in \mathcal{G}\).
+
+(ii) Let \(G \in \mathcal{G}\) be arbitrary. Then
+\[
+\int_G \mathbf{1}_A \, dP = \int_\Omega \mathbf{1}_{G \cap A} \, dP = P(G \cap A)
+\]
+\end{example}
+\begin{example}
+If \(\mathcal{G} = \{\emptyset, \Omega\}\), then \(P(A \mid \mathcal{G}) = P(A)\) a.s.
+
+\textbf{Proof:} Let \(f = P(A)\). We prove that \(f\) satisfies conditions (i) and (ii).
+
+(i) \(f\) is \(\mathcal{G}\)-measurable since \(f\) is a constant random variable and so \(\forall B \in \mathbb{R}\),
+\[
+f^{-1}(B) = \{\omega \in \Omega; f(\omega) \in B\} = 
+\begin{cases} 
+\Omega & \text{if } P(A) \in B \\
+\emptyset & \text{if } P(A) \notin B 
+\end{cases} \in \mathcal{G}
+\]
+
+(ii) We have to show that
+\[
+\int_G f \, dP = P(A \cap G) \quad \forall G \in \mathcal{G} \tag{1}
+\]
+
+We have two cases:
+\begin{itemize}
+    \item \(G = \emptyset\). Then
+    \[
+    \int_G f \, dP = \int_\emptyset P(A) \, dP = 0 = P(A \cap \emptyset) = P(A \cap G)
+    \]
+    \item \(G = \Omega\). Then
+    \[
+    \int_G f \, dP = \int_\Omega P(A) \, dP = P(A) = P(A \cap \Omega) = P(A \cap G)
+    \]
+\end{itemize}
+\end{example}
+
+\begin{definition}
+We say that event \(A\) is \textit{independent} of the \(\sigma\)-field \(\mathcal{G}\) if \(A\) is independent of \(G\), \(\forall G \in \mathcal{G}\), i.e.,
+\[
+P(A \cap G) = P(A) \cdot P(G) \quad \forall G \in \mathcal{G}
+\]
+\end{definition}
+
+
+
+\textbf{Observation:} Any event \(A\) is independent of the trivial \(\sigma\)-field \(\mathcal{G} = \{\emptyset, \Omega\}\). (Exercise)
+
+\begin{example}
+The event \(A\) is independent of \(\mathcal{G} \iff P(A \mid \mathcal{G}) = P(A) \) a.s.
+
+\textbf{Proof:} \(\Rightarrow\) Assume that \(A\) is independent of \(\mathcal{G}\). Let \(f = P(A)\). We prove that \(f\) satisfies conditions (i) and (ii) from the definition of \(P(A \mid \mathcal{G})\).
+
+(i) \(f = P(A)\) is a constant random variable. Hence, \(f\) is \(\mathcal{G}\)-measurable.
+
+(ii) We have to check that
+\[
+\int_G f \, dP = P(A \cap G) \quad \forall G \in \mathcal{G} \tag{1}
+\]
+
+Let \(G \in \mathcal{G}\) be arbitrary. Then
+\[
+\int_G f \, dP = \int_G P(A) \, dP = P(A) \int_G dP = P(A) \cdot P(G) = P(A \cap G)
+\]
+
+So (1) holds.
+
+\(\Leftarrow\) Suppose that \(P(A \mid \mathcal{G}) = P(A)\) a.s. Let \(G \in \mathcal{G}\) be arbitrary. Then, by property (ii) of conditional probability, we know that
+\[
+\int_G f \, dP = P(A \cap G), \quad \text{where } f = P(A)
+\]
+
+Note that
+\[
+\int_G f \, dP = \int_G P(A) \, dP = P(A) \cdot P(G)
+\]
+
+So, \(P(A) \cdot P(G) = P(A \cap G)\).
+\end{example}
+
+
+\begin{definition}
+    
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(A \in \mathcal{F}\). Let \(X: \Omega \rightarrow \mathbb{R}\) be a random variable (i.e., \(X\) is \(\mathcal{F}\)-measurable). 
+
+Let \(\mathcal{G} = \sigma(X) = \{ X^{-1}(B); B \in \mathcal{B}(\mathbb{R}) \}\) where 
+\[ 
+X^{-1}(B) = \{ \omega \in \Omega; X(\omega) \in B \} = \{X \in B\}
+\]
+
+We say that \(P(A \mid \mathcal{G})\) is a version of the conditional probability of \(A\) given \(X\), and we denote this by \(P(A \mid X)\), i.e.,
+\[
+P(A \mid X) := P\left(A \mid \sigma(\{X\})\right)
+\]
+
+This means that:
+\[
+\begin{cases} 
+(i) & P(A \mid X) \text{ is } \sigma(X)\text{-measurable} \\
+(ii) & \int_B P(A \mid X) \, dP = P(A \cap \{X \in B\}) \quad \forall B \in \mathcal{B}(\mathbb{R})
+\end{cases}
+\]
+\end{definition}
+
+
+
+
+\begin{theorem}
+    Let \((X, \mathcal{X}, \mu)\) and \((Y, \mathcal{Y}, \nu)\) be measure spaces. \(\mu\) and \(\nu\) are \(\sigma\)-finite. \(X \times Y = \{(x,y); x \in X, y \in Y\}\).
+
+\[
+\mathcal{X} \otimes \mathcal{Y} = \sigma(\{A \times B; A \in \mathcal{X}, B \in \mathcal{Y}\}) \quad \text{product \(\sigma\)-field}
+\]
+
+If \(E \in \mathcal{X} \otimes \mathcal{Y}\), then
+\[
+\begin{cases} 
+E_x = \{y \in Y; (x,y) \in E\} \quad \forall x \in X \\
+E^y = \{x \in X; (x,y) \in E\} \quad \forall y \in Y
+\end{cases}
+\]
+\end{theorem} 
+
+
+
+\begin{proposition}
+(i) If \( E \in \mathcal{X} \otimes \mathcal{Y} \) then 
+\[
+\begin{cases}
+E_x \in \mathcal{Y} \quad \forall x \in X \\
+E^y \in \mathcal{X} \quad \forall y \in Y
+\end{cases}
+\]
+
+(ii) If \( f: X \times Y \rightarrow \mathbb{R} \) is \(\mathcal{X} \otimes \mathcal{Y}\)-measurable then
+\[
+\begin{cases}
+y \mapsto f(x,y) \text{ is } \mathcal{Y}\text{-measurable} \quad \forall x \in X \\
+x \mapsto f(x,y) \text{ is } \mathcal{X}\text{-measurable} \quad \forall y \in Y
+\end{cases}
+\]
+\end{proposition}
+
+
+\begin{proposition}
+For any set \( E \in \mathcal{X} \otimes \mathcal{Y} \)
+\[
+\begin{cases}
+x \mapsto \nu(E_x) \text{ is } \mathcal{X}\text{-measurable} \\
+y \mapsto \mu(E^y) \text{ is } \mathcal{Y}\text{-measurable}
+\end{cases}
+\]
+
+Define
+\[
+\pi'(E) = \int_X \nu(E_x) \mu(dx) \quad \text{and} \quad \pi''(E) = \int_Y \mu(E^y) \nu(dy)
+\]
+
+Then \(\pi'\) and \(\pi''\) are measures on \((X \times Y, \mathcal{X} \otimes \mathcal{Y})\) and
+\[
+\pi'(E) = \pi''(E) =: \pi(E) \quad \forall E \in \mathcal{X} \otimes \mathcal{Y}
+\]
+
+Moreover, \(\pi\) is the only measure on \(X \times Y\) s.t.
+\[
+\pi(A \times B) = \mu(A) \cdot \nu(B) \quad \forall A \in \mathcal{X}, \, \forall B \in \mathcal{Y}
+\]
+
+We denote \(\pi = \mu \times \nu\) and we say that \(\pi\) is the product measure.
+\end{proposition}
+
+
+\begin{theorem}
+(i) If \( f: X \times Y \rightarrow [0, \infty) \) is \(\mathcal{X} \otimes \mathcal{Y}\)-measurable, then
+\[
+g: X \rightarrow \mathbb{R}, \quad g(x) = \int_Y f(x,y) \nu(dy) \text{ is } \mathcal{X}\text{-measurable}
+\]
+\[
+h: Y \rightarrow \mathbb{R}, \quad h(y) = \int_X f(x,y) \mu(dx) \text{ is } \mathcal{Y}\text{-measurable}
+\]
+
+and
+\[
+\int_X \left( \int_Y f(x,y) \nu(dy) \right) \mu(dx) = \int_Y \left( \int_X f(x,y) \mu(dx) \right) \nu(dy)
+\]
+\[
+= \int_{X \times Y} f(x,y) (\mu \times \nu)(dx,dy) \tag{4}
+\]
+
+(ii) If \( f: X \times Y \rightarrow \mathbb{R} \) is \(\mathcal{X} \otimes \mathcal{Y}\)-measurable and integrable w.r.t. \(\mu \times \nu\), then
+\[
+\begin{cases}
+g(x) \text{ is finite for } \mu\text{-almost all } x \in X, \quad g \text{ is } \mathcal{X}\text{-measurable} \\
+h(y) \text{ is finite for } \nu\text{-almost all } y \in Y, \quad h \text{ is } \mathcal{Y}\text{-measurable}
+\end{cases}
+\]
+
+and (4) holds.
+\end{theorem}

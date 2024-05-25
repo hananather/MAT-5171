@@ -1,0 +1,290 @@
+\newpage
+\section{February 12, 2024}
+\subsection{Conditional probability continued}
+
+\begin{theorem}
+Let \(X\) and \(Y\) be independent random variables and \(\mu = P \circ X^{-1}\), \(\nu = P \circ Y^{-1}\). Then
+
+a)
+\[
+P((X,Y) \in B) = \int_{\mathbb{R}} P((x,Y) \in B) \mu(dx) \quad \forall B \in \mathbb{R}^2 \tag{2}
+\]
+
+b)
+\[
+P((X \in A, (X,Y) \in B) = \int_{\mathbb{R}} P((x,Y) \in B) \mu(dx) \quad \forall A \in \mathbb{R} \quad \forall B \in \mathbb{R}^2 \tag{4}
+\]
+\end{theorem}
+\begin{proof}
+a) Since \(X, Y\) are independent, the law of \((X, Y)\) is \(\mu \times \nu\), i.e.,
+\[
+P \circ (X, Y)^{-1} = (P \circ X^{-1}) \times (P \circ Y^{-1}) = \mu \times \nu
+\]
+
+Recall:
+\[
+B_x = \{y \in \mathbb{R}; (x, y) \in B\} \text{ is the section of } B \text{ at } x
+\]
+
+By Fubini's Theorem,
+\[
+(\mu \times \nu)(B) = \int_{\mathbb{R}} \nu(B_x) \mu(dx) \tag{1}
+\]
+
+Note that
+\[
+(\mu \times \nu)(B) = P((X, Y) \in B)
+\]
+\[
+\nu(B_x) = (P \circ Y^{-1})(B_x) = P(Y \in B_x) = P(\{\omega \in \Omega; Y(\omega) \in B_x\})
+\]
+
+So
+\[
+\nu(B_x) = P(\{\omega \in \Omega; (x, Y(\omega)) \in B\}) = P((x, Y) \in B)
+\]
+
+Hence (1) gives our desired conclusion for a).
+\end{proof}
+
+\begin{proof}
+    b) We write (1) for set \( B \) replaced by \( B' = (A \times \mathbb{R}) \cap B \), relation (1) becomes:
+\[
+(\mu \times \nu)(B') = \int_{\mathbb{R}} \nu(B'_x) \mu(dx) \tag{3}
+\]
+
+Note that
+\[
+(\mu \times \nu)(B') = (P \circ (X, Y)^{-1})(B') = P((X, Y) \in B') = P((X, Y) \in (A \times \mathbb{R}) \cap B) = P(X \in A, (X, Y) \in B) = \text{LHS of (4)}
+\]
+
+\[
+B'_x = \{y \in \mathbb{R}; (x, y) \in B'\} = \{y \in \mathbb{R}; x \in A \text{ and } (x, y) \in B\} = 
+\begin{cases}
+\emptyset & \text{if } x \notin A \\
+B_x & \text{if } x \in A
+\end{cases}
+\]
+
+\[
+\nu(B'_x) =
+\begin{cases}
+0 & \text{if } x \notin A \\
+\nu(B_x) & \text{if } x \in A
+\end{cases}
+\]
+
+So
+\[
+\nu(B'_x) =
+\begin{cases}
+0 & \text{if } x \notin A \\
+P((x, Y) \in B) & \text{if } x \in A
+\end{cases}
+\]
+
+Relation (3) gives exactly (4).
+
+\end{proof}
+
+\begin{theorem}
+Let \(X\) and \(Y\) be independent random variables, and \(J \subseteq \mathbb{R}\).
+
+Consider the function
+\[
+f(x) = P((x, Y) \in J) \quad \text{for all } x \in \mathbb{R}.
+\]
+
+a) Then
+\[
+P((X, Y) \in J \mid X) = f(X) \quad \text{a.s.}
+\]
+
+b) Let \(M = \max(X, Y)\). Then for all \(m \in \mathbb{R}\),
+\[
+P(M \leq m \mid X) = \mathbf{1}\{X \leq m\} P(Y \leq m) \quad \text{a.s.}
+\]
+\end{theorem}
+
+\begin{proof}
+a) We check that \(f(X)\) satisfies conditions (i) and (ii) from the definition of conditional probability. Here \(\mathcal{G} = \sigma(X)\).
+
+(i) \(f(X)\) is \(\sigma(X)\)-measurable. This is clear.
+
+(ii) Let \(G \in \sigma(X)\) be arbitrary. Then \(G = \{X \in H\}\) for some \(H \in \mathcal{B}(\mathbb{R})\). Let \(P \circ X^{-1} = \mu\).
+\[
+\int_G f(X) \, dP = \int_{\{X \in H\}} f(X) \, dP = \int_H f(x) \, \mu(dx) \quad \text{(change of variable, Th 16.13)}
+\]
+\[
+\int_G f(X) \, dP = \int_\Omega f(X(\omega)) \mathbf{1}_G (\omega) \, dP(\omega) = \int_H f(x) \, \mu(dx) = \int_H P((x, Y) \in J) \, \mu(dx) \quad \text{(definition of \(f\))}
+\]
+\[
+= P(X \in H, (X, Y) \in J) \quad \text{(by (4))}
+\]
+In summary, we proved that:
+\[
+\int_G f(X) \, dP = P(A \cap G) \quad \forall G \in \sigma(X)
+\]
+\end{proof}
+\begin{proof}
+    b) We use the result in part a). Note that
+\[
+\{M \leq m\} = \{\max(X,Y) \leq m\} = \{X \leq m, Y \leq m\} = \{(X,Y) \in J\}
+\]
+where \(J = \{(x,y) \in \mathbb{R}^2; x \leq m \text{ and } y \leq m\}\).
+
+By a),
+\[
+P(M \leq m \mid X) = P((X,Y) \in J \mid X) = f(X) \quad \text{a.s.} \tag{5}
+\]
+where \(f(x) = P((x,Y) \in J)\).
+
+Let us calculate \(f(x)\):
+\[
+f(x) = P((x,Y) \in J) = P(\{\omega \in \Omega; x \leq m \text{ and } Y(\omega) \leq m\})
+\]
+\[
+= 
+\begin{cases} 
+0 & \text{if } x > m \\
+P(Y \leq m) & \text{if } x \leq m
+\end{cases} 
+= \mathbf{1}_{\{x \leq m\}} P(Y \leq m)
+\]
+
+Then 
+\[
+f(x) = \mathbf{1}_{\{x \leq m\}} P(Y \leq m)
+\]
+
+Relation (5) becomes:
+\[
+P(M \leq m \mid X) = \mathbf{1}_{\{X \leq m\}} P(Y \leq m).
+\]
+
+\end{proof}
+
+\textbf{Recall: (MAT 5170):}
+A family \(\mathcal{P}\) of subsets of a set \(\Omega\) is called a \(\pi\)-system if it is closed under finite intersections, i.e., if \(A, B \in \mathcal{P}\) then \(A \cap B \in \mathcal{P}\).
+
+\note{
+Let \(\mathcal{P}\) be a \(\pi\)-system of subsets of \(\Omega\), \(\sigma(\mathcal{P}) = \mathcal{F}\), and \(\Omega = \bigcup_{i \geq 1} A_i\) with \(A_i \in \mathcal{P}\).
+
+If \(\mu\) and \(\nu\) are measures on \((\Omega, \mathcal{F})\) and \(\mu(A) = \nu(A)\) for all \(A \in \mathcal{P}\), then \(\mu = \nu\).
+}
+\begin{theorem}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(\mathcal{G} \subseteq \mathcal{F}\) is a sub \(\sigma\)-field of \(\mathcal{F}\), \(A \in \mathcal{F}\).
+
+Assume that \(\mathcal{G} = \sigma(\mathcal{P})\) where \(\mathcal{P}\) is a \(\pi\)-system and \(\Omega = \bigcup_{i \geq 1} A_i\) with \(A_i \in \mathcal{P}\).
+
+Let \(f: \Omega \rightarrow [0, \infty)\) be a function which satisfies:
+\begin{itemize}
+    \item[(i)] \(f\) is \(\mathcal{G}\)-measurable and integrable
+    \item[(ii)] \(\int_G f \, dP = P(A \cap G) \quad \forall G \in \mathcal{P}\)
+\end{itemize}
+
+Then \(f = P(A \mid \mathcal{G})\) a.s.
+\end{theorem}
+\begin{proof}
+Define
+\[
+\mu(G) = \int_G f \, dP, \quad G \in \mathcal{G}
+\]
+\[
+\nu(G) = P(A \cap G), \quad G \in \mathcal{G}
+\]
+Both \(\mu\) and \(\nu\) are measures on \((\Omega, \mathcal{G})\).
+
+By (ii), \(\mu(G) = \nu(G) \quad \forall G \in \mathcal{P}\).
+
+Hence, by Theorem 10.4, \(\mu(G) = \nu(G) \quad \forall G \in \mathcal{G}\). The conclusion follows since \(f\) satisfies the two conditions (i) and (ii) from the definition of \(P(A \mid \mathcal{G})\).
+
+The next result shows that \(P(\cdot \mid \mathcal{G})\) satisfies the same properties as the classical probability measure \(P\).
+\end{proof}
+
+
+\begin{theorem}{Theorem 33.2 (Properties of Conditional Probability)}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space and \(\mathcal{G} \subseteq \mathcal{F}\) be a sub-\(\sigma\)-field.
+
+1) \(P(\emptyset \mid \mathcal{G}) = 0 \) a.s. and \(P(\Omega \mid \mathcal{G}) = 1 \) a.s.
+
+2) \(P(A \mid \mathcal{G}) \geq 0\) a.s. and \(P(A \mid \mathcal{G}) \leq 1\) a.s. \(\forall A \in \mathcal{F}\)
+
+3) If \(\{A_n\}_{n \geq 1}\) are disjoint sets in \(\mathcal{F}\), then
+\[
+P\left(\bigcup_{n \geq 1} A_n \mid \mathcal{G}\right) = \sum_{n \geq 1} P(A_n \mid \mathcal{G}) \quad \text{a.s.}
+\]
+
+4) If \(A, B \in \mathcal{F}\) and \(A \subseteq B\), then
+\[
+P(B \setminus A \mid \mathcal{G}) = P(B \mid \mathcal{G}) - P(A \mid \mathcal{G}) \quad \text{a.s.}
+\]
+\[
+P(A \mid \mathcal{G}) \leq P(B \mid \mathcal{G}) \quad \text{a.s.}
+\]
+
+5) \textit{Inclusion-exclusion principle:} For any \(A_1, \ldots, A_n \in \mathcal{F}\),
+\[
+P\left(\bigcup_{i=1}^n A_i \mid \mathcal{G}\right) = \sum_{i=1}^n P(A_i \mid \mathcal{G}) - \sum_{i<j} P(A_i \cap A_j \mid \mathcal{G}) + \ldots + (-1)^{n+1} P\left(\bigcap_{i=1}^n A_i \mid \mathcal{G}\right) \quad \text{a.s.}
+\]
+
+6) If \(\{A_n\}_{n \geq 1}\) are subsets of \(\mathcal{F}\) such that \(A_n \uparrow A \in \mathcal{F}\) (i.e., \(A_n \subseteq A_{n+1}\) and \(A = \bigcup_{n \geq 1} A_n\)), then
+\[
+P(A_n \mid \mathcal{G}) \uparrow P(A \mid \mathcal{G}) \quad \text{a.s.}
+\]
+Similarly, if \(A_n \downarrow A\) (i.e., \(A_n \supseteq A_{n+1}\) and \(A = \bigcap_{n \geq 1} A_n\)), then
+\[
+P(A_n \mid \mathcal{G}) \downarrow P(A \mid \mathcal{G}) \quad \text{a.s.}
+\]
+
+7) If \(A \in \mathcal{F}\) is such that \(P(A) = 1\), then \(P(A \mid \mathcal{G}) = 1 \quad \text{a.s.}\)
+
+If \(A \in \mathcal{F}\) is such that \(P(A) > 0\), then \(P(A \mid \mathcal{G}) > 0 \quad \text{a.s.}\)
+\end{theorem}
+
+\begin{proof}
+1) \(1\) is trivial: \(f = 0\) satisfies conditions (i) and (ii) from the definition of \(P(\emptyset \mid \mathcal{G})\).
+\[
+f = 1 \quad \text{satisfies } P(\Omega \mid \mathcal{G})
+\]
+
+2) Use the following result: If \(f: \Omega \rightarrow \mathbb{R}\) is a \(\mathcal{G}\)-measurable function and
+\[
+\int_G f \, dP \geq 0 \quad \forall G \in \mathcal{G} \text{ then } f \geq 0 \text{ a.s.} \quad \text{(Section 15)}
+\]
+
+In our case, \(f = P(A \mid \mathcal{G})\) satisfies:
+\[
+\int_G f \, dP = P(A \cap G) \geq 0 \quad \forall G \in \mathcal{G}. \text{ Hence, } f \geq 0 \text{ a.s.}
+\]
+
+Similarly, the function \(f' = 1 - P(A \mid \mathcal{G})\) satisfies:
+\[
+\int_G f' \, dP = \int_G (1 - P(A \mid \mathcal{G})) \, dP = P(G) - \int_G P(A \mid \mathcal{G}) \, dP = P(G) - P(A \cap G) = P(G \setminus A) \geq 0
+\]
+Hence \(f' \geq 0\) a.s., that is \(P(A \mid \mathcal{G}) \leq 1\) a.s.
+
+3) Let \(f = \sum_{n \geq 1} P(A_n \mid \mathcal{G})\). We check that \(f\) satisfies conditions (i) and (ii) from the definition of \(P(\bigcup_{n \geq 1} A_n \mid \mathcal{G})\).
+
+(i) \(f\) is \(\mathcal{G}\)-measurable (limit of a seq. of \(\mathcal{G}\)-measurable functions is \(\mathcal{G}\)-measurable).
+
+(ii) Let \(G \in \mathcal{G}\) be arbitrary, and denote \(A = \bigcup_{n \geq 1} A_n\). We want to prove that:
+\[
+\int_G f \, dP = P(A \cap G) \tag{7}
+\]
+
+\[
+\int_G f \, dP = \int_G \sum_{n \geq 1} P(A_n \mid \mathcal{G}) \, dP \geq 0 \quad \text{(Corollary to Theorem 16.7)}
+\]
+\[
+\int_G \sum_{n \geq 1} P(A_n \mid \mathcal{G}) \, dP = \sum_{n \geq 1} \int_G P(A_n \mid \mathcal{G}) \, dP = \sum_{n \geq 1} P(A_n \cap G) \quad \text{(by condition (ii) in the def. of } P(A_n \mid \mathcal{G}))
+\]
+\[
+= P\left(\bigcup_{n \geq 1} (A_n \cap G)\right) = P\left(\left(\bigcup_{n \geq 1} A_n\right) \cap G\right) = P(A \cap G)
+\]
+
+This proves (7).
+
+4) - 7) Exercise.
+
+\end{proof}

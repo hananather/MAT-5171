@@ -1,0 +1,235 @@
+\newpage
+\section{February 28, 2024}
+\subsection{Conditional Expectation}
+\note{
+\textbf{Recall}: We say that a r.v. \( P(A|\mathcal{G}) \) is the conditional probability of \( A \) given \( \mathcal{G} \) if:
+\begin{enumerate}
+    \item \( P(A|\mathcal{G}) \) is \( \mathcal{G} \)-measurable and integrable
+    \item \(\int_G P(A|\mathcal{G}) \, dP = P(A \cap G) \quad \forall G \in \mathcal{G} \)
+\end{enumerate}
+Note that \( P(A \cap G) = \int_G \mathbf{1}_A \, dP \), (ii) can be stated as:
+\[
+\int_G P(A|\mathcal{G}) \, dP = \int_G \mathbf{1}_A \, dP \quad \forall G \in \mathcal{G}
+\]
+}
+
+\begin{theorem}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(\mathcal{G} \subseteq \mathcal{F}\) a sub-\(\sigma\)-field, and \(X: \Omega \to \mathbb{R}\) an integrable r.v. Then, there exists a r.v. \(g: \Omega \to \mathbb{R}\) such that:
+\begin{enumerate}
+    \item \(g\) is \(\mathcal{G}\)-measurable and integrable
+    \item \(\int_G g \, dP = \int_G X \, dP \quad \forall G \in \mathcal{G}\)
+\end{enumerate}
+
+If \(g': \Omega \to \mathbb{R}\) is another r.v. satisfying (i) and (ii), then \(g = g'\) a.s., i.e.
+\[
+P(\{\omega \in \Omega; \, g(\omega) = g'(\omega)\}) = 1
+\]
+
+We say that \(g\) is a (version of) the conditional expectation of \(X\) given \(\mathcal{G}\), and we denote
+\[
+g = \mathbb{E}(X | \mathcal{G})
+\]
+\end{theorem}
+
+\begin{proof}
+\textbf{Proof: Existence Case 1, \(X \ge 0\)}
+
+Define
+\[
+\mathcal{D}(G) = \int_G X \, dP \quad \text{for all } G \in \mathcal{G}.
+\]
+Clearly, \(\mathcal{D}\) is a measure on \((\Omega, \mathcal{G})\).
+
+Note that \(\mathcal{D}\) is a finite measure:
+\[
+\mathcal{D}(\Omega) = \int_\Omega X \, dP = \mathbb{E}(X) < \infty.
+\]
+Moreover, \(\mathcal{D}\) is absolutely continuous with respect to \(P\):
+\[
+\text{if } P(G) = 0 \text{ then } \mathcal{D}(G) = 0.
+\]
+
+By the Radon-Nikodym Theorem (Theorem 32.3), there exists a \(\mathcal{G}\)-measurable function \(g: \Omega \to \mathbb{R}\) such that:
+\[
+\mathcal{D}(G) = \int_G g \, dP \quad \forall G \in \mathcal{G}.
+\]
+From (1) and (2),
+\[
+\int_G X \, dP = \int_G g \, dP \quad \forall G \in \mathcal{G}.
+\]
+
+Thus, \(g\) is clearly integrable. So, \(g\) satisfies (i) and (ii).
+\end{proof}
+
+\begin{proof}
+\textbf{Case 2: \(X\) is arbitrary}
+
+Recall that any \(a \in \mathbb{R}\) can be written as:
+\[
+a = a^+ - a^- \quad \text{where} \quad 
+a^+ = 
+\begin{cases} 
+a & \text{if } a \ge 0 \\
+0 & \text{if } a < 0 
+\end{cases}
+, \quad 
+a^- = 
+\begin{cases} 
+0 & \text{if } a \ge 0 \\
+-a & \text{if } a < 0 
+\end{cases}
+\]
+(Note: \(a^+ \ge 0, a^- \ge 0\))
+
+Hence, for \(X(\omega) \in \mathbb{R}\), we have:
+\[
+X(\omega) = X^+(\omega) - X^-(\omega) \quad \forall \omega \in \Omega.
+\]
+
+Both \(X^+\) and \(X^-\) are non-negative r.v.'s. By Case 1,
+
+\begin{itemize}
+    \item there exists a function \(g_1: \Omega \to \mathbb{R}\) \(\mathcal{G}\)-measurable and integrable s.t.
+    \[
+    \int_G g_1 \, dP = \int_G X^+ \, dP \quad \forall G \in \mathcal{G} \tag{3}
+    \]
+    \item there exists a function \(g_2: \Omega \to \mathbb{R}\) \(\mathcal{G}\)-measurable and integrable s.t.
+    \[
+    \int_G g_2 \, dP = \int_G X^- \, dP \quad \forall G \in \mathcal{G} \tag{4}
+    \]
+\end{itemize}
+
+Take the difference between (3) and (4), we get:
+\[
+\int_G (g_1 - g_2) \, dP = \int_G (X^+ - X^-) \, dP = \int_G X \, dP \quad \forall G \in \mathcal{G}.
+\]
+
+Taking \(g = g_1 - g_2\), we see that \(g\) satisfies (i) and (ii).
+\end{proof}
+
+\begin{lemma}{Lemma 1}
+    If \(X\) is \(\mathcal{G}\)-measurable, then \(\mathbb{E}(X|\mathcal{G}) = X \) a.s. (and integrable)
+\end{lemma}
+
+
+\begin{proof}
+It is clear that \(g = X\) satisfies (ii) and (iii) of Theorem 1. \(\qed\)
+\end{proof}
+\begin{lemma}{Lemma 2}
+   If \(X\) is independent of \(\mathcal{G}\) (i.e. \(\{X \in B\}\) and \(G\) are independent for any \(B \in \mathcal{R}, G \in \mathcal{G}\)), then \(\mathbb{E}(X|\mathcal{G}) = \mathbb{E}(X) \) a.s. 
+\end{lemma}
+
+
+\begin{proof}
+    We check that \(g = \mathbb{E}(X)\) satisfies (i) and (ii) from Theorem 1:
+\begin{itemize}
+    \item[(i)] \(g = \mathbb{E}(X)\) is a constant r.v., so it is measurable w.r.t. any \(\sigma\)-field, and in particular it is \(\mathcal{G}\)-measurable. Clearly, \(g\) is integrable.
+    \item[(ii)] 
+    \[
+    \int_G g \, dP = \int_G \mathbb{E}(X) \, dP = \mathbb{E}(X) \int_G dP = \mathbb{E}(X) \cdot P(G) \quad \forall G \in \mathcal{G}.
+    \]
+    \[
+    \int_G X \, dP = \int_\Omega 1_G X \, dP = \mathbb{E}(1_G X) = \mathbb{E}(1_G) \cdot \mathbb{E}(X) = P(G) \cdot \mathbb{E}(X) \quad \text{for any } G \in \mathcal{G}.
+    \]
+    (independent since \(X\) is indep. of \(\mathcal{G}\))
+\end{itemize}
+\end{proof}
+\begin{example}
+Let \( X \) be an integrable r.v. on \( (\Omega, \mathcal{F}, P) \) and \(\mathcal{G} = \sigma(\{ B_i \}_{i \geq 1}) \) where \( \{ B_i \}_{i \geq 1} \) is a partition of \(\Omega\), with \( P(B_i) > 0 \). Recall that an arbitrary set in \(\mathcal{G}\) is of the form \( G = \bigcup_{i \in I} B_i \) for some \( I \subset \{ 1, 2, \ldots \} \).
+\textbf{Find} \( \mathbb{E}(X|\mathcal{G}) \).
+
+\textb{Solution}
+It can be proved that since \( \mathbb{E}(X|\mathcal{G}) \) is \(\mathcal{G}\)-measurable and \( \mathcal{G} = \sigma(\{ B_i \}_{i \geq 1}) \), then 
+\[ \mathbb{E}(X|\mathcal{G}) = \sum_{i \geq 1} \alpha_i 1_{B_i} \]
+for some \( \alpha_i \in \mathbb{R} \).
+
+Let us find the constants \( \alpha_i \in \mathbb{R} \). We write property (ii) for \( G = B_i \):
+\[ \int_{B_i} \alpha_i \, dP = \int_{B_i} X \, dP, \]
+i.e. \( \alpha_i \int_{B_i} \, dP = \int_{B_i} X \, dP, \)
+or equivalently \( \alpha_i P(B_i) = \int_{B_i} X \, dP \). So \( \alpha_i = \frac{1}{P(B_i)} \int_{B_i} X \, dP \).
+
+Hence,
+\[ \mathbb{E}(X|\mathcal{G}) = \sum_{i \geq 1} \left( \frac{1}{P(B_i)} \int_{B_i} X \, dP \right) 1_{B_i}. \]
+
+\end{example}
+
+\textbf{Remark:} If there exist some \( i \geq 1 \) such that \( P(B_i) = 0 \), for those values \( i \) we can choose \( d_i \in \mathbb{R} \) arbitrarily. In that case,
+\[ \mathbb{E}(X|\mathcal{G}) = \sum_{\{i \geq 1; P(B_i) > 0\}} \left( \frac{1}{P(B_i)} \int_{B_i} X \, dP \right) 1_{B_i} + \sum_{\{i \geq 1; P(B_i) = 0\}} d_i 1_{B_i} \]
+
+\begin{example}
+    
+For any event \( A \in \mathcal{F} \) and for any \(\sigma\)-field \( \mathcal{G} \subset \mathcal{F} \),
+\[ \mathbb{E}(1_A | \mathcal{G}) = P(A | \mathcal{G}) \text{ a.s.} \]
+
+\textbf{Proof:}
+We show that \( g = P(A|\mathcal{G}) \) satisfies (i) and (ii) in Theorem 1:
+\begin{itemize}
+    \item[(i)] \( g \) is \( \mathcal{G} \)-measurable (clear).
+    \item[(ii)] \(\int g \, dP = \int P(A | \mathcal{G}) \, dP = P(A \cap G) = \int 1_A \, dP \quad \forall G \in \mathcal{G}.\)
+\end{itemize}
+\end{example}
+
+\begin{theorem}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(X: \Omega \rightarrow \mathbb{R}\) an integrable random variable. Suppose that \(\mathcal{G} = \sigma(\mathcal{P})\) where
+\[
+\mathcal{P} \text{ is a } \pi\text{-system, i.e., if } A, B \in \mathcal{P} \text{ then } A \cap B \in \mathcal{P}
+\]
+and
+\[
+\Omega = \bigcup_{i \geq 1} P_i \text{ for some } P_i \in \mathcal{P}.
+\]
+Let \(g: \Omega \rightarrow \mathbb{R}\) be a function which satisfies:
+\[
+\begin{cases}
+(i) & g \text{ is } \mathcal{G}\text{-measurable and integrable} \\
+(ii)' & \int_G g \, dP = \int_G X \, dP \quad \forall G \in \mathcal{P}
+\end{cases}
+\]
+Then \(g = \mathbb{E}(X|\mathcal{G})\) a.s.
+\end{theorem}
+\begin{proof}
+\[
+\int_G g \, dP = \int_G X \, dP = \int_G \mathbb{E}(X|\mathcal{G}) \, dP \quad \forall G \in \mathcal{P}.
+\]
+By \textbf{Theorem 16.10(iii)}, \(g = \mathbb{E}(X|\mathcal{G})\) a.s. \qed
+\end{proof}
+
+\begin{theorem}{Properties of Conditional Expectation}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(\mathcal{G} \subseteq \mathcal{F}\) a sub-\(\sigma\)-field; let \(X: \Omega \rightarrow \mathbb{R}\) and \(Y: \Omega \rightarrow \mathbb{R}\) be integrable random variables.
+\begin{itemize}
+    \item[(i)] If \(X = a\) a.s. where \(a \in \mathbb{R}\), then \(\mathbb{E}(X|\mathcal{G}) = a\) a.s.
+    \item[(ii)] (Linearity) \(\mathbb{E}(aX + bY | \mathcal{G}) = a \mathbb{E}(X|\mathcal{G}) + b \mathbb{E}(Y|\mathcal{G})\) a.s. \quad \(\forall a, b \in \mathbb{R}\)
+    \item[(iii)] (Monotonicity) If \(X \leq Y\) a.s., then \(\mathbb{E}(X|\mathcal{G}) \leq \mathbb{E}(Y|\mathcal{G})\) a.s.
+    \item[(iv)] \(\left| \mathbb{E}(X|\mathcal{G}) \right| \leq \mathbb{E}(|X| | \mathcal{G})\)
+\end{itemize}
+\end{theorem}
+\begin{proof}
+    \begin{itemize}
+    \item[(i)] Clearly \( g = a \) satisfies (i) and (ii) from Theorem 1.
+    
+    \item[(ii)] We let \( g = a \mathbb{E}(X|\mathcal{G}) + b \mathbb{E}(Y|\mathcal{G}) \). We show that \( g \) satisfies properties (i) and (ii) from the definition of \(\mathbb{E}(aX + bY|\mathcal{G})\) (Theorem 1):
+    \begin{itemize}
+        \item[(a)] \( g \) is \(\mathcal{G}\)-measurable. This is clear since \( g \) is a linear combination of \(\mathcal{G}\)-measurable functions. Similarly, \( g \) is integrable.
+        \item[(b)] \(\int_G g \, dP = \int_G (a \mathbb{E}(X|\mathcal{G}) + b \mathbb{E}(Y|\mathcal{G})) \, dP = a \int_G \mathbb{E}(X|\mathcal{G}) \, dP + b \int_G \mathbb{E}(Y|\mathcal{G}) \, dP = a \int_G X \, dP + b \int_G Y \, dP = \int_G (aX + bY) \, dP\)
+        
+        \(\forall G \in \mathcal{G}\).
+    \end{itemize}
+    
+    \item[(iii)] \( \left( \mathbb{E}(Y|\mathcal{G}) - \mathbb{E}(X|\mathcal{G}) \right) dP = \int_G \mathbb{E}(Y|\mathcal{G}) dP - \int_G \mathbb{E}(X|\mathcal{G}) dP = \int_G Y \, dP - \int_G X \, dP = \int_G (Y - X) \, dP \geq 0 \)
+    
+    for all \( G \in \mathcal{G} \). Hence \( \mathbb{E}(Y|\mathcal{G}) - \mathbb{E}(X|\mathcal{G}) \geq 0 \) a.s.
+
+    \item[(iv)]
+    \[
+    -\mathbb{E}(|X| | \mathcal{G}) \leq \mathbb{E}(X | \mathcal{G}) \leq \mathbb{E}(|X| | \mathcal{G})
+    \]
+    This is true because
+    \[
+    -|X| \leq X \leq |X|
+    \]
+    and then we apply monotonicity:
+    \[
+    \mathbb{E}(-|X| | \mathcal{G}) \leq \mathbb{E}(X | \mathcal{G}) \leq \mathbb{E}(|X| | \mathcal{G}).
+    \]
+\end{itemize}
+\end{proof}

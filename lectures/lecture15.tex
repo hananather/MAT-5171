@@ -1,0 +1,113 @@
+\section{March 13, 2024}
+\textbf{Recall the following definition from last time:} \\
+A process $(X_t)_{t\geq0}$ (i.e. a collection of r.v.'s defined on $(\Omega, \mathcal{F}, P)$) is called a Markov process if 
+
+\begin{equation}
+    P(X_u \in H | X_s, s \in [0,t]) = P(X_u \in H | X_t) \quad \forall 0 \leq t < u
+\end{equation}
+
+Denote $\mathcal{G}_1 = \sigma(\{X_s ; s \in [0,t]\})$ ``the history'' (or the past) of the process up to time $t$ \\
+$\mathcal{G}_2 = \sigma(\{X_t\})$ ``the present'' \\
+$\mathcal{G}_3 = \sigma(\{X_u\})$ where $u>t$ ``the future'' \\
+Relation (1) says that for every $A \in \mathcal{G}_3$
+
+\begin{equation}
+    P(A | \sigma(\mathcal{G}_1 \cup \mathcal{G}_2)) = P(A | \mathcal{G}_2)
+\end{equation}
+
+which is denoted by $\mathcal{G}_1 \lor \mathcal{G}_2$ (notation).
+
+
+\begin{lemma}[Problem 3.11]
+Let $\mathcal{G}_1, \mathcal{G}_2, \mathcal{G}_3$ be sub-$\sigma$-fields of $\mathcal{F}$. The following conditions are equivalent:
+
+\begin{itemize}
+    \item[(i)] $P(A | \mathcal{G}_1 \vee \mathcal{G}_2) = P(A | \mathcal{G}_2)$ for all $A \in \mathcal{G}_3$.
+    \item[(ii)] $P(A \cap B | \mathcal{G}_2) = P(A | \mathcal{G}_2) \cdot P(B | \mathcal{G}_2)$ for all $A \in \mathcal{G}_1$, $B \in \mathcal{G}_3$, i.e., $A$ and $B$ are ``conditionally independent'' given $\mathcal{G}_2$.
+    \item[(iii)] $P(A | \mathcal{G}_2 \vee \mathcal{G}_3) = P(A | \mathcal{G}_2)$ for all $A \in \mathcal{G}_1$.
+\end{itemize}
+\end{lemma}
+
+
+\begin{proof}
+It is enough to prove (i)$\implies$(ii). The argument for (ii)$\implies$(i) is the same. We have
+\begin{align*}
+P(A \cap A_3 | \mathcal{G}_2) &= E\left[\mathbf{1}_{A \cap A_3} | \mathcal{G}_2\right] \\
+&= E\left[E\left[\mathbf{1}_{A} \mathbf{1}_{A_3} | \mathcal{G}_1 \vee \mathcal{G}_2\right] | \mathcal{G}_2\right] \quad \text{(Tower Property)} \\
+&= E\left[\mathbf{1}_A E\left[\mathbf{1}_{A_3} | \mathcal{G}_1 \vee \mathcal{G}_2\right] | \mathcal{G}_2\right] \\
+&= E\left[\mathbf{1}_A P(A_3 | \mathcal{G}_1 \vee \mathcal{G}_2) | \mathcal{G}_2\right] \\
+&\quad \quad \text{($\mathbf{1}_{A_3}$ is $\mathcal{G}_1$-measurable, hence $\mathcal{G}_1 \vee \mathcal{G}_2$-measurable)} \\
+&= E\left[\mathbf{1}_A P(A_3 | \mathcal{G}_2) | \mathcal{G}_2\right] \quad \text{(from (i))} \\
+&= E\left[\mathbf{1}_A | \mathcal{G}_2\right] P(A_3 | \mathcal{G}_2) \\
+&= P(A | \mathcal{G}_2) P(A_3 | \mathcal{G}_2).
+\end{align*}
+This shows that (i) implies (ii).
+(ii) $\implies$ (i) We show that $P(A | \mathcal{G}_2)$ satisfies the two conditions from the def of $P(A_3 | \mathcal{G}_1 \vee \mathcal{G}_2)$:
+
+1) $P(A | \mathcal{G}_2)$ is $\mathcal{G}_2$-measurable, hence $\mathcal{G}_1 \vee \mathcal{G}_2$-measurable
+
+2) We have to show that
+\[
+\int_{G} P(A | \mathcal{G}_2) \, dP = P(A \cap G) \quad \forall G \in \mathcal{G}_1 \vee \mathcal{G}_2
+\]
+
+By Theorem 33.1, it is enough to prove that (i) holds $\forall G \in \mathcal{F}$ where $\{F = A \cap A' : A \in \mathcal{G}_1, A' \in \mathcal{G}_2\}$ is a $\pi$-system (exer) and $\sigma(F) = \mathcal{G}_1 \vee \mathcal{G}_2$ (exer). $\Omega$ is a countable union of sets in $F$ ($\Omega \in \mathcal{G}_1, \mathcal{G}_2$).
+
+Let $G = A \cap A'$ with $A \in \mathcal{G}_1, A' \in \mathcal{G}_2$. Then on the left-hand side of (1) we have:
+\textbf{LHS of (1):}
+\begin{align*}
+\text{LHS of (1)} &= \int_{A_1 \cap A_2} P(A_3|\mathcal{G}_2) \, dP \\
+&= E\left[\mathbf{1}_{A_1 \cap A_2} P(A_3|\mathcal{G}_2)\right] \\
+&= E\left[E\left[\mathbf{1}_{A_1} \frac{P(A_3|\mathcal{G}_2)}{\mathbf{1}_{A_2}} \Big| \mathcal{G}_2\right]\right] \\
+&\quad \text{by $\mathcal{G}_2$-measurability (product of $\mathcal{G}_2$-meas. rv's)} \\
+&= E\left[\mathbf{1}_{A_2} P(A_3|\mathcal{G}_2) \cdot E\left[\mathbf{1}_{A_1} | \mathcal{G}_2\right]\right] \\
+&= E\left[\mathbf{1}_{A_2} P(A_3|\mathcal{G}_2)\right] \cdot P(A_1 | \mathcal{G}_2) \\
+&\quad \text{using (ii)} \\
+&= E\left[\mathbf{1}_{A_1 \cap A_2 \cap A_3} | \mathcal{G}_2\right] \\
+&= P(A_1 \cap A_2 \cap A_3).
+\end{align*}
+
+\textbf{RHS of (1):}
+\begin{align*}
+\text{RHS of (1)} &= P(A_1 \cap (A_2 \cap A_3)) \\
+&= E\left[\mathbf{1}_{A_1 \cap A_2 \cap A_3}\right] \\
+&= E\left[E\left[\mathbf{1}_{A_1 \cap A_3} {\mathbf{1}_{A_2}}\Big| \mathcal{G}_2\right]\right] \\
+&= E\left[\mathbf{1}_{A_2}\right] \cdot E\left[\mathbf{1}_{A_1 \cap A_3} | \mathcal{G}_2\right] \\
+&= P(A_2) \cdot P(A_1 \cap A_3 | \mathcal{G}_2).
+\end{align*}
+\end{proof}
+
+
+
+\subsection{Discrete Time Martingales}
+
+\begin{definition}
+Let \( X_1, X_2, \ldots \) be a sequence of random variables on a probability space \( (\Omega, \mathcal{F}, P) \), and let \( \mathcal{F}_1, \mathcal{F}_2, \ldots \) be a sequence of \(\sigma\)-fields in \( \mathcal{F} \). The sequence \( \{ (X_n, \mathcal{F}_n) : n = 1, 2, \ldots \} \) is a martingale if the following four conditions hold:
+\begin{enumerate}
+    \item \( \mathcal{F}_n \subseteq \mathcal{F}_{n+1} \),
+    \item \( X_n \) is measurable with respect to \( \mathcal{F}_n \),
+    \item \( E[|X_n|] < \infty \) for all \( n \),
+    \item with probability 1, \( E[X_{n+1} | \mathcal{F}_n] = X_n \).
+\end{enumerate}
+\end{definition}
+
+We simply say that $\{X_n\}_{n\geq1}$ is a \emph{martingale} if $(X_n)$ is a martingale with respect to the natural filtration 
+\[
+\mathcal{F}_n^X = \sigma(X_1, X_2, \ldots, X_n)
+\]
+which is the ``smallest'' $\sigma$-filtration which satisfies (i) and (ii).
+
+\textbf{Remark:} 
+If (ii) holds, then (iv) is equivalent to:
+\[
+\int_A X_n \, dP - \int_A X_{n+1} \, dP = 0 \quad \forall A \in \mathcal{F}_n
+\]
+(by the def. of $E[X_n|\mathcal{F}_n]$).
+
+\textbf{Motivation:} Bets placed at horse races
+\begin{itemize}
+    \item $X_n$ = fortune of the gambler after the $n$-th race
+    \item $\mathcal{F}_n$ = information accumulated by the gambler up to the $n$-th race.
+    \item $E[X_{n+1} | \mathcal{F}_n]$ = expected fortune after the $(n+1)$-th race.
+\end{itemize}
+The game is fair if $E[X_{n+1} | \mathcal{F}_n] = X_n$.

@@ -1,5 +1,6 @@
+\newpage
 \section{January 17, 2024}
-
+\subsection{Fundamental Theorems}
 \begin{theorem}[Skorohod Representation Theorem]
 Let \( \{\mu_n\} \) and \( \mu \) be probability measures on \( (\mathbb{R}, \mathcal{R}) \) such that \( \mu_n \Rightarrow \mu \). Then there exists a probability space \( (\Omega, \mathcal{F}, P) \) and random variables \( (Y_n)_n \) on this space such that
 \footnote{Recall:
@@ -23,3 +24,108 @@ where
 \[ h^{-1}(A) = \{ x \in \mathbb{R}; h(x) \in A \}. \]\footnote{
 \textbf{Remark:} Note that \( D_h \in \mathcal{R} \). See the proof in the textbook.}
 \end{theorem}
+
+\begin{proof}
+By Theorem 25.6 (Skorohod Representation Theorem), there exists a probability space \((\Omega', \mathcal{F}', P')\) and random variables \( \{Y_n, Y\} \) on this space such that \( P \circ Y_n^{-1} = \mu_n \) and \( P \circ Y^{-1} = \mu \), and \( Y_n(\omega) \rightarrow Y(\omega) \) for all \(\omega \in \Omega'\).
+
+Let \(\omega \in \Omega'\) but \(Y(\omega) \notin D_h\). Then \(h\) is continuous at \(Y(\omega)\) and hence \(h(Y_n(\omega)) \rightarrow h(Y(\omega))\).
+
+Denote by \( \Omega'_{\sim} \) the set \( \{\omega \in \Omega'; Y(\omega) \notin D_h\} \). Then
+\[ P(\Omega'_{\sim}) = P(\{\omega \in \Omega', Y(\omega) \notin D_h\}) = P(Y^{-1}(D_h^c)) = 1 - P(Y^{-1}(D_h)) = 1 - \mu(D_h) = 1. \]
+and so \( P(\Omega'_{\sim}) = 1 \). This proves that \( h(Y_n) \rightarrow h(Y) \) almost surely.
+
+Hence \( h(Y_n) \xrightarrow{d} h(Y) \) by Theorem 25.2 (a.s. convergence implies convergence in probability), which in turn implies convergence in distribution. This means that \( P \circ (h(Y_n))^{-1} \rightarrow P \circ (h(Y))^{-1} \).
+
+This proves that \( \mu_n \circ h^{-1} \rightarrow \mu \circ h^{-1} \).
+\end{proof}
+
+\begin{corollary}
+If \( X_n \xrightarrow{d} X \) and \( h: \mathbb{R} \rightarrow \mathbb{R} \) is a measurable function such that \( P(X \in D_h) = 0 \), then \( h(X_n) \xrightarrow{d} h(X) \).
+\end{corollary}
+
+
+\begin{proof}
+Note that \( X_n \xrightarrow{d} X \) means that \( \mu_n \rightarrow \mu \) where \( P \circ X_n^{-1} = \mu_n \) for \( n \) and \( P \circ X^{-1} = \mu \), and \( P(X \in D_h) = (P \circ X^{-1})(D_h) = \mu(D_h) \). Then by Theorem 25.7, \( \mu_n \circ h^{-1} \rightarrow \mu \circ h^{-1} \). So \( h(X_n) \xrightarrow{d} h(X) \).
+
+\textit{Law of $h_n$:} Law of $h(X)$ (see below).
+\end{proof}
+
+
+Recall: 
+
+\begin{align*}
+P \circ (h(X))^{-1}(A) &= P(\{\omega \in \Omega ; h(X(\omega)) \in A\}) \\
+&= P(\{\omega \in \Omega ; X(\omega) \in h^{-1}(A)\}) \\
+&= (P \circ X^{-1})(h^{-1}(A)) \\
+&= \mu(h^{-1}(A)) \\
+&= (\mu \circ h^{-1})(A).
+\end{align*}
+
+\begin{corollary}
+Suppose that \( X_n \xrightarrow{P} a \), where \( a \in \mathbb{R} \) is a constant. Let \( h: \mathbb{R} \rightarrow \mathbb{R} \) be measurable and continuous at \( a \). Then \( h(X_n) \xrightarrow{P} h(a) \).
+
+\begin{proof}
+By Theorem 25.2, \( X_n \xrightarrow{P} a \), hence, we let \( X(\omega) = a \) for all \( \omega \in \Omega \). Note that \( \{ X \in D_h \} = \{ a \in D_h \} = \varnothing \), so \( P(X \in D_h) = 0 \). So by Corollary 1, \( h(X_n) \xrightarrow{d} h(a) \). By Theorem 25.3, \( h(X_n) \xrightarrow{P} h(a) \).
+\end{proof}
+\end{corollary}
+
+\begin{example}[25.8]
+Suppose that \(X_n \xrightarrow{d} X\) and \( \{a_n\}, \{b_n\} \) are real numbers such that \( a_n \rightarrow a \in \mathbb{R} \) and \( b_n \rightarrow b \in \mathbb{R} \). Then
+\[ a_n X_n + b_n \xrightarrow{d} aX + b. \]
+(See also problem 25.2 for a generalization.)
+\end{example}
+
+\begin{proof}
+Recall Slutsky's Theorem: If \( X_n \xrightarrow{d} X \), and \( Y_n - X_n \xrightarrow{P} 0 \), then \( Y_n \xrightarrow{d} X \).
+
+Example 25.7: If \( X_n \xrightarrow{d} X \) and \( s_n \rightarrow 0 \), then \( s_n X_n \xrightarrow{d} 0 \).
+
+Note that
+\[ (a_n X_n + b_n) - (aX + b) = (a_n - a) X_n + (b_n - b) \xrightarrow{d} 0 \text{ (by ex. 25.7) } \]
+by TRS 25.5.
+
+In addition, because \( h: \mathbb{R} \rightarrow \mathbb{R} \) given by \( h(x) = ax + b \) is continuous since \( X_n \xrightarrow{d} X \), we also have \( h(X_n) \xrightarrow{d} h(X) \), i.e.,
+\[ a_n X_n + b_n \xrightarrow{d} aX + b. \]
+
+In summary, we proved:
+\[
+\begin{cases}
+(a_n X_n + b_n) - (aX + b) \xrightarrow{d} 0 & \text{(which is equivalent to \( P \rightarrow 0 \))} \\
+a_n X_n + b_n \xrightarrow{d} aX + b.
+\end{cases}
+\]
+By Slutsky's Theorem, we can take the sum and conclude that \( a_n X_n + b_n \xrightarrow{d} aX + b \).
+\end{proof}
+
+
+
+\begin{theorem}[Portmanteau Theorem]
+Let \( \mu_n, \mu \) be probability measures on \( \mathbb{R} \). The following statements are equivalent:
+\begin{enumerate}
+    \item[(i)] \( \mu_n \rightarrow \mu \)
+    \item[(ii)] \( \int f d\mu_n \rightarrow \int f d\mu \) for any \( f: \mathbb{R} \rightarrow \mathbb{R} \) which is continuous and bounded
+    \item[(iii)] \( \mu_n(A) \rightarrow \mu(A) \) for any set \( A \in \mathbb{R} \) which is a continuity set, i.e., \( \mu(\partial A) = 0 \) where \( \partial A = \bar{A} \setminus A^{\circ} \) is the boundary of \( A \)
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\( (i) \Rightarrow (ii) \): By Skorohod Representation Theorem, there exists a probability space \( (\Omega', \mathcal{F}', P') \) and random variables \( \{Y_n, Y\} \) on this space such that:
+\[ P \circ Y_n^{-1} = \mu_n \text{ and } P \circ Y^{-1} = \mu, \]
+and \( Y_n(\omega) \rightarrow Y(\omega) \) for all \( \omega \in \Omega' \).
+
+Let \( f: \mathbb{R} \rightarrow \mathbb{R} \) which is continuous and bounded. Then the discontinuity set of \( f \) is \( D_f = \varnothing \), hence \( \mu(D_f) = 0 \).
+
+Moreover, if \( Y_n(\omega) \rightarrow Y(\omega) \) for all \( \omega \in \Omega' \), then:
+\[ \int_{\mathbb{R}} f d\mu_n = \int_{\Omega'} f(Y_n) dP' \rightarrow \int_{\Omega'} f(Y) dP' = \int_{\mathbb{R}} f d\mu \]
+by Bounded Convergence Theorem (Thm 16.5) and Change of Variables for \( P \circ Y_n^{-1} \) and \( P \circ Y^{-1} \).
+\end{proof}
+\textbf{Recall:} Change of Variable (21.1)
+\[
+\Omega \xrightarrow{P} \mathbb{R} \xrightarrow{f} \mathbb{R}, \quad f(X) = f \circ X
+\]
+\[
+\int_{\Omega} f(X) dP = \int_{\mathbb{R}} f d(P \circ X^{-1})
+\]
+We can also write this as:
+\[
+\int_{\Omega} f(X(\omega)) dP(\omega) = \int_{\mathbb{R}} f(x) d(P \circ X^{-1})(x)
+\]

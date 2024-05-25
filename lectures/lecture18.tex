@@ -1,0 +1,54 @@
+\section{March 27, 2024}
+
+Let $[ \alpha, \beta ]$ be an interval, and $X_1, \ldots, X_n$ be random variables.
+Inductively, we define variables $\tau_1, \tau_2, \ldots$ as follows:
+\[
+\tau_1 = 
+\begin{cases} 
+\min \{ j \leqslant n \mid X_j \leqslant \alpha \}, & \text{if there exists } j \leqslant n \text{ such that } X_j \leqslant \alpha, \\
+n, & \text{otherwise}.
+\end{cases}
+\]
+
+For any $k \leqslant n$:
+\begin{itemize}
+  \item If $k$ is even, then
+  \[
+  \tau_k = 
+  \begin{cases} 
+  \min \{ j \leqslant n \mid j > \tau_{k-1} \text{ and } X_j \geqslant \beta \}, & \text{if there exists } j \leqslant n \text{ such that } j > \tau_{k-1} \text{ and } X_j \geqslant \beta, \\
+  n, & \text{otherwise}.
+  \end{cases}
+  \]
+  
+  \item If $k$ is odd, then
+  \[
+  \tau_k = 
+  \begin{cases} 
+  \min \{ j \leqslant n \mid j > \tau_{k-1} \text{ and } X_j \leqslant \alpha \}, & \text{if there exists } j \leqslant n \text{ such that } j > \tau_{k-1} \text{ and } X_j \leqslant \alpha, \\
+  n, & \text{otherwise}.
+  \end{cases}
+  \]
+\end{itemize}
+
+We define the number of upcrossings of $[\alpha,\beta]$ by $X_1, \ldots, X_n$ as the largest index $i$ such that:
+\[
+X_{2i} \leqslant \alpha < \beta \leqslant X_{2i+1} \quad (\text{from } \tau \text{ to be odd}).
+\]
+
+\begin{theorem}[Doob's Upcrossing Theorem]
+Let $(X_k)_{k=1,\ldots,n}$ be a submartingale with respect to $(\mathcal{F}_k)_{k=1,\ldots,n}$ and let $U$ be the number of upcrossings of $[a,b]$ by $X_1,\ldots,X_n$. Then
+\[ \mathbb{E}(U) \leq \frac{\mathbb{E}(|X_n|) + |a|}{b-a}. \]
+\end{theorem}
+
+\begin{proof}
+    Let \( Y_k = \max\{0, X_k - \alpha\} \) and \( \theta = \beta - \alpha \). By Theorem 35.1(ii), \( Y_1, \ldots, Y_n \) is a submartingale. The \( \tau_k \) are unchanged if in the definitions \( X_j < \alpha \) is replaced by \( Y_j = 0 \) and \( X_j \geq \beta \) by \( Y_j \geq 0 \), and so \( U \) is also the number of upcrossings of \([0,\theta]\) by \( Y_1, \ldots, Y_n \). If \( k \) is even and \( \tau_{k-1} \) is a stopping time, then for \( j < n \),
+\[ [\tau_k = j] = \bigcap_{i=1}^{j-1} [\tau_{k-1} = i, Y_{i+1} < \theta, \ldots, Y_{j-1} < \theta, Y_j \geq \theta] \]
+lies in \( \mathcal{F}_j \) and \( [\tau_k = n] = [\tau_k \leq n - 1] \) lies in \( \mathcal{F}_{n-1} \), and so \( \tau_k \) is also a stopping time. With a similar argument for odd \( k \), this shows that the \( \tau_k \) are all stopping times. Since the \( \tau_k \) are strictly increasing until they reach \( n \), \( \tau_n = n \). Therefore,
+\[ Y_n = Y_{\tau_n} \geq Y_{\tau_1} - Y_1 = \sum_{k=2}^{n} (Y_{\tau_k} - Y_{\tau_{k-1}}) = \Sigma_e + \Sigma_o, \]
+where \( \Sigma_e \) and \( \Sigma_o \) are the sums over the even \( k \) and the odd \( k \) in the range \( 2 \leq k \leq n \). By Theorem 35.2, \( \Sigma_o \) has nonnegative expected value, and therefore, \( E[Y_n] \geq E[\Sigma_e] \).
+
+If \( Y_{\tau_{i-1}} = 0 \) ( \( 0 \leq i \leq n \) ) and \( Y_{\tau_i} \geq \theta \) (which is the same thing as \( X_{\tau_{2i-1}} < \alpha < \beta \leq X_{\tau_{2i}} \)), then the difference \( Y_{\tau_i} - Y_{\tau_{i-1}} \) appears in the sum \( \Sigma_e \) and is at least \( \theta \). Since there are \( U \) of these differences, \( \Sigma_e \geq U\theta \), and therefore \( E[Y_n] \geq \theta E[U] \). In terms of the original variables, this is
+\[ (\beta - \alpha)E[U] \leq \int_{[X_n > \alpha]} (X_n - \alpha) \,dP \leq E[|X_n|] + |a|. \]
+
+\end{proof}

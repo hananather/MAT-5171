@@ -1,4 +1,111 @@
+\newpage
 \section{January 10, 2024}
+
+\subsection{Convergence of Random Series continued}
+\begin{proof}[Proof of Theorem 22.6 (Continued from last time)]
+Step 1 concluded with:
+\[
+\lim_{n \to \infty} P\left(\sup_{r \geq 1} |S_{n+r} - S_n| > \epsilon\right) = 0 \quad \forall \epsilon > 0. \tag{1}
+\]
+
+\textbf{Step 2:} Define $E_n(\epsilon) = \left\{ \sup_{s, r \geq n} |S_s - S_r| > 2\epsilon \right\}$ and let $E(\epsilon) = \bigcap_{n=1}^\infty E_n(\epsilon)$.
+
+Note that $P(E_n(\epsilon)) \downarrow P(E(\epsilon))$ as $n \to \infty$. 
+
+Furthermore, observe that if $|S_j - S_n| > 2\epsilon$ then $|S_i - S_n| > \epsilon$ or $|S_R - S_n| > \epsilon$ for some $i, R \geq n$. To see this, assume by contradiction that both $|S_i - S_n| \leq \epsilon$ and $|S_R - S_n| \leq \epsilon$. Then
+\[
+|S_j - S_R| = |(S_j - S_n) + (S_n - S_R)| \leq |S_j - S_n| + |S_n - S_R| \leq 2\epsilon,
+\]
+which contradicts our assumption that $|S_j - S_R| > 2\epsilon$.
+
+Hence,
+\[
+\sup_{j, R \geq n} |S_j - S_R| > 2\epsilon \implies \bigcup_{j, R \geq n} \left( |S_j - S_n| > \epsilon \right) \text{ or } \left( |S_R - S_n| > \epsilon \right),
+\]
+and so, $E_n(\epsilon) = \bigcup_{j \geq n} \left\{ |S_j - S_n| > \epsilon \right\}$, which we denote by $A_n(\epsilon)$.
+
+Therefore, we can summarize that
+\[
+P\left(\bigcup_{R \geq n} A_R \right) \leq \frac{1}{\epsilon^2} E(S_n^2),
+\]
+Recall that $A_n(\epsilon) = \left\{\sup_{j \geq n} |S_j - S_n| > \epsilon \right\}$ and by equation (1), $P(A_n(\epsilon)) \to 0$ as $n \to \infty$.
+
+Since $P(E_n(\epsilon)) \leq P(A_n(\epsilon))$ by the squeeze principle, we have $P(E_n(\epsilon)) \to 0$ as $n \to \infty$. Thus,
+\[
+P(E(\epsilon)) = 0 \quad \forall \epsilon > 0. \tag{3}
+\]
+
+Finally, define $E = \bigcup_{\epsilon > 0} E(\epsilon)$. Then, by countable additivity,
+\[
+P(E) \leq \sum_{\epsilon > 0} P(E(\epsilon)) = 0.
+\]
+
+To summarize, we have shown that $P(E) = 0$ (equation 3).
+
+Note that
+\[
+E = \left\{\exists \epsilon > 0 \text{ such that } \forall n, \sup_{j \geq n} |S_j - S_n| > 2\epsilon \right\} = \left\{(S_n)_n \text{ is not a Cauchy sequence} \right\}.
+\]
+
+Hence, $P(E^c) = 1$. This proves that $(S_n)_n$ is a convergent sequence almost surely.
+\end{proof}
+
+\begin{theorem}[22.7]
+Let $(X_n)_{n\geq1}$ be a sequence of independent random variables and $S_n = \sum_{i=1}^n X_i$. If $S_n \to S$ almost surely, then $S_n \xrightarrow{\text{a.s.}} S$.
+\end{theorem}
+
+\begin{proof}
+The main effort will be to prove again that $(1)$ holds. Then, exactly as in the proof of Theorem 22.6, we conclude that $(S_n)_{n\geq1}$ converges almost surely to a limit that we may call $T$. Since $S_n \xrightarrow{\text{a.s.}} T$ implies that $S_n \to P$, and by uniqueness of the limit, $T = S$ almost surely. Hence $S_n \to S$ almost surely.
+
+Let us prove $(1)$. The probability that the partial sums deviate from $S$ by at least $\epsilon$ can be bounded by
+\[
+P(|S_{n+j} - S_n| \geq \epsilon) \leq P(|S_{n+j} - S| \geq \frac{\epsilon}{2}) + P(|S_n - S| \geq \frac{\epsilon}{2}).
+\]
+Taking the supremum over $j \geq 1$, we obtain
+\[
+\sup_{j \geq 1} P(|S_{n+j} - S_n| \geq \epsilon) \leq \sup_{j \geq 1} P(|S_{n+j} - S| \geq \frac{\epsilon}{2}) + P(|S_n - S| \geq \frac{\epsilon}{2}).
+\]
+As $n \to \infty$, both terms on the right-hand side tend to zero since $S_n \to S$ almost surely.
+Recall that $S_n \to S$ almost surely means that for every $\epsilon > 0$, $P(|S_n - S| > \epsilon/2) \to 0$ as $n \to \infty$. Hence, for $\epsilon > 0$, there exists $N_\epsilon \in \mathbb{N}$ such that $P(|S_j - S| > \epsilon/2) < \delta$ for all $j \geq N_\epsilon$. Therefore, if $h > N_\epsilon$, then $\sup_{j \geq h} P(|S_j - S| > \epsilon/2) < \delta$. Thus, $\limsup_{h \to \infty} \sup_{j \geq h} P(|S_j - S| > \epsilon/2) = 0$, which proves $(1)$.
+
+We return to $(5)$. Taking the limit as $n \to \infty$ in $(5)$, we obtain:
+\[
+\limsup_{n \to \infty} \sup_{j \geq 1} P(|S_{n+j} - S_n| > \epsilon) = 0 \quad (6)
+\]
+
+By Etemadi's Maximal Inequality, we have
+\[
+P(\max_{1 \leq j \leq n} |S_{n+j} - S_n| > \epsilon) \leq 3 \max_{1 \leq j \leq n} P(|S_{n+j} - S_n| > \epsilon/3).
+\]
+
+Let $n \to \infty$; we get
+\[
+P(\sup_{j \geq 1} |S_{n+j} - S_n| > \epsilon) \leq 3 \sup_{j \geq 1} P(|S_{n+j} - S_n| > \epsilon/3) \to 0 \text{ as } n \to \infty \text{ by } (6).
+\]
+
+By the Squeeze Principle, $(1)$ follows.
+\end{proof}
+
+\textbf{Theorem 22.8 (Three Series Theorem).} Let $(X_n)$ be independent random variables, and define $X_n^{(c)}$ as the truncated random variable at level $c$:
+\[
+X_n^{(c)} = \begin{cases} 
+X_n & \text{if } |X_n| \leq c, \\
+0 & \text{if } |X_n| > c.
+\end{cases}
+\]
+Here, $c > 0$.
+
+\begin{enumerate}
+    \item[a)] If $\sum X_n$ converges almost surely, then $\sum P(|X_n| > c)$, $\sum E[X_n^{(c)}]$, and $\sum \operatorname{Var}[X_n^{(c)}]$ converge for all $c > 0$.
+    \item[b)] If there exists $c > 0$ such that all three series $\sum P(|X_n| > c)$, $\sum E[X_n^{(c)}]$, and $\sum \operatorname{Var}[X_n^{(c)}]$ converge, then $\sum X_n$ converges almost surely.
+\end{enumerate}
+
+\begin{proof}
+    In order that $\sum X_n$ converge with probability 1 it is necessary that the three series converge for all positive $c$ and sufficient that they converge for some positive $c$.
+
+\textbf{Proof of Sufficiency.}
+Suppose that the series (22.13) converge, and put $m_n^{(c)} = E[X_n^{(c)}]$. By Theorem 22.6, $\sum(X_n - m_n^{(c)})$ converges with probability 1, and since $\sum m_n^{(c)}$ converges, so does $\sum X_n$. Since $P(X_n \neq X_n^{(c)} \text{ i.o.}) = 0$ by the first Borel--Cantelli lemma, it follows finally that $\sum X_n$ converges with probability 1.
+\end{proof}
 \subsection{Weak Convergence}
 Recall (from MAT5170) let $(\Omega, \mathcal{F}, P)$ be a prob. space, and $X : \Omega \rightarrow \mathbb{R}$ r.v. i.e. 
 \[\{X \in A\} = \{ \omega \in \Omega; X(\omega) \in A \} \in \mathcal{F} \text{ for any } A \in \mathcal{R}\]

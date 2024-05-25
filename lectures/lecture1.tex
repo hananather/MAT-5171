@@ -1,0 +1,118 @@
+\section{January 8, 2024}
+\subsection{Sums of  independent random variables}
+\textbf{Strong Law of Large Numbers:}
+Let $(X_i)_{i \geq 1}$ be independent and identically distributed (i.i.d.) random variables with finite expected value $\mathbb{E}[X_1]$. Define $S_n = \sum_{i=1}^n X_i$. Then, the Strong Law of Large Numbers states:
+\[
+\frac{S_n}{n} \to \mathbb{E}[X_1] \quad \text{almost surely as } n \to \infty.
+\]
+
+\textbf{Kolmogorov 0-1 Law:}
+If $(X_n)_{n \geq 1}$ are independent random variables, then for any event $A$ in the tail $\sigma$-field $\mathcal{T}$, defined as
+\[
+\mathcal{T} = \bigcap_{n=1}^\infty \sigma(X_n, X_{n+1}, \dots),
+\]
+we have $\mathbb{P}(A) \in \{0,1\}$.
+
+\begin{corollary}
+If $(X_n)_{n \geq 1}$ are independent random variables, and $A = \left\{ \lim_{n \to \infty} \frac{S_n}{n} = 0 \right\}$ and $B = \left\{ S_n \text{ converges} \right\}$, then $\mathbb{P}(A) \in \{0,1\}$ and $\mathbb{P}(B) \in \{0,1\}$.
+\end{corollary}
+
+\begin{theorem}[Kolmogorov Maximal Inequality]
+Let $(X_n)_{n \geq 1}$ be independent random variables with $\mathbb{E}(X_n) = 0$ and $\mathbb{E}(X_n^2) < \infty$ for all $n$. Then, for any $\alpha > 0$,
+\[
+\mathbb{P}\left( \max_{k \leq n} |S_k| \geq \alpha \right) \leq \frac{1}{\alpha^2} \mathbb{E}(S_n^2).
+\]
+\end{theorem}
+
+\begin{proof}
+Let $\tilde{A}_k = \{ |S_k| \geq \alpha \}$ and note that $\{ \max_{k \leq n} |S_k| \geq \alpha \} = \bigcup_{k=1}^n \tilde{A}_k$. We disjointize the events $\tilde{A}_k$ by taking:
+\[
+\tilde{A}_k = \tilde{A}_k \setminus \left( \bigcup_{i=1}^{k-1} \tilde{A}_i \right) \quad \text{for } k=2, \ldots, n,
+\]
+and
+\[
+\tilde{A}_k = \bigcup_{i=1}^k \tilde{A}_i \quad \text{for } k=1, \ldots, n.
+\]
+It can be proven that
+\[
+\max_{k \leq n} |S_k| \geq \alpha \text{ is equivalent to } \bigcup_{k=1}^n \tilde{A}_k.
+\]
+Note that:
+\[
+\mathbb{E}(S_n^2) = \int_{\Omega} S_n^2 \, dP \geq \sum_{k=1}^n \int_{\tilde{A}_k} S_n^2 \, dP = \sum_{k=1}^n \int_{\tilde{A}_k} (S_k^2 + (S_n - S_k)^2) \, dP,
+\]
+where $(\tilde{A}_k)_{k=1,\ldots,n}$ are disjoint.
+
+\[
+\mathbb{E}(S_n^2) \geq \sum_{k=1}^n \int_{A_k} \left( S_k^2 + 2S_k(S_n-S_k) + (S_n-S_k)^2 \right) \, dP.
+\]
+Since $(S_n-S_k)^2 \geq 0$, this simplifies to:
+\[
+\mathbb{E}(S_n^2) \geq \sum_{k=1}^n \int_{A_k} \left( S_k^2 + 2S_k(S_n-S_k) \right) \, dP.
+\]
+Noting that
+\[
+\int_{A_k} S_k(S_n-S_k) \, dP = \int_{A_k} \left( \sum_{i=1}^k X_i \right) \left( \sum_{j=k+1}^n X_j \right) \, dP,
+\]
+and since $\{X_i\}_{i=1}^n$ are independent, we have
+\[
+\mathbb{E} \left[ \left(\sum_{i=1}^k X_i\right) \left(\sum_{j=k+1}^n X_j\right) \right] = 0.
+\]
+Thus,
+\[
+\int_{A_k} S_k(S_n-S_k) \, dP = 0,
+\]
+and
+\[
+\mathbb{E}(S_n^2) = \sum_{k=1}^n \mathbb{E}(X_k^2) = 0.
+\]
+It follows that:
+\[
+\mathbb{E}(S_n^2) \geq \sum_{k=1}^n \alpha^2 \mathbb{P}(A_k) = \alpha^2 \sum_{k=1}^n \mathbb{P}(A_k),
+\]
+where $A_k = \{ |S_k| \geq \alpha \}$, and the events $A_k$ are disjoint.
+
+In summary, we obtained:
+\[
+\mathbb{P} \left( \bigcup_{k=1}^n A_k \right) \leq \frac{1}{\alpha^2} \mathbb{E}(S_n^2).
+\]
+
+The conclusion follows from (1) and (2).
+\end{proof}
+
+
+
+\begin{theorem}[Etemadi's Inequality]
+Let $(X_n)_{n\geq 1}$ be independent random variables and let $S_n = \sum_{i=1}^n X_i$. Then, for any $\alpha > 0$, we have
+\[
+P\left( \max_{1 \leq r \leq n} |S_r| \geq 3\alpha \right) \leq 3 \max_{1 \leq r \leq n} P(|S_r| \geq \alpha).
+\]
+\end{theorem}
+
+\begin{proof}
+Omitted.
+\end{proof}
+
+\begin{theorem}[Kolmogorov's Criterion]
+Let $(X_n)_{n\geq 1}$ be independent random variables with $E(X_n) = 0$ for all $n$ and $\sum_{n=1}^\infty E(X_n^2) < \infty$. Then, the series $\sum_{n=1}^\infty X_n$ converges almost surely.
+\end{theorem}
+
+
+\begin{proof}[Proof: Step 1]
+Note that by Kolmogorov's maximal inequality, for each integer $n \geq 1$ and $\epsilon > 0$, we have
+\[
+P\left(\max_{1 \leq r \leq n} |S_{n+r} - S_n| > \epsilon\right) \leq \frac{1}{\epsilon^2} \sum_{i=n+1}^{n+r} E(X_i^2),
+\]
+where $S_{n+r} - S_n = \sum_{i=n+1}^{n+r} X_i$ and $(X_i)$ are independent random variables with $E(X_i) = 0$.
+
+Letting $r \to \infty$, we get
+\[
+P\left(\sup_{r \geq 1} |S_{n+r} - S_n| > \epsilon\right) \leq \frac{1}{\epsilon^2} \sum_{i=n+1}^\infty E(X_i^2).
+\]
+
+Finally, letting $n \to \infty$, we obtain
+\[
+\lim_{n \to \infty} P\left(\sup_{r \geq 1} |S_{n+r} - S_n| > \epsilon\right) = 0 \quad \forall \epsilon > 0.
+\]
+This completes the proof of the assertion.
+\end{proof}

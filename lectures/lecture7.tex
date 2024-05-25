@@ -1,0 +1,172 @@
+\newpage
+\section{January 29, 2024}
+\begin{corollary}
+Let \(\mu\) be a probability measure with characteristic function \(\varphi\). If
+\[
+\int_{-\infty}^{\infty} \frac{|\varphi(t)|}{|t|} dt < \infty
+\]
+then \(\mu\) has a continuous density \( f \) given by:
+\[
+f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} \varphi(t) dt \quad (\text{Inversion Formula})
+\]
+\end{corollary}
+
+\begin{proof}
+Let \( F(x) = \mu((-\infty, x]) \) be the cumulative distribution function corresponding to \(\mu\). We have to prove that \( F \) is differentiable. Then, for \( \varepsilon > 0 \),
+\[
+\frac{F(x+\varepsilon) - F(x)}{\varepsilon} = \frac{\mu((-\infty, x+\varepsilon]) - \mu((-\infty, x])}{\varepsilon} = \frac{\mu((x, x+\varepsilon])}{\varepsilon}
+\]
+\[
+= \lim_{T \to \infty} \frac{1}{2\pi} \int_{-T}^{T} \frac{e^{-it(x+\varepsilon)} - e^{-itx}}{it\varepsilon} \varphi(t) dt
+\]
+By Theorem 26.2, as \( T \to \infty \), this limit exists and hence, the function \( F \) is differentiable.
+\textbf{By D.C.T.,}
+\begin{equation}
+\frac{F(x+\varepsilon) - F(x)}{\varepsilon} = \frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{-itx} - e^{-it(x+\varepsilon)}}{it\varepsilon} \varphi(t) dt \quad (2)
+\end{equation}
+
+To justify the application of D.C.T, we note:
+\[
+\left| \frac{e^{-itx} - e^{-it(x+\varepsilon)}}{it\varepsilon} \right| = \left| \frac{e^{-itx}(1 - e^{-it\varepsilon})}{it\varepsilon} \right| \leq |t| \text{ (since } |1 - e^{-it\varepsilon}| \leq |t\varepsilon| \text{)}
+\]
+
+\textbf{Recall:}
+\[
+\left| e^{it} - \sum_{k=0}^{n} \frac{(it)^k}{k!} \right| \leq \text{min} \left\{ \frac{|t|^{n+1}}{(n+1)!}, \frac{2|t|^{n}}{n!} \right\}
+\]
+
+\[
+\left| \frac{e^{-itx} - e^{-it(x+\varepsilon)}}{it\varepsilon} \varphi(t) \right| \leq \frac{|t\varepsilon|}{|\varepsilon|} |\varphi(t)| = |\varphi(t)| \text{ and } |\varphi(t)| \text{ is an integrable function.}
+\]
+
+Note that (2) also holds for $\varepsilon < 0$. By another application of D.C.T.,
+\[
+F'(x) = \lim_{\varepsilon \to 0} \frac{F(x+\varepsilon) - F(x)}{\varepsilon} = \frac{1}{2\pi} \int_{-\infty}^{\infty} \lim_{\varepsilon \to 0} \frac{e^{-itx} - e^{-it(x+\varepsilon)}}{it\varepsilon} \varphi(t) dt
+\]
+\[
+= \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} \varphi(t) dt
+\]
+Note that $f$ is continuous on $\mathbb{R}$:
+\begin{align*}
+|f(x+\varepsilon) - f(x)| &= \left| \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-it(x+\varepsilon)} \varphi(t) \, dt - \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} \varphi(t) \, dt \right| \\
+&= \left| \frac{1}{2\pi} \int_{-\infty}^{\infty} (e^{-it(x+\varepsilon)} - e^{-itx}) \varphi(t) \, dt \right| \\
+&\leq \frac{1}{2\pi} \int_{-\infty}^{\infty} |e^{-itx} (e^{-it\varepsilon} - 1)| |\varphi(t)| \, dt \\
+&= \frac{1}{2\pi} \int_{-\infty}^{\infty} |e^{-it\varepsilon} - 1| \cdot |\varphi(t)| \, dt \quad \text{by D.C.T. as } \varepsilon \to 0.
+\end{align*}
+\end{proof}
+
+\begin{enumerate}
+  \item If \(X \sim N(0,1)\), then \(X\) has density \(f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}, x \in \mathbb{R}\) and characteristic function: \[\varphi(t) = e^{-\frac{t^2}{2}} \quad (\text{used the power series expansion}).\]
+
+  \item If \(X \sim \text{Uniform}(0,1)\) then \(X\) has density \(f(x) = \begin{cases} 
+  1 & \text{if } x \in [0,1], \\
+  0 & \text{if } x \notin [0,1].
+  \end{cases}\) and characteristic function: \[\varphi(t) = \int_{0}^{1} e^{itx} dx = \frac{e^{it} - 1}{it} \quad \left( \text{or} \quad \frac{1}{it} (e^{it} - 1)' \right).\]
+
+  \item If \(X \sim \text{Exponential}(\lambda)\), then \(X\) has density \(f(x) = \lambda e^{-\lambda x} \mathbb{1}_{(0, \infty)}(x)\) and characteristic function: \[\varphi(t) = \int_{0}^{\infty} e^{itx} e^{-\lambda x} dx = \left. \frac{e^{(it-\lambda)x}}{it-\lambda} \right|_{0}^{\infty} = \frac{1}{1 - it}. \quad (\text{since the limit as } x \to \infty \text{ is } 0).\]
+  \item If \(X \sim \text{Double-Exponential}\), then \(X\) has density \(f(x) = \frac{1}{2} e^{-|x|}, x \in \mathbb{R}\) and characteristic function:
+  \begin{align*}
+    \varphi(t) &= \int_{-\infty}^{\infty} e^{itx} \cdot \frac{1}{2}e^{-|x|} dx \\
+    &= \frac{1}{2} \left( \int_{0}^{\infty} e^{-(1-it)x} dx + \int_{-\infty}^{0} e^{-(1+it)x} dx \right) \\
+    &= \frac{1}{2} \left( \frac{1}{1-it} + \frac{1}{1+it} \right) \\
+    &= \frac{1}{2} \left( \frac{1+it + 1-it}{1+t^2} \right) \\
+    &= \frac{1}{1+t^2}.
+  \end{align*}
+  
+  \item If \(X \sim \text{Cauchy}\), then \(X\) has density \(f(x) = \frac{1}{\pi} \frac{1}{1+x^2}, x \in \mathbb{R}\) and characteristic function:
+  \begin{align*}
+    \varphi(t) &= \int_{-\infty}^{\infty} e^{itx} \frac{1}{\pi} \frac{1}{1+x^2} dx \\
+    &= \frac{1}{\pi} \int_{-\infty}^{\infty} e^{-itx} \frac{1}{1+x^2} dx \\
+    &= \frac{1}{\pi} \left[ e^{-itx} \frac{1}{1+(-it)^2} \right] \\
+    &= \frac{1}{\pi} \frac{e^{-itx}}{1+t^2}.
+  \end{align*}
+  (Note that the characteristic function of a Cauchy distribution is an exercise in some texts and can be derived using complex analysis techniques.)
+\end{enumerate}
+
+
+\begin{theorem}[Continuity Theorem]
+Let \(\{\mu_n\}\) and \(\mu\) be probability measures on \(\mathbb{R}\), with characteristic functions \(\{\varphi_n\}\) and \(\varphi\) respectively. Then 
+\[
+\mu_n \rightarrow \mu \text{ if and only if } \varphi_n(t) \rightarrow \varphi(t) \text{ for all } t \in \mathbb{R}.
+\]
+\end{theorem}
+
+\begin{proof}
+\textbf{Part 1 "Only If":} Suppose that \(\mu_n \rightarrow \mu\). Then, by Portmanteau theorem, we know that 
+\[
+\int f d\mu_n \rightarrow \int f d\mu \text{ for all } f: \mathbb{R} \rightarrow \mathbb{R} \text{ continuous and bounded}.
+\]
+In our case, 
+\[
+\varphi_n(t) = \int_{-\infty}^{\infty} e^{-itx} \mu_n(dx) = \int_{-\infty}^{\infty} \cos(tx) \mu_n(dx) + i \int_{-\infty}^{\infty} \sin(tx) \mu_n(dx)
+\]
+implies that as \(n \rightarrow \infty\), 
+\[
+\int_{-\infty}^{\infty} \cos(tx) \mu_n(dx) + i \int_{-\infty}^{\infty} \sin(tx) \mu_n(dx) \rightarrow \int_{-\infty}^{\infty} e^{-itx} \mu(dx) = \varphi(t).
+\]
+
+\textbf{Part 2 "If":} We do not discuss this. It uses "tightness". Details are in the book.
+\end{proof}
+
+\subsection{Central Limit Theorem}
+
+\begin{theorem}[Lindeberg–Lévy Theorem]
+Let $\{X_i\}_{i\geq1}$ be a sequence of independent and identically distributed (i.i.d.) random variables, with $\mathbb{E}[X_i^2] < \infty$. We denote $\mu = \mathbb{E}[X_i]$ and $\sigma^2 = \mathrm{Var}(X_i)$. Let $S_n = \sum_{i=1}^{n} X_i$. Then
+\[
+\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} Z \sim N(0,1).
+\]
+\end{theorem}
+
+\begin{proof}
+    Let \( I = \frac{1}{2\pi} \int_{-T}^{T} \frac{e^{-ita} - e^{-itb}}{it} \varphi(t) \, dt \). Then, by Fubini's Theorem,
+    \[
+    I_T = \frac{1}{2\pi} \int_{-T}^{T} \frac{e^{-ita} - e^{-itb}}{it} \int_{-\infty}^{\infty} e^{itx} \, \mu(dx) \, dt
+    \]
+    \[
+    = \int_{-\infty}^{\infty} \left( \frac{1}{2\pi} \int_{-T}^{T} \frac{e^{-it(a-x)} - e^{-it(b-x)}}{it} \, dt \right) \mu(dx)
+    \]
+    \[
+    = \int_{-\infty}^{\infty} \Phi_T(x) \mu(dx),
+    \]
+    where \( \Phi_T(x) \) is defined as \( \frac{1}{2\pi} \int_{-T}^{T} \frac{e^{-it(a-x)} - e^{-it(b-x)}}{it} \, dt \).
+
+    We can apply Fubini's Theorem since:
+    \[
+    \left| \frac{e^{-ita} - e^{-itb}}{it} \cdot e^{itx} \right| = \left| \frac{e^{-it(a-x)} - e^{-it(b-x)}}{it} \right| \leq b-a,
+    \]
+    \[
+    \left| e^{ita} - e^{itb} \right| = \left| e^{itb}(e^{it(a-b)} - 1) \right| \leq |t(b-a)|,
+    \]
+    which is integrable over \( t \) in the interval \( [-T, T] \) and measurable with respect to \( \mu \).
+
+\end{proof}
+
+\begin{theorem}[Central Limit Theorem for Triangular Arrays with Lyapunov condition]
+For each \(n \geq 1\), let \(X_{n1}, X_{n2}, \ldots, X_{nn}\) be independent random variables with \(\mathbb{E}(X_{ni}) = 0\) for all \(i = 1, \ldots, n\) and
+\[
+\sigma^2_{ni} = \mathbb{E}(X^2_{ni}) < \infty \quad \forall i = 1, \ldots, n.
+\]
+Let \(S_n = \sum_{i=1}^{n} X_{ni}\) and \(\lambda_n^2 = \mathbb{E}(S_n^2) = \sum_{i=1}^{n} \sigma^2_{ni}\). Assume that \(\lambda_n^2 \geq 0\) for all \(n\). Suppose that there exists \(\delta > 0\) such that
+\[
+\mathbb{E}(|X_{ni}|^{2+\delta}) < \infty \quad \text{for all } i = 1, \ldots, n,
+\]
+and
+\[
+\lim_{n \to \infty} \frac{1}{\lambda_n^{2+\delta}} \sum_{i=1}^{n} \mathbb{E}(|X_{ni}|^{2+\delta}) = 0 \quad \text{(Lyapunov condition)}.
+\]
+Then
+\[
+\frac{S_n}{\lambda_n} \xrightarrow{d} Z \sim N(0,1).
+\]
+\end{theorem}
+
+
+\begin{proof}
+It suffices to show that the Lyapunov condition holds, and then we apply Theorem 27.2. We have:
+\begin{align*}
+\frac{1}{\lambda_n^2} \sum_{i=1}^{n} \int_{\{|X_{ni}| \geq \epsilon \lambda_n\}} X_{ni}^2 dP &= \frac{1}{\lambda_n^2} \sum_{i=1}^{n} \mathbb{E}\left[ X_{ni}^2 \mathbf{1}_{\{|X_{ni}| \geq \epsilon \lambda_n\}} \right] \\
+&\leq \frac{1}{\epsilon^{\delta} \lambda_n^{2+\delta}} \sum_{i=1}^{n} \mathbb{E}\left[ |X_{ni}|^{2+\delta} \right] \\
+&= \frac{1}{\epsilon^{\delta} \lambda_n^{2+\delta}} \mathbb{E}\left[ \sum_{i=1}^{n} |X_{ni}|^{2+\delta} \right] \to 0 \quad \text{by the Lyapunov condition}.
+\end{align*}
+Hence the Lyapunov condition holds.
+\end{proof}

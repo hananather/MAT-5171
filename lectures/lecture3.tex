@@ -1,3 +1,4 @@
+\newpage
 \section{January 15, 2024}
 
 \begin{definition}[Convergence in Distribution]
@@ -10,3 +11,143 @@ We write \( X_n \Rightarrow X \) or \( X_n \xrightarrow{d} X \).
 \textbf{Remark:} If \( \mu_n(-\infty, x] = P_n(X_n \leq x) \) and \( \mu(-\infty, x] = P(X \leq x) \), then \( \mu_n \Rightarrow \mu \).
 \end{definition}
 
+\begin{definition}
+Let \( (X_n) \) be random variables defined on the same probability space \( (\Omega, \mathcal{F}, P) \). 
+\begin{enumerate}
+    \item[a)] We say that \( (X_n) \) converges in probability to \( X \) if
+    \[ \lim_{n \to \infty} P(\lvert X_n - X \rvert > \varepsilon) = 0 \quad \forall \varepsilon > 0. \]
+    We write \( X_n \xrightarrow{P} X \).
+    
+    \item[b)] We say that \( (X_n) \) converges to \( X \) almost surely (a.s.) or with probability 1 if
+    \[ P(\lim_{n \to \infty} X_n = X) = 1. \]
+    We write \( X_n \xrightarrow{\text{a.s.}} X \).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[25.2]
+We will prove the following two claims:
+\begin{enumerate}
+    \item[a)] If \( X_n \rightarrow X \) a.s., then \( X_n \xrightarrow{P} X \).
+    \item[b)] If \( X_n \xrightarrow{P} X \), then \( X_n \xrightarrow{d} X \).
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+    a) Fix \(\varepsilon > 0\). Let \(A_n = \{ \omega \in \Omega \mid |X_n(\omega) - X(\omega)| \geq \varepsilon \}\).
+
+Recall Theorem 1.1:
+\[ P(\limsup A_n) \leq \limsup P(A_n) \leq \liminf P(A_n) \leq P(\liminf A_n) \]
+
+It is enough to prove that
+\[ P(\limsup A_n) = 0 \quad (4) \]
+
+Recall that:
+\[ \limsup A_n = \bigcap_{N=1}^{\infty} \bigcup_{n \geq N} A_n = \{ \omega \mid \exists N, \forall n \geq N, \omega \in A_n \} \]
+\[ = \{ \omega \mid \exists N, \forall n \geq N, |X_n(\omega) - X(\omega)| \geq \varepsilon \} \]
+
+Note that:
+\[ (\limsup A_n)^c = \bigcup_{N=1}^{\infty} \bigcap_{n \geq N} A_n^c = \{ \omega \mid \forall \varepsilon > 0, \exists N, \forall n \geq N, |X_n(\omega) - X(\omega)| < \varepsilon \} \]
+by De Morgan's Law, which implies \(\{X_n\}\) converges to \(X\) hence \(P((\limsup A_n)^c) = 1\). So (4) holds.
+Let \( X \in \mathbb{R} \) be such that \( P(X=x) = 0 \). Let \( \varepsilon_0 \) be arbitrary.
+
+b)
+
+\begin{enumerate}
+    \item Note that:
+    \[ \{X_n \leq x\} \subseteq \{ |X_n - X| \geq \varepsilon \} \cup \{X \leq x-\varepsilon\} \]
+    To see this, assume by contradiction that \( |X_n - X| < \varepsilon \) and \( X > x+\varepsilon \).
+    Then \( X_n - X > -\varepsilon \) and \( X > x+\varepsilon \). Hence
+    \[ X_n = (X_n - X) + X > -\varepsilon + (x + \varepsilon) = x. \]
+    This is a contradiction.
+
+    \item From 1, we deduce that:
+    \[ P(X_n \leq x) \leq P(|X_n - X| \geq \varepsilon) + P(X \leq x-\varepsilon) \]
+    which can be written as:
+    \[ P(X \leq x-\varepsilon) \leq \lim_{n \to \infty} P(X_n \leq x) \leq \lim_{n \to \infty} P(X_n \leq x+\varepsilon) \quad \text{for all } \varepsilon > 0. \]
+
+    \item Finally, let \( \varepsilon \to 0 \). We get
+    \[ P(X \leq x) \leq \lim_{n \to \infty} P(X_n \leq x) \leq P(X \leq x) \]
+    Hence,
+    \[ \lim_{n \to \infty} P(X_n \leq x) = P(X \leq x). \]
+\end{enumerate}
+This completes the proof since \( P(X=x) = 0 \).
+\end{proof}
+
+
+\begin{theorem}[Convergence in Distribution Implies Convergence in Probability]
+Let \( (X_n) \) be a sequence of random variables defined on the same probability space. If \( X_n \xrightarrow{d} X \) for all \( \omega \in \Omega \), where \( a \in \mathbb{R} \), then \( X_n \xrightarrow{P} X \).
+\end{theorem}
+
+\begin{proof}
+Let \(\varepsilon > 0\) be arbitrary. We want to prove that \( P(|X_n - a| > \varepsilon) \rightarrow 0 \) as \( n \rightarrow \infty \).
+
+Note that 
+\[
+\{X_n - a > \varepsilon\} = \{X_n > a + \varepsilon\} \cup \{X_n < a - \varepsilon\} = \{X_n > a + \varepsilon\} \cup \{X_n < a - \varepsilon\}
+\]
+and
+\[
+P(|X_n - a| > \varepsilon) = P(X_n > a + \varepsilon) + P(X_n < a - \varepsilon) \quad (7)
+\]
+
+We know that \(X_n \xrightarrow{d} X\) i.e., \(F_{X_n}(x) \rightarrow F_X(x)\) for all \(x \in \mathbb{R}\) where \(P(X=x)=0\) (i.e., \(F_X\) is continuous at \(x\)).
+
+Recall that 
+\[
+F_X(x) = P(X \leq x) = \begin{cases} 
+0 & \text{if } x < a, \\
+1 & \text{if } x \geq a.
+\end{cases}
+\]
+
+Hence 
+\[
+P(X_n \leq x) \rightarrow 0 \text{ for all } x < a.
+\]
+and 
+\[
+P(X_n \geq x) \rightarrow 1 \text{ for all } x > a.
+\]
+
+We let \( n \rightarrow \infty \) in \( (7) \):
+\begin{align*}
+P(X_n > a + \varepsilon) &= 1 - P(X_n \leq a + \varepsilon) = 1 - F_{X_n}(a + \varepsilon) \rightarrow 1 - 0 = 0, \\
+P(X_n < a - \varepsilon) &\leq P(|X_n - a| > \varepsilon) \rightarrow 0.
+\end{align*}
+
+In summary, both terms converge to 0. This proves that \( P(|X_n - a| > \varepsilon) \rightarrow 0 \) as \( n \rightarrow \infty \).
+\end{proof}
+
+
+\begin{theorem}[Slutsky's Theorem]
+If \( X_n \xrightarrow{d} X \) and \( Y_n - X_n \xrightarrow{P} 0 \), then \( Y_n \xrightarrow{d} X \).
+\end{theorem}
+
+\begin{proof}
+Let \( F \) be the distribution function of \( X \), i.e., \( F(x) = P(X \leq x) \), and let \( x \) be a continuity point of \( F \), i.e., \( P(X=x) = 0 \). Let \( \varepsilon > 0 \) be arbitrary. Choose \( y' \) and \( y'' \) continuity points of \( F \) such that \( y' < x < y'' \) and
+\[
+F(x) - F(y') < \varepsilon \quad \text{and} \quad F(y'') - F(x) < \varepsilon
+\]
+where
+\[
+\lim_{y \uparrow x} F(y) = F(x-) = F(x) \quad \text{and} \quad \lim_{y \downarrow x} F(y) = F(x+).
+\]
+
+Let \( \varepsilon > 0 \) be such that \( y' \) is \( x - \varepsilon \) and \( y'' \) is \( x + \varepsilon \). Similarly to (5) and (6), it can be proved that:
+\[
+P(X_n \leq y') - P(|X_n - X| \geq \varepsilon) \leq P(Y_n \leq x) \leq P(X_n \leq y'') + P(|X_n - X| \geq \varepsilon) \quad \text{(exercise)}
+\]
+
+Taking \( n \to \infty \), we get:
+\[
+P(X \leq y') = \lim_{n \to \infty} P(X_n \leq x) = \lim_{n \to \infty} P(X_n \leq y'') \leq F(y'') = F(x) + \varepsilon
+\]
+
+Finally, letting \( \varepsilon \to 0 \), we get:
+\[
+F(x) = \lim_{n \to \infty} P(Y_n \leq x) \leq \lim_{n \to \infty} P(X_n \leq x) \leq F(x)
+\]
+This proves that:
+\[
+\lim_{n \to \infty} P(X_n \leq x) = F(x).
+\]
+\end{proof}

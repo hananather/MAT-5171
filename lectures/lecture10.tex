@@ -1,0 +1,259 @@
+\newpage
+\section{February 14, 2024}
+\subsection{Conditional Distributions continued}
+\begin{theorem}
+Let \((\Omega, \mathcal{F}, P)\) be a probability space, \(X: \Omega \to \mathbb{R}\) is a random variable, and \(\mathcal{G} \subseteq \mathcal{F}\) a sub-\(\sigma\)-field. Then there exists a function \(\mu(H, \omega)\) defined for any \(H \in \mathcal{B}(\mathbb{R}), \omega \in \Omega\) such that the following conditions hold:
+\begin{itemize}
+    \item[(a)] \(\mu(\cdot, \omega)\) is a probability measure on \(\mathbb{R}\), \(\forall \omega \in \Omega\)
+    \item[(b)] \(\mu(H, \cdot)\) is a version of \(P(X \in H \mid \mathcal{G})\), \(\forall H \in \mathcal{B}(\mathbb{R})\)
+\end{itemize}
+
+We say that \(\mu\) is the conditional distribution of \(X\) given \(\mathcal{G}\). In particular, if \(\mathcal{G} = \sigma(Y)\), we say that \(\mu\) is the conditional distribution of \(X\) given \(Y\).
+\end{theorem}
+
+
+
+For each \(r \in \mathbb{Q}\), let \(F(r, \cdot)\) be a version of \(P(X \leq r \mid \mathcal{G})\), i.e.,
+\[
+F(r, \omega) = P(X \leq r \mid \mathcal{G})(\omega) \quad \text{for } P\text{-almost all } \omega \in \Omega.
+\]
+
+\textbf{Properties of \(F\):}
+
+1) If \(r, s \in \mathbb{Q}\) with \(r \leq s\), then \(F(r, \omega) \leq F(s, \omega)\) with probability 1.
+\[
+P(X \leq r \mid \mathcal{G})(\omega) \leq P(X \leq s \mid \mathcal{G})(\omega) \quad \text{since } \{X \leq r\} \subseteq \{X \leq s\}.
+\]
+
+Let \(E_{r,s} = \{\omega \in \Omega; F(r, \omega) \leq F(s, \omega)\}\).
+
+Then \(E_{r,s} \in \mathcal{G}\) and \(P(E_{r,s}) = 1\).
+
+2) For every \(r \in \mathbb{Q}\) fixed,
+\[
+\lim_{n \to \infty} F\left(r + \frac{1}{n}, \omega\right) = \lim_{n \to \infty} P\left(X \leq r + \frac{1}{n} \mid \mathcal{G}\right)(\omega) = P(X \leq r \mid \mathcal{G})(\omega) = F(r, \omega)
+\]
+
+by property 6) in Theorem 33.2.
+
+Let \(E_r = \left\{\omega \in \Omega; \lim_{n \to \infty} F\left(r + \frac{1}{n}, \omega\right) = F(r, \omega)\right\}\). Then \(E_r \in \mathcal{G}\) with \(P(E_r) = 1\).
+
+3) 
+\[
+\lim_{r \to \infty} F(r, \omega) = \lim_{r \to \infty} P(X \leq r \mid \mathcal{G})(\omega) = P(\Omega \mid \mathcal{G})(\omega) = 1 \quad \text{with probability 1}
+\]
+\[
+\{\{X \leq r\}\}_{r \in \mathbb{Q}} \uparrow \Omega
+\]
+
+Let \(D_1 = \left\{\omega \in \Omega; \lim_{r \to \infty} F(r, \omega) = 1\right\}\). Then \(D_1 \in \mathcal{G}\) and \(P(D_1) = 1\).
+
+4)
+\[
+\lim_{r \to -\infty} F(r, \omega) = \lim_{r \to -\infty} P(X \leq r \mid \mathcal{G})(\omega) = P(\emptyset \mid \mathcal{G})(\omega) = 0 \quad \text{with probability 1}
+\]
+\[
+\{\{X \leq r\}\}_{r \in \mathbb{Q}} \downarrow \emptyset
+\]
+
+Let \(D_2 = \left\{\omega \in \Omega; \lim_{r \to -\infty} F(r, \omega) = 0\right\}\). Then \(D_2 \in \mathcal{G}\) and \(P(D_2) = 1\).
+
+Let \(S = \left(\bigcap_{r \in \mathbb{Q}} E_r \right) \cap \left(\bigcap_{r,s \in \mathbb{Q}} E_{r,s}\right) \cap D_1 \cap D_2\). Then \(S \in \mathcal{G}\) and \(P(S) = 1\).
+\begin{itemize}
+    \item For \(\omega \in S\), extend \(F(r, \omega)\) to \(\mathbb{R}\) by setting
+    \[
+    \bar{F}(x, \omega) := \inf_{r > x, r \in \mathbb{Q}} F(r, \omega)
+    \]
+    Clearly, if \(x \in \mathbb{Q}\) then \(\bar{F}(x, \omega) = F(x, \omega)\).
+
+    \item For \(\omega \notin S\), let \(\bar{F}(\cdot, \omega) := F^*\) where \(F^*\) is a fixed cumulative distribution function on \(\mathbb{R}\).
+
+    \item For \(\omega \in S\), we check that \(\bar{F}(\cdot, \omega) : \mathbb{R} \to [0,1]\) is a probability distribution function:
+    \begin{itemize}
+        \item[(a)] right-continuity: \(\lim_{n \to \infty} \bar{F}(x_n, \omega) = \bar{F}(x, \omega)\) if \(x_n \uparrow x\)
+        \item[(b)] non-decreasing: if \(x \leq y\), then \(\bar{F}(x, \omega) \leq \bar{F}(y, \omega)\)
+        \item[(c)] \(\lim_{x \to \infty} \bar{F}(x, \omega) = 1\)
+        \item[(d)] \(\lim_{x \to -\infty} \bar{F}(x, \omega) = 0\)
+    \end{itemize}
+
+    Hence, by Theorem 1.2, there exists a unique probability measure \(\bar{\mu}(\cdot, \omega)\) on \(\mathbb{R}\) such that
+    \[
+    \bar{\mu}((-\infty, x], \omega) = \bar{F}(x, \omega) \quad \forall x \in \mathbb{R}
+    \]
+
+    \item For \(\omega \notin S\), let \(\bar{\mu}^*\) be the probability measure corresponding to \(F^*\), i.e.
+    \[
+    \bar{\mu}^*((-\infty, x]) = F^*(x) = F^*(x) \quad \forall x \in \mathbb{R}
+    \]
+
+    Define
+    \[
+    \mu(H, \omega) =
+    \begin{cases}
+        \bar{\mu}(H, \omega) & \text{if } \omega \in S \\
+        \bar{\mu}^*(H) & \text{if } \omega \notin S
+    \end{cases}
+    \]
+    Then \(\mu(H, \omega)\) is a probability measure on \(\mathbb{R}\) \(\forall \omega \in \Omega\), i.e. condition (a) holds.
+\end{itemize}
+
+\textbf{We now prove that \(\mu\) satisfies condition (b):}
+
+We will prove that \(\mu(H, \cdot) = P(X \in H \mid \mathcal{G})\) a.s. by checking that \(\mu(H, \cdot)\) satisfies conditions (i) and (ii) from the definition of \(P(X \in H \mid \mathcal{G})\).
+
+(i) \textit{We have to prove that \(\mu(H, \cdot)\) is \(\mathcal{G}\)-measurable, \(\forall H \in \mathcal{B}(\mathbb{R})\)}.
+
+Let \(\mathcal{L} = \{H \in \mathcal{B}(\mathbb{R}); \mu(H, \cdot) \text{ is } \mathcal{G}\text{-measurable}\}\) is a \(\lambda\)-system, i.e.
+\begin{itemize}
+    \item[1)] \(\mathbb{R} \in \mathcal{L}\)
+    \item[2)] If \(H \in \mathcal{L}\) then \(H^c \in \mathcal{L}\)
+    \item[3)] If \((H_n)_{n \geq 1}\) are disjoint then \(\bigcup_{n \geq 1} H_n \in \mathcal{L}\)
+\end{itemize}
+\(\mathcal{P} = \{(-\infty, r]; r \in \mathbb{Q}\}\) is a \(\pi\)-system, i.e.
+\begin{itemize}
+    \item if \(A_1, A_2, \ldots, A_n \in \mathcal{P}\) then \(A_1 \cap A_2 \cap \ldots \cap A_n \in \mathcal{P}\)
+\end{itemize}
+
+\(\mathcal{P} \subseteq \mathcal{L}\) since \(\mu((-\infty, r], \cdot) = F(r, \cdot) = P(X \leq r \mid \mathcal{G})(\cdot)\) if \(\omega \in S\), and hence \(\mu((-\infty, r], \cdot) = P(X \leq r \mid \mathcal{G})\) with probability 1.
+
+Because \(P(X \leq r \mid \mathcal{G})\) is \(\mathcal{G}\)-measurable, it follows that \(\mu((-\infty, r], \cdot)\) is \(\mathcal{G}\)-measurable.
+
+To summarize, we have:
+\[
+\mathcal{L} = \lambda\text{-system}
+\]
+\[
+\mathcal{P} = \pi\text{-system}
+\]
+\(\mathcal{P} \subseteq \mathcal{L}\)
+
+Then, by Dynkin's \(\pi\)-\(\lambda\) theorem (Theorem 3), it follows that:
+\[
+\sigma(\mathcal{P}) = \mathcal{L}
+\]
+
+Hence,
+\[
+\mathcal{B}(\mathbb{R}) = \sigma(\mathcal{P}) \subseteq \mathcal{L} \subseteq \mathcal{B}(\mathbb{R}) \text{ i.e. } \mathcal{L} = \mathcal{B}(\mathbb{R})
+\]
+
+This means that \(\mu(H, \cdot)\) is \(\mathcal{G}\)-measurable \(\forall H \in \mathcal{B}(\mathbb{R})\).
+
+(ii) \textit{We want to prove that}
+\[
+P\left(\left\{X \in H\right\} \cap G\right) = \int_G \mu(H, \omega) P(d\omega) \quad \forall G \in \mathcal{G}, \forall H \in \mathcal{B}(\mathbb{R})
+\]
+
+\[
+P\left(\left\{X \in H\right\} \cap G\right) = \int_G \mu(H, \omega) P(d\omega) \quad \forall G \in \mathcal{G}, \forall H \in \mathcal{B}(\mathbb{R})
+\]
+Fix \(G \in \mathcal{G}\). Define
+\[
+\begin{aligned}
+    \varphi_1(H) &= P(\{X \in H\} \cap G) \\
+    \varphi_2(H) &= \int_G \mu(H, \omega) P(d\omega)
+\end{aligned}
+\]
+Note that \(\varphi_1(H) = \varphi_2(H) \forall H \in \mathcal{P}\), since if \(H = (-\infty, r] \text{ with } r \in \mathbb{Q}\)
+\[
+\begin{aligned}
+    \varphi_1((-\infty, r]) &= P(\{X \leq r\} \cap G) \\
+    \varphi_2((-\infty, r]) &= \int_G \mu((-\infty, r], \omega) P(d\omega)
+\end{aligned}
+\]
+\[
+\varphi_2((-\infty, r]) = \int_G \mu((-\infty, r], \omega) P(d\omega) = \int_G F(r, \omega) P(d\omega) = \int_G P(X \leq r \mid \mathcal{G})(\omega) P(d\omega)
+\]
+\[ = P(X \leq r \mid \mathcal{G}) P(d\omega) = P(\{X \leq r\} \cap G) \]
+By the definition of conditional probability.
+
+Since \(\mathcal{P}\) is a \(\pi\)-system, \(\varphi_1(H) = \varphi_2(H) \forall H \in \mathcal{B}(\mathbb{R})\). 
+
+\[
+\begin{aligned}
+    \varphi_1((-\infty, r]) &= P(\{X \leq r\} \cap G) \\
+    \varphi_2((-\infty, r]) &= \int_G \mu((-\infty, r], \omega) P(d\omega) = \int_G F(r, \omega) P(d\omega) = \int_G P(X \leq r \mid \mathcal{G})(\omega) P(d\omega)
+\end{aligned}
+\]
+\[ = P(X \leq r \mid \mathcal{G}) P(d\omega) = P(\{X \leq r\} \cap G) \]
+By the definition of conditional probability.
+
+Since \(\mathcal{P}\) is a \(\pi\)-system, \(\varphi_1(H) = \varphi_2(H) \forall H \in \mathcal{B}(\mathbb{R})\). 
+
+\[
+P(\{X \in H\} \cap G) = \int_G \mu(H, \omega) P(d\omega) \quad \forall G \in \mathcal{G}, \forall H \in \mathcal{B}(\mathbb{R})
+\qed
+\]
+
+\begin{example}
+Let \(X, Y\) be r.v.'s on \((\Omega, \mathcal{F}, P)\) s.t. the law of \((X, Y)\) has density \(f(x, y)\), i.e.
+\[
+P((X, Y) \in A) = \int_A f(x, y) \, dx \, dy \quad \forall A \subseteq \mathbb{R}^2
+\]
+
+Let \(f_X(x) = \int_{\mathbb{R}} f(x, y) \, dy\) be the marginal density of \(X\):
+\[
+P(X \in B) = \int_B f_X(x) \, dx \quad \forall B \subseteq \mathbb{R}
+\]
+
+Define
+\[
+f_{Y \mid X}(y \mid x) = \frac{f(x, y)}{f_X(x)} \quad \text{if } f_X(x) \neq 0
+\]
+
+\textit{Observation:}
+\[
+\int_{\mathbb{R}} f_{Y \mid X}(y \mid x) \, dy = 1 \quad \text{(exercise)}
+\]
+
+Define
+\[
+Q(x, H) = \begin{cases}
+    \int_H f_{Y \mid X}(y \mid x) \, dy & \text{if } f_X(x) \neq 0 \\
+    Q^*(H) & \text{if } f_X(x) = 0
+\end{cases}
+\]
+
+Set
+\[
+\mu(H, \omega) = Q(X(\omega), H)
+\]
+
+\textit{Claim:} \(\mu(H, \omega)\) is the conditional distribution of \(Y\) given \(X\).
+\end{example}
+
+\textbf{Proof of this claim:} We check properties a) and b) of Theorem 33.3
+
+a) \(\mu(\cdot, \omega) = Q(X(\omega), \cdot)\) is indeed a probability measure \(\forall \omega \in \Omega\)
+
+b) We have to check that \(\mu(H, \cdot)\) is a version of \(P(Y \in H \mid X)\), i.e.
+\[
+\mu(H, \cdot) = P(Y \in H \mid X) \quad \text{a.s.}
+\]
+
+For this, we have to check that conditions (i) and (ii) are verified:
+\begin{enumerate}
+    \item[(i)] \(\mu(H, \cdot) = Q(X(\cdot), H)\) is \(\sigma(X)\)-measurable. This is clear since \(Q\) is a function of \(X\).
+    \item[(ii)] We have to prove that
+    \[
+    P(\{Y \in H\} \cap G) = \int_G \mu(H, \omega) P(d\omega) \quad \forall G \in \sigma(X) = \mathcal{G} \quad \text{(2)}
+    \]
+\end{enumerate}
+
+Let us prove (2). Let \(G = \{X \in E\} \in \sigma(X)\) be arbitrary, with \(E \in \mathcal{B}(\mathbb{R})\). Then
+\[
+\begin{aligned}
+    &\text{Let } G = \{X \in E\} \in \sigma(X) \text{ be arbitrary, with } E \in \mathcal{R}. \\
+    &\int_{G} \mu(H, \omega) \, P(d\omega) = \int_{\{X \in E\}} Q(X(\omega), H) \, P(d\omega) \\
+    &= \int_{\{X \in E\}} 1_E(X(\omega)) \, Q(X(\omega), H) \, P(d\omega) \\
+    &= \int_{\Omega} 1_E(X(\omega)) \, Q(X(\omega), H) \, P(d\omega) \\
+    &= \int_{E} Q(x, H) \, (P \circ X^{-1})(dx) \quad \text{(change of variables theorem 16.13)} \\
+    &= \int_{E} Q(x, H) \, f_X(x) \, dx \\
+    &= \int_{E \cap \{f_X(x) \neq 0\}} Q(x, H) \, f_X(x) \, dx \\
+    &= \int_{E \cap \{f_X(x) \neq 0\}} \left( \int_{H} f_{Y|X}(y|x) \, dy \right) f_X(x) \, dx \\
+    &= \int_{E \cap \{f_X(x) \neq 0\}} \int_{H} f(x, y) \, dy \, dx \\
+    &= \int_{E} \int_{H} f(x, y) \, dy \, dx \\
+    &= P((X, Y) \in E \times H) \\
+    &= P(\{X \in E\} \cap \{Y \in H\}) \quad \text{(by definition of } E \text{ and } H) \\
+\end{aligned}
+\]

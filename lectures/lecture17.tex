@@ -1,0 +1,191 @@
+\section{March 20, 2024}
+
+\textbf{Recall:}
+Let $(\mathcal{F}_n)_{n\geq 1}$ be a filtration on a probability space $(\Omega, \mathcal{F}, P)$. A random variable $\tau: \Omega \to \{1, 2, \ldots \}$ is called a \textit{stopping time} with respect to $(\mathcal{F}_n)_{n\geq 1}$ if
+\[
+\{\tau = n\} \in \mathcal{F}_n \text{ for all } n \geq 1.
+\]
+In this case, we define $\mathcal{F}_\tau \equiv \{A \in \mathcal{F}: A \cap \{\tau = n\} \in \mathcal{F}_n \text{ for all } n \geq 1\}$.
+
+
+We proved the following properties:
+\begin{enumerate}
+    \item $\tau$ is a stopping time if $\{\tau = n\} \in \mathcal{F}_n$ for all $n \geq 1$.
+    \item $\mathcal{F}_\tau$ is a $\sigma$-field.
+    \item $\tau$ is $\mathcal{F}_\tau$-measurable.
+    \item If $\tau = k$ (constant) then $\mathcal{F}_\tau = \mathcal{F}_k$.
+\end{enumerate}
+Exercise: Show that $\mathcal{F}_\tau = \{A \in \mathcal{F}: A \cap \{\tau \leq n\} \in \mathcal{F}_n \text{ for all } n \geq 1\}$.
+
+
+\textbf{Property:}
+If $\tau_1 \leq \tau_2$ are stopping times with respect to $(\mathcal{F}_n)_{n\geq 1}$, then $\mathcal{F}_{\tau_1} \subseteq \mathcal{F}_{\tau_2}$.
+
+\begin{proof}
+Let $A \in \mathcal{F}_{\tau_1}$. We want to prove that $A \in \mathcal{F}_{\tau_2}$, i.e., $A \cap \{\tau_2 = n\} \in \mathcal{F}_n$ for all $n$.
+\[
+A \cap \{\tau_2 = n\} = (A \cap \{\tau_1 = n\}) \cap \{\tau_2 = n\} \in \mathcal{F}_n \text{ since } \{\tau_2 = n\} \in \mathcal{F}_n.
+\]
+\end{proof}
+
+\textbf{Property:}
+If $(X_n)_{n\geq 1}$ are r.v.'s such that $X_n$ is $\mathcal{F}_n$-measurable for all $n \geq 1$, then $\mathbf{1}_{\{X_{\tau} \in B\}}$ is $\mathcal{F}_{\tau}$-measurable.
+
+\begin{proof}
+Let $B \in \mathbb{R}$ be an arbitrary Borel set. We have to prove that $\mathbf{1}_{\{X_{\tau} \in B\}}^{-1}(1) = \{X_{\tau} \in B\} \in \mathcal{F}_{\tau}$. Using property 5, this is equivalent to showing that $\{X_{\tau} \in B\} \cap \{\tau = n\} \in \mathcal{F}_n$ for all $n \geq 1$.
+
+Note that:
+\begin{align*}
+\{X_{\tau} \in B\} \cap \{\tau = n\} &= \{\omega \in \Omega : X_{\tau(\omega)}(\omega) \in B, \tau(\omega) = n\} \\
+&= \{\omega \in \Omega : X_n(\omega) \in B\} \cap \{\tau = n\} \in \mathcal{F}_n, \quad \text{for any } n \geq 1.
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Optional Sampling Theorem]
+Let $(X_i)_{i=1,\ldots,n}$ be a submartingale with respect to the filtration $(\mathcal{F}_i)_{i=1,\ldots,n}$. Let $\tau_1$ and $\tau_2$ be stopping times with respect to $(\mathcal{F}_i)_{i=1,\ldots,n}$ with $\tau_1, \tau_2\colon \Omega \to \{1,2,\ldots,n\}$. Then
+\begin{equation}
+    \mathbb{E}[X_{\tau_2}|\mathcal{F}_{\tau_1}] \geq X_{\tau_1} \quad \text{a.s.}
+\end{equation}
+that is, $(X_{\tau_1}, X_{\tau_2})$ is a submartingale with respect to $(\mathcal{F}_{\tau_1}, \mathcal{F}_{\tau_2})$.
+\end{theorem}
+
+\begin{proof}
+Let $X_{\tau_i} = \sum_{k=1}^n X_k \mathbf{1}_{\{\tau_i=k\}}$ then $\lvert X_{\tau_i} \rvert \leq \sum_{k=1}^n \lvert X_k \rvert \mathbf{1}_{\{\tau_i=k\}} \leq \sum_{k=1}^n \lvert X_k \rvert$. So $\mathbb{E}[\lvert X_{\tau_i} \rvert] \leq \sum_{k=1}^n \mathbb{E}[\lvert X_k \rvert] < \infty$, i.e., $X_{\tau_i}$ is integrable. (for $i=1,2$)
+
+To show (2), we must prove that:
+\begin{equation}
+    \left\lvert \int_A X_{\tau_2} dP \right\rvert \geq \int_A X_{\tau_1} dP \quad \forall A \in \mathcal{F}_{\tau_1} \quad (3)
+\end{equation}
+
+Let $\Delta_k = X_k - X_{k-1}$ for $k=2,\ldots,n$, and $\Delta_1 = X_1$. Then $X_{\tau_2} - X_{\tau_1} = \sum_{k=\tau_1+1}^{\tau_2} \Delta_k = \sum_{k=\tau_1+1}^n \Delta_k \mathbf{1}_{\{\tau_1 < k \leq \tau_2\}}$.
+
+(Use: $\sum_{k=\tau_1+1}^m (X_k - X_{k-1}) = (X_{m-1}-X_{\tau_1}) + (X_{m-2}-X_{m-1}) + \ldots + (X_{m}-X_{m-1}) = X_m - X_{\tau_1}$ for any $m,\tau_1 \in \{1,\ldots,n\}, \tau_1 \leq m$)
+
+In our case, $L=\tau_1(\omega), M=\tau_2(\omega)$.
+Hence, for $A \in \mathcal{F}_{\tau_1}$,
+\[
+\int_A (X_{\tau_2} - X_{\tau_1}) \, dP = \int_A \sum_{k=\tau_1+1}^{\tau_2} \Delta_k \, dP = \int_A \sum_{k=\tau_1+1}^n \Delta_k \mathbf{1}_{\{\tau_1 < k \leq \tau_2\}} \, dP.
+\]
+Note that
+\[
+\mathbf{1}_{B_{\tau_2}} := A \cap \{\tau_1 < k \leq \tau_2\} = A \cap \{\tau_1 < k\} \cap \{k \leq \tau_2\} \in \mathcal{F}_{\tau_2},
+\]
+where $B_{\tau_2} \in \mathcal{F}_{\tau_2}$ by the definition of $\mathcal{F}_{\tau_2}$. Recall that $(\Delta_k)_{k=1,\ldots,n}$ is a submartingale difference:
+\[
+\mathbb{E}[X_k | \mathcal{F}_{k+1}] \geq X_k \quad \text{so} \quad \mathbb{E}[X_{\tau_2} - X_{\tau_1} | \mathcal{F}_{\tau_2}] \geq 0 \quad \text{i.e.} \quad \mathbb{E}[\Delta_k | \mathcal{F}_{k+1}] \geq 0 \quad \text{a.s.}
+\]
+This means that for any set $B \in \mathcal{F}_{\tau_1}$,
+\[
+\int_B \Delta_k \, dP \geq 0.
+\]
+In particular, this is true for $B = B_{\tau_2}$ above. Hence
+\[
+\int_A \Delta_k \, dP \geq 0, \quad \text{for all} \quad A \in \mathcal{F}_{\tau_1}, \{\tau_1 < k \leq \tau_2\}.
+\]
+Hence
+\[
+\int_A (X_{\tau_2} - X_{\tau_1}) \, dP \geq 0.
+\]
+\end{proof}
+
+If $\tau_1 \leq \tau_2 \leq \ldots \leq \tau_m$ are stopping times with respect to $(\mathcal{F}_k)_{k=1,\ldots,n}$, and $(X_k)_{k=1,\ldots,n}$ is a submartingale with respect to $(\mathcal{F}_k)_{k=1,\ldots,n}$, then $(X_{\tau_1}, X_{\tau_2}, \ldots, X_{\tau_m})$ is a submartingale with respect to $(\mathcal{F}_{\tau_1}, \mathcal{F}_{\tau_2}, \ldots, \mathcal{F}_{\tau_m})$.
+
+
+\begin{theorem}[Kolmogorov's Maximal Inequality]
+Let $(X_k)_{k \geq 1}$ be i.i.d.\ random variables with $\mathbb{E}(X_k^2) < \infty$ for all $k$. Let
+\[ S_n = \sum_{k=1}^n X_k, \]
+and we know that $(S_n)$ is a martingale. Then Kolmogorov's inequality states that
+\[ \mathbb{P}\left( \max_{k \leq n} |S_k| > \alpha \right) \leq \frac{1}{\alpha^2} \mathbb{E}(S_n^2) \quad \text{for all } \alpha > 0. \]
+\end{theorem}
+
+Note that $\max_{k \leq n} |S_k| > \alpha$ is equivalent to $\max_{k \leq n} S_k^2 > \alpha^2$. Hence, we can write the inequality as:
+\[ \mathbb{P}\left( \max_{k \leq n} S_k^2 > \alpha^2 \right) \leq \frac{\mathbb{E}(S_n^2)}{\alpha^2}. \]
+
+Recall that $(S_n^2)$ is a submartingale. The next result extends this inequality to an arbitrary submartingale.
+
+\begin{theorem}[Maximal Inequality]
+Let $(X_k)_{k=1,\ldots,n}$ be a submartingale with respect to $(\mathcal{F}_k)_{k=1,\ldots,n}$. Then for any $\alpha > 0$,
+\[ \mathbb{P}\left( \max_{k \leq n} |X_k| \geq \alpha \right) \leq \frac{1}{\alpha} \mathbb{E}(|X_n|). \]
+\end{theorem}
+
+
+\begin{proof}
+Define: $\tau \colon \Omega \to \{1, 2, \ldots, n\}$ as
+\[
+\tau(\omega) = \begin{cases} 
+\min \{j \leqslant n : X_j(\omega) \geq \alpha\} & \text{if there exists } j \leqslant n \text{ s.t. } X_j(\omega) \geq \alpha, \\
+n & \text{otherwise } (i.e., X_i(\omega) < \alpha \; \forall i \leqslant n).
+\end{cases}
+\]
+
+Clearly, $\tau$ is a stopping time w.r.t.\ $(\mathcal{F}_k)_{k=1,\ldots,n}$.
+
+Proof of Claim: We have to prove that $\{\tau = k\} \in \mathcal{F}_k$ for all $k=1,\ldots,n$ (see property 1 on page 1).
+
+Let $\{r_j\}_{j=1,\ldots,n}$ be arbitrary. We have two cases:
+
+\textbf{Case 1:} $\{r_j \leqslant m\}$
+
+For $\{\tau = k\} = \bigcap_{j=1}^k \{X_j < \alpha\} \cap \{X_k \geq \alpha\} \in \mathcal{F}_k$
+
+\textbf{Case 2:} $\{r_j = n\}$
+
+For $\{\tau = n\} = \bigcap_{j=1}^n \{X_j < \alpha\} \in \mathcal{F}_n$.
+
+Define $\tau \geqslant n$ (also a stopping time). Clearly, $\tau_1 \leq \tau_2$. By Optional Sampling Theorem (Theorem 35.2)
+\[
+\mathbb{E}[X_{\tau_2} | \mathcal{F}_{\tau_1}] \geq X_{\tau_1} \text{ a.s.}
+\]
+
+Let $M_{\tau} = \max\{X_i, i \leq \tau\}$, for $\tau=1,\ldots,n$. Clearly, $M_{\tau_1} \leq M_{\tau_2} \leq \cdots \leq M_{\tau_n}$.
+
+Let us examine the event $\{M_n \geq \alpha\}$.
+
+\textbf{Claim:}
+$\{M_n \geq \alpha\} \in \mathcal{F}_{\tau_1}$, i.e., $\{M_n \geq \alpha\} \cap \{\tau_1 \leq \tau_2\} \in \mathcal{F}_{\tau_2}$ for all $\tau_2 = 1, \ldots, n$.
+
+\textbf{Proof of Claim:}
+We will show that: $\forall \tau_2 = 1, \ldots, n$.
+\[
+\{M_n \geq \alpha\} \cap \{\tau_1 \leq \tau_2\} = \{M_{\tau_2} \geq \alpha\}
+\]
+
+To prove (7), we use double-inclusion:
+
+($\subseteq$) Let $\omega \in \{M_{\tau_2} \geq \alpha\}$. Then $M_{\tau_2}(\omega) \geq \alpha$. But since $M_{\tau_2}(\omega) = \max\{X_i(\omega), i \leq \tau_2\}$ and $\tau_1(\omega)$ is the smallest index $i$ for which $X_i(\omega) \geq \alpha$, we have $\{\tau_1(\omega) \leq \tau_2\}$.
+
+($\supseteq$) If $\tau_2 = n$, the inclusion is clear.
+If $\tau_2 = n-1$, by the definition of $\tau_1$, $X_{\tau_1} \geq \alpha$. But $M_{\tau_2} \geq X_{\tau_1}$, so $M_{\tau_2} \geq \alpha$.
+On the event $\{\tau_1 \leq \tau_2\}$, we have $M_{\tau_1} \leq M_{\tau_2}$.
+Hence, $\{M_{\tau_2} - X_{\tau_1} \geq 0\}$.
+
+\textbf{Remark:}
+If $\tau_1, \tau_2, \ldots, \tau_n$ are stopping times w.r.t.\ $(\mathcal{F}_{\tau})_{\tau=1,\ldots,n}$, then $(X_{\tau_1}, X_{\tau_2}, \ldots, X_{\tau_n})$ is a submartingale w.r.t.\ $(\mathcal{F}_{\tau_1}, \mathcal{F}_{\tau_2}, \ldots, \mathcal{F}_{\tau_n})$.
+
+Coming back to (8), we recall that (8) means that
+\[
+\int_A X_{\tau_2} \, dP \geq \int_A X_{\tau_1} \, dP \quad \forall A \in \mathcal{F}_{\tau_1},
+\]
+we will this inequality with $A = \{M_n \geq \alpha\} \in \mathcal{F}_{\tau_1}$, hence
+\[
+\int \mathbf{1}_{\{M_n \geq \alpha\}} X_{\tau_2} \, dP \geq \int \mathbf{1}_{\{M_n \geq \alpha\}} X_{\tau_1} \, dP.
+\]
+
+To summarize, we obtain that:
+\[
+\int_{\{M_n \geq \alpha\}} X_{\tau_2} \, dP \leq \int_{\{M_n \geq \alpha\}} X_n \, dP \tag{9}
+\]
+On the other hand, $\{M_n \geq \alpha\} = \bigcup_{k=1}^n \{X_k \geq \alpha\}$. So if $\omega \in \{M_n \geq \alpha\}$, then $\tau_2 = n$ such that $X_{\tau_2}(\omega) \geq \alpha$ and $\tau_1(\omega) \leq \tau_2$.
+
+Hence
+\[
+\int_{\{M_n \geq \alpha\}} X_{\tau_2} \, dP = \alpha P(M_n \geq \alpha) \tag{10}
+\]
+
+Putting (9) and (10) together, we get:
+\[
+\alpha P(M_n \geq \alpha) \leq \int_{\{M_n \geq \alpha\}} X_n^+ \, dP - \int_{\{M_n \geq \alpha\}} X_n^- \, dP \leq \int_{\Omega} (X_n^+ + X_n^-) \, dP = \mathbb{E}(|X_n|)
+\]
+
+\end{proof}
+
