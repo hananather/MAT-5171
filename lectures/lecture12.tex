@@ -1,2 +1,208 @@
 \newpage
 \section{March 4, 2024}
+\subsection{Conditonal Expectation Continued}
+\begin{theorem}
+    Suppose that \(X, Y, X_n\) are integrable.
+\begin{enumerate}
+    \item[(i)] If \(X = a\) with probability 1, then \(E[X \mid \mathcal{G}] = a\).
+    \item[(ii)] For constants \(a\) and \(b\), \(E[aX + bY \mid \mathcal{G}] = aE[X \mid \mathcal{G}] + bE[Y \mid \mathcal{G}]\).
+    \item[(iii)] If \(X \leq Y\) with probability 1, then \(E[X \mid \mathcal{G}] \leq E[Y \mid \mathcal{G}]\).
+    \item[(iv)] \(|E[X \mid \mathcal{G}]| \leq E[|X| \mid \mathcal{G}]\).
+    \item[(v)] If \(\lim_{n} X_n = X\) with probability 1, \(|X_n| \leq Y\), and \(Y\) is integrable, then \(\lim_{n} E[X_n \mid \mathcal{G}] = E[X \mid \mathcal{G}]\) with probability 1.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+    If \( X = a \) with probability 1, the function identically equal to \( a \) satisfies conditions (i) and (ii) in the definition of \( E[X \mid \mathcal{G}] \), and so (i) above follows by uniqueness.
+
+As for (ii), \( aE[X \mid \mathcal{G}] + bE[Y \mid \mathcal{G}] \) is integrable and measurable \(\mathcal{G}\), and
+\[
+\int_G \left( aE[X \mid \mathcal{G}] + bE[Y \mid \mathcal{G}] \right) dP = a \int_G E[X \mid \mathcal{G}] dP + b \int_G E[Y \mid \mathcal{G}] dP
+= a \int_G X dP + b \int_G Y dP = \int_G (aX + bY) dP
+\]
+for all \( G \) in \(\mathcal{G}\), so that this function satisfies the functional equation.
+
+If \( X \leq Y \) with probability 1, then
+\[
+\int_G \left( E[Y \mid \mathcal{G}] - E[X \mid \mathcal{G}] \right) dP = \int_G (Y - X) dP \geq 0
+\]
+for all \( G \) in \(\mathcal{G}\). Since \( E[Y \mid \mathcal{G}] - E[X \mid \mathcal{G}] \) is measurable \(\mathcal{G}\), it must be nonnegative with probability 1 (consider the set \( G \) where it is negative). This proves (iii), which clearly implies (iv) as well as the fact that \( E[X \mid \mathcal{G}] = E[Y \mid \mathcal{G}] \) if \( X = Y \) with probability 1.
+
+To prove (v), consider \( Z_n = \sup_{k \geq n} |X_k - X| \). Now \( Z_n \downarrow 0 \) with probability 1, and by (ii), (iii), and (iv),
+\[
+|E[X_n \mid \mathcal{G}] - E[X \mid \mathcal{G}]| \leq E[Z_n \mid \mathcal{G}].
+\]
+It suffices, therefore, to show that \( E[Z_n \mid \mathcal{G}] \downarrow 0 \) with probability 1. By (iii) the sequence \( E[Z_n \mid \mathcal{G}] \) is nonincreasing and hence has a limit \( Z \); the problem is to prove that \( Z = 0 \) with probability 1, or, \( Z \) being nonnegative, that \( E[Z] = 0 \). But \( 0 \leq Z_n \leq 2Y \), and so (34.1) and the dominated convergence theorem give
+\[
+E[Z] = \int E[Z \mid \mathcal{G}] dP \leq \int E[Z_n \mid \mathcal{G}] dP = E[Z_n] \to 0.
+\]
+\end{proof}
+
+\begin{theorem}[Theorem 34.2 (v) Dominated Convergence Theorem for Conditional Expectation]
+    Let $(\Omega, \mathcal{F}, P)$ be a probability space and $\mathcal{G} \subseteq \mathcal{F}$ a sub-$\sigma$-field. Let $(X_n), X, Y$ be integrable random variables. If $X_n \rightarrow X \text{ a.s.}$ and $|X_n| \leq Y \text{ a.s.} \forall n$, then
+    \[
+    \mathbb{E}(X_n | \mathcal{G}) \rightarrow \mathbb{E}(X | \mathcal{G}) \text{ a.s.}
+    \]
+\end{theorem}
+
+\begin{proof}
+    We proved it above.
+\end{proof}
+
+\begin{theorem}
+    If \( X \) is integrable and the \(\sigma\)-fields \(\mathcal{G}_1\) and \(\mathcal{G}_2\) satisfy \(\mathcal{G}_1 \subseteq \mathcal{G}_2\), then
+\[
+E[E[X \mid \mathcal{G}_2] \mid \mathcal{G}_1] = E[X \mid \mathcal{G}_1]
+\]
+with probability 1.
+\end{theorem}
+
+
+
+\begin{proof}
+
+It will be shown first that the right side of (34.4) is a version of the left side if \( X = I_{G_0} \) and \( G_0 \in \mathcal{G} \). Since \( I_{G_0} E[Y \mid \mathcal{G}] \) is certainly measurable \(\mathcal{G}\), it suffices to show that it satisfies the functional equation
+\[
+\int_G I_{G_0} E[Y \mid \mathcal{G}] dP = \int_G I_{G_0} Y dP, \quad G \in \mathcal{G}.
+\]
+But this reduces to
+\[
+\int_{G \cap G_0} E[Y \mid \mathcal{G}] dP = \int_{G \cap G_0} Y dP,
+\]
+which holds by the definition of \( E[Y \mid \mathcal{G}] \). Thus (34.4) holds if \( X \) is the indicator of an element of \(\mathcal{G}\).
+
+It follows by Theorem 34.2(ii) that (34.4) holds if \( X \) is a simple function measurable \(\mathcal{G}\). For the general \( X \) that is measurable \(\mathcal{G}\), there exist simple functions \( X_n \), measurable \(\mathcal{G}\), such that \( |X_n| \leq |X| \) and \( \lim_{n} X_n = X \) (Theorem 13.5). Since \( |X_n Y| \leq |XY| \) and \( |XY| \) is integrable, Theorem 34.2(v) implies that
+\[
+\lim_{n} E[X_n Y \mid \mathcal{G}] = E[XY \mid \mathcal{G}]
+\]
+with probability 1. But \( E[X_n Y \mid \mathcal{G}] = X_n E[Y \mid \mathcal{G}] \) by the case already treated, and of course \( \lim_{n} X_n E[Y \mid \mathcal{G}] = X E[Y \mid \mathcal{G}] \). (Note that \( X_n E[Y \mid \mathcal{G}] = E[X_n Y \mid \mathcal{G}] \leq E[|XY| \mid \mathcal{G}] \), so that the limit \( X E[Y \mid \mathcal{G}] \) is integrable.) Thus (34.4) holds in general. Notice that \( X \) has not been assumed integrable.
+
+\end{proof}
+
+
+\begin{theorem}[Tower Property]
+    If \( X \) is measurable \(\mathcal{G}\), and if \( Y \) and \( XY \) are integrable, then
+    \[
+    E[XY \mid \mathcal{G}] = XE[Y \mid \mathcal{G}]
+    \]
+    with probability 1.
+
+\end{theorem}
+
+
+\begin{proof}
+    Let \( X' = E(E(X \mid \mathcal{G}_2) \mid \mathcal{G}_1) \). We check that \( X' \) satisfies properties (i) and (ii) in the definition of \( E(X \mid \mathcal{G}_1) \).
+
+\begin{enumerate}
+    \item[(i)] \( X' \) is \(\mathcal{G}_1\)-measurable and integrable. This is clear.
+    \item[(ii)] We have to prove that:
+    \[
+    \int_G X' \, dP = \int_G X \, dP \quad \forall G \in \mathcal{G}_1
+    \]
+    Let \( G \in \mathcal{G}_1 \) be arbitrary. Then
+    \[
+    \int_G X' \, dP = \int_G E(E(X \mid \mathcal{G}_2) \mid \mathcal{G}_1) \, dP = \int_G E(Y \mid \mathcal{G}_1) \, dP = \int_G Y \, dP
+    \]
+    where \( Y = E(X \mid \mathcal{G}_2) \). By property (ii) in the definition of \( E(Y \mid \mathcal{G}_1) \), since \( G \in \mathcal{G}_1 \),
+    \[
+    \int_G E(X \mid \mathcal{G}_2) \, dP = \int_G X \, dP \quad \text{(using property (ii) in the def. of \( E(X \mid \mathcal{G}_2) \))}
+    \]
+    \[
+    \begin{aligned}
+    &\Rightarrow \int_G X \, dP.
+    \end{aligned}
+    \]
+    Therefore,
+    \[
+    \int_G X' \, dP = \int_G X \, dP \quad \forall G \in \mathcal{G}_1.
+    \]
+\end{enumerate}
+
+\end{proof}
+
+
+If \(\mathcal{G}_1 \subseteq \mathcal{G}_2\) then trivially \( E(E(X \mid \mathcal{G}_2) \mid \mathcal{G}_1) = E(X \mid \mathcal{G}_1) \).
+
+\[
+Y = E(X \mid \mathcal{G}_2) 
+\]
+\( Y \) is \(\mathcal{G}_1\)-measurable, hence \(\mathcal{G}_2\)-measurable.
+
+\begin{lemma}
+    If \(X\) is \(\mathcal{G}\)-measurable then \( E(X \mid \mathcal{G}) = X \) a.s.
+\end{lemma}
+
+\textbf{Recall}
+Jensen's inequality: If \( \varphi : \mathbb{R} \rightarrow \mathbb{R} \) is a convex function, then
+\[
+\varphi(E(X)) \leq E(\varphi(X)) \tag{5}
+\]
+for any r.v. \(X\) for which \(X, \varphi(X)\) are integrable.
+
+\[
+\text{Example: } \varphi(X) = |X|^p, \, p \geq 1 
+\]
+Then (5) says:
+\[
+|E(X)|^p \leq E(|X|^p) \quad \forall p \geq 1 
+\]
+In particular, \( |E(X)|^2 \leq E(X^2) \).
+
+\textbf{Recall the following basic properties of convex functions:}
+\begin{enumerate}
+    \item Definition: \(\varphi\) is convex if 
+    \[
+    \varphi(tx + (1-t)y) \leq t\varphi(x) + (1-t)\varphi(y) \quad \forall t \in (0, 1)
+    \]
+\end{enumerate}
+
+\textbf{Remark:} If \(\mathcal{G}_1 \subseteq \mathcal{G}_2\) then trivially \( E(E(X \mid \mathcal{G}_2) \mid \mathcal{G}_1) = E(X \mid \mathcal{G}_1) \).
+
+\[
+Y = E(X \mid \mathcal{G}_2) 
+\]
+\( Y \) is \(\mathcal{G}_1\)-measurable, hence \(\mathcal{G}_2\)-measurable.
+
+\textbf{Lemma (Feb 28):} If \(X\) is \(\mathcal{G}\)-measurable then \( E(X \mid \mathcal{G}) = X \) a.s.
+
+\textbf{Recall:} Jensen's inequality: If \( \varphi : \mathbb{R} \rightarrow \mathbb{R} \) is a convex function, then
+\[
+\varphi(E(X)) \leq E(\varphi(X)) \tag{5}
+\]
+for any r.v. \(X\) for which \(X, \varphi(X)\) are integrable.
+
+\[
+\text{Example: } \varphi(X) = |X|^p, \, p \geq 1 
+\]
+Then (5) says:
+\[
+|E(X)|^p \leq E(|X|^p) \quad \forall p \geq 1 
+\]
+In particular, \( |E(X)|^2 \leq E(X^2) \).
+
+\textbf{Recall the following basic properties of convex functions:}
+\begin{enumerate}
+    \item Definition: \(\varphi\) is convex if 
+    \[
+    \varphi(tx + (1-t)y) \leq t\varphi(x) + (1-t)\varphi(y) \quad \forall t \in (0, 1)
+    \]
+
+    \item If \(\varphi\) is convex, then \(\varphi\) is continuous.
+    \item If \(\varphi\) is convex, 
+    \[
+    \varphi'(x_0^+) = \lim_{\epsilon \to 0^+} \frac{\varphi(x_0 + \epsilon) - \varphi(x_0)}{\epsilon} \text{ exists and is finite}
+    \]
+    \[
+    \varphi'(x_0^-) = \lim_{\epsilon \to 0^-} \frac{\varphi(x_0 - \epsilon) - \varphi(x_0)}{\epsilon} \text{ exists and is finite}
+    \]
+    \item If \(\varphi\) is convex and \(\varphi'(x_0^-) \leq A(x_0) \leq \varphi'(x_0^+)\), then
+    \[
+    \varphi(x) \geq \varphi(x_0) + A(x_0)(x - x_0) \quad \forall x \in \mathbb{R} \tag{6}
+    \]
+    (6) says that the graph of \(\varphi\) stays above any support line through \((x_0, \varphi(x_0))\). This happens for any \(x_0 \in \mathbb{R}\).
+\end{enumerate}
+
+\textbf{Lemma 3 (Jensen's Inequality):}
+\begin{equation}
+\varphi(E(X)) \leq E(\varphi(X))
+\end{equation}
+for any convex function \(\varphi\) and any random variable \(X\) such that the expectations exist.

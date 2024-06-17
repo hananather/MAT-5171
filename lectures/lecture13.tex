@@ -1,2 +1,233 @@
 \newpage
 \section{March 6, 2024}
+
+\subsection{Proof of Conditional Jensen Inequality}
+
+\textbf{Recall:} Jensen Inequality says for any convex function $\varphi$,
+\[
+\varphi(\mathbb{E}(X)) \leq \mathbb{E}(\varphi(X))
+\]
+
+\textbf{Goal:} Extend this inequality to $\mathbb{E}(\cdot \mid \mathcal{G})$
+
+\begin{lemma}[Jensen Inequality for Conditional Expectations]
+For any convex function $\varphi: \mathbb{R} \to \mathbb{R}$ and for any random variable $X$ such that $X$ and $\varphi(X)$ are integrable,
+\[
+\varphi(\mathbb{E}(X \mid \mathcal{G})) \leq \mathbb{E}(\varphi(X) \mid \mathcal{G}) \quad \text{a.s.}
+\]
+\end{lemma}
+
+
+\begin{proof}
+Recall from last time that $\forall x_0 \in \mathbb{R}$, $\forall x \in \mathbb{R}$, $\varphi'(x_0^-) \leq A(x_0) \leq \varphi'(x_0^+)$,
+\[
+\varphi(x) \geq \varphi(x_0) + A(x_0)(x - x_0) \tag{2}
+\]
+Fix $\omega \in \Omega$. We apply (2) to $\begin{cases} x_0 = \mathbb{E}(X \mid \mathcal{G})(\omega) \\ x = X(\omega) \end{cases}$. We obtain:
+\[
+\varphi(X(\omega)) \geq \varphi(\mathbb{E}(X \mid \mathcal{G})(\omega)) + A(\mathbb{E}(X \mid \mathcal{G})(\omega))(X(\omega) - \mathbb{E}(X \mid \mathcal{G})(\omega))
+\]
+We drop $\omega$ from the writing. We write:
+\[
+\varphi(X) \geq \varphi(\mathbb{E}(X \mid \mathcal{G})) + A(\mathbb{E}(X \mid \mathcal{G}))(X - \mathbb{E}(X \mid \mathcal{G})) \tag{2}
+\]
+\end{proof}
+
+\subsection*{Case 1}
+Assume that $\mathbb{E}(X \mid \mathcal{G})$ is bounded, i.e. $\left| \mathbb{E}(X \mid \mathcal{G}) \right| \leq M$ for some $M \geq 0$.
+
+Note that if $\varphi$ is convex, then $\varphi$ and $A$ are bounded on bounded sets. Hence $\varphi(\mathbb{E}(X \mid \mathcal{G}))$ and $A(\mathbb{E}(X \mid \mathcal{G}))$ are bounded (hence integrable).
+
+Take $\mathbb{E}(\cdot \mid \mathcal{G})$ in (2). We use monotonicity of cond. expect. (Th.34.2.(iii)). We get:
+\[
+\mathbb{E}(\varphi(X) \mid \mathcal{G}) \geq \mathbb{E}[\varphi(\mathbb{E}(X \mid \mathcal{G})) \mid \mathcal{G}] + \mathbb{E}[A(\mathbb{E}(X \mid \mathcal{G}))(X - \mathbb{E}(X \mid \mathcal{G})) \mid \mathcal{G}]
+\]
+
+\subsection*{Case 2: General Case}
+Let $G_n = \{\omega \in \Omega; \left| \mathbb{E}(X \mid \mathcal{G})(\omega) \right| \leq n \}$. Note that $G_n \in \mathcal{G}$ and
+\[
+\mathbb{E}(\mathbb{I}_{G_n} X \mid \mathcal{G}) = \mathbb{I}_{G_n} \mathbb{E}(X \mid \mathcal{G})
+\]
+\[
+\mathbb{E}(X \mid \mathcal{G}) = \begin{cases}
+\mathbb{E}(X \mid \mathcal{G}) & \text{on } G_n \\
+0 & \text{on } G_n^c
+\end{cases}
+\]
+Hence $\mathbb{E}(\mathbb{I}_{G_n} X \mid \mathcal{G})$ is bounded. By applying Case 1 (to $\mathbb{I}_{G_n} X$ instead of $X$), we obtain:
+\[
+\varphi\left( \mathbb{E}(\mathbb{I}_{G_n} X \mid \mathcal{G}) \right) \leq \mathbb{E}\left( \varphi(\mathbb{I}_{G_n} X) \mid \mathcal{G} \right) \quad \text{a.s. } \forall n \geq 1 \tag{3}
+\]
+We evaluate separately the two sides of (3):
+
+LHS (left hand side) is equal to:
+\[
+\text{LHS of (3)} = \varphi\left( \mathbb{E}(\mathbb{I}_{G_n} X \mid \mathcal{G}) \right) = \varphi\left( \mathbb{I}_{G_n} \mathbb{E}(X \mid \mathcal{G}) \right) \tag{4}
+\]
+because $\mathbb{I}_{G_n}$ is $\mathcal{G}$-measurable.
+
+RHS: Note that
+\[
+(\mathbb{I}_{G_n} X)(\omega) = \mathbb{I}_{G_n}(\omega) X(\omega) = \begin{cases}
+X(\omega) & \text{if } \omega \in G_n \\
+0 & \text{if } \omega \in G_n^c
+\end{cases}
+\]
+\[
+\varphi(\mathbb{I}_{G_n} X)(\omega) = \begin{cases}
+\varphi(X(\omega)) & \text{if } \omega \in G_n \\
+\varphi(0) & \text{if } \omega \in G_n^c
+\end{cases}
+\]
+This means that $\varphi(\mathbb{I}_{G_n} X) = \varphi(X) \mathbb{I}_{G_n} + \varphi(0) \mathbb{I}_{G_n^c}$. Hence,
+\[
+\text{RHS of (3)} = \mathbb{E}[\varphi(X) \mathbb{I}_{G_n} + \varphi(0) \mathbb{I}_{G_n^c} \mid \mathcal{G}]
+= \mathbb{E}[\varphi(X) \mathbb{I}_{G_n} \mid \mathcal{G}] + \mathbb{E}[\varphi(0) \mathbb{I}_{G_n^c} \mid \mathcal{G}]
+= \mathbb{I}_{G_n} \mathbb{E}[\varphi(X) \mid \mathcal{G}] + \mathbb{I}_{G_n^c} \mathbb{E}[\varphi(0) \mid \mathcal{G}]
+= \mathbb{I}_{G_n} \mathbb{E}[\varphi(X) \mid \mathcal{G}] + \varphi(0) \mathbb{I}_{G_n^c} \tag{5}
+\]
+
+We will use (4) and (5) in inequality (3). We obtain:
+\[
+\varphi(\mathbb{I}_{G_n} \mathbb{E}(X \mid \mathcal{G})) \leq \mathbb{I}_{G_n} \mathbb{E}[\varphi(X) \mid \mathcal{G}] + \varphi(0) \mathbb{I}_{G_n^c} \quad \forall n \geq 1 \quad \text{a.s.}
+\]
+We take the limit as $n \to \infty$. We use the fact that $\{G_n \subseteq G_{n+1} \forall n \}$, $\bigcup_{n=1}^{\infty} G_n = \Omega$.
+
+Hence, $\mathbb{I}_{G_n} \to \mathbb{I}_{\Omega} = 1$ and $\mathbb{I}_{G_n^c} \to 0$.
+
+Since $\varphi$ is convex, $\varphi$ is continuous. Hence $\varphi(\mathbb{I}_{G_n} \mathbb{E}(X \mid \mathcal{G})) \to \varphi(\mathbb{E}(X \mid \mathcal{G}))$ as $n \to \infty$.
+
+Therefore,
+\[
+\varphi(\mathbb{E}(X \mid \mathcal{G})) \leq \mathbb{E}(\varphi(X) \mid \mathcal{G}) \quad \text{a.s.}
+\]
+
+
+\textbf{Recall (Th.33.3)} $X$ = r.v., $\mathcal{G} \subseteq \mathcal{F}$ sub $\sigma$-field. The \emph{conditional distribution} of $X$ given $\mathcal{G}$ is $\mu(H, \omega)$ for $H \in \mathcal{R}, \omega \in \Omega$ such that:
+\[
+(i) \quad \mu(\cdot, \omega) \text{ is a probability measure on } \mathcal{R} \text{ for } \omega \in \Omega.
+\]
+\[
+(ii) \quad \mu(H, \cdot) = P(X \in H \mid \mathcal{G}) \quad \text{a.s. } \forall H \in \mathcal{R}
+\]
+\subsection{Conditional Distribution and Conditional Expectation}
+\begin{theorem}[Th.34.5: Conditional Distribution and Conditional Expectation]
+Let $(\Omega, \mathcal{F}, P)$ be a probability space, $\mathcal{G} \subseteq \mathcal{F}$ is a sub $\sigma$-field, $X$ is an \emph{integrable} r.v. Let $\mu(H, \omega)$ be the cond. distrib. of $X$ given $\mathcal{G}$.
+
+Let $\varphi: \mathbb{R} \to \mathbb{R}$ be a \emph{measurable} function s.t. $\varphi(X)$ is \emph{integrable}. Then
+\[
+\mathbb{E}[\varphi(X) \mid \mathcal{G}](\omega) = \int_{\mathbb{R}} \varphi(\xi) \mu(d\xi, \omega) \quad \text{for almost all } \omega \in \Omega.
+\]
+
+In particular, if $\varphi(\xi) = \xi$, then
+\[
+\mathbb{E}[X \mid \mathcal{G}](\omega) = \int_{\mathbb{R}} \xi \mu(d\xi, \omega) \quad \text{for almost all } \omega \in \Omega.
+\]
+
+\end{theorem}
+
+
+\begin{proof}
+\textbf{Case 1} \(\varphi = \mathbb{1}_H\)
+
+For some Borel set \(H \in \mathcal{R}\).
+\[
+\text{RHS of (6)} = \int_{\mathbb{R}} \mathbb{1}_H(x) \mu(dx \times \omega) = \mu(H, \omega) = \mathbb{P}(X \in H | \mathcal{G}) = \mathbb{E} \left[ \mathbb{1}_{\{X \in H\}} | \mathcal{G} \right]
+\]
+\[
+\mathbb{1}_{\{X \in H\}}(\omega) = 
+\begin{cases} 
+1 & \text{if } \omega \in \{X \in H\} \\ 
+0 & \text{if } \omega \notin \{X \in H\} 
+\end{cases} 
+= \begin{cases} 
+1 & \text{if } X(\omega) \in H \\ 
+0 & \text{if } X(\omega) \notin H 
+\end{cases}
+\]
+\[
+\mathbb{1}_H(X)(\omega) = \mathbb{1}_H(X(\omega)) = 
+\begin{cases} 
+1 & \text{if } X(\omega) \in H \\ 
+0 & \text{if } X(\omega) \notin H 
+\end{cases}
+\]
+So \(\mathbb{1}_{\{X \in H\}} = \mathbb{1}_H(X)\) and \(\mathbb{E} \left[ \mathbb{1}_{\{X \in H\}} | \mathcal{G} \right] = \mathbb{E} \left[ \mathbb{1}_H(X) | \mathcal{G} \right] = \mathbb{E} \left[ \varphi(X) | \mathcal{G} \right]\)
+
+\textbf{Case 2} \(\varphi\) is a simple function i.e., \(\varphi = \sum_{i=1}^k \alpha_i \mathbb{1}_{H_i}\) with \(\alpha_i \in \mathbb{R}, H_i \in \mathbb{R}\).
+
+Follows by Case 1, using linearity.
+\textbf{Case 3} \(\varphi \geq 0\). By \textbf{Theorem 13.5}, there exists a sequence \(\{\varphi_n\}\) of simple functions s.t. \(\varphi_n(x) \uparrow \varphi(x)\) as \(n \to \infty\), for any \(x \in \mathbb{R}\). By Case 2,
+\[
+\mathbb{E}[\varphi_n(X) | \mathcal{G}](\omega) = \int_{\mathbb{R}} \varphi_n(x) \mu(dx \times \omega) \quad \forall n \text{ for a.a. } \omega
+\]
+Let \(n \to \infty\) in (7). We have:
+
+\[
+\begin{array}{ll}
+\mathbb{E}[\varphi_n(X) | \mathcal{G}] \xrightarrow{a.s.} \mathbb{E}[\varphi(X) | \mathcal{G}] & \text{by D.C.T.} \\
+\text{To justify the application of this theorem, note that} & \\
+\quad \varphi_n(X) \leq \varphi(X) \forall n \text{ and } \varphi(X) \text{ is integrable (by hypothesis)} & \\
+\int_{\mathbb{R}} \varphi_n(X) \mu(dx \times \omega) \to \int_{\mathbb{R}} \varphi(X) \mu(dx \times \omega) & \text{by MCT.}
+\end{array}
+\]
+
+
+
+We obtain:
+\[
+\mathbb{E}[\varphi(X) | \mathcal{G}] = \int_{\mathbb{R}} \varphi(X) \mu(dx \times \omega) \quad \text{for a.a. } \omega
+\]
+
+\textbf{Case 4} \(\varphi\) is arbitrary. We write \(\varphi = \varphi^+ - \varphi^-\) where 
+\[
+\varphi^+ (x) = 
+\begin{cases} 
+\varphi(x) & \text{if } \varphi(x) \geq 0 \\ 
+0 & \text{if } \varphi(x) < 0 
+\end{cases}
+\]
+\[
+\varphi^- (x) = 
+\begin{cases} 
+0 & \text{if } \varphi(x) \geq 0 \\ 
+-\varphi(x) & \text{if } \varphi(x) < 0 
+\end{cases}
+\]
+The conclusion follows by applying Case 3 to \(\varphi^+, \varphi^-\) and use linearity.
+\end{proof}
+
+
+
+Using \textbf{Theorem 3.15}, we can give another proof of \textbf{Jensen's Inequality} for \textbf{Conditional Expectation}: for any convex function \(\varphi\),
+\[
+\varphi(\mathbb{E}(X | \mathcal{G})) \leq \mathbb{E}[\varphi(X) | \mathcal{G}] \quad \text{a.s.}
+\]
+
+To see this, let \(\mu(dx, \omega)\) be the cond. distr. of \(X\) given \(\mathcal{G}\). Then
+\[
+\mathbb{E}(X | \mathcal{G})(\omega) = \int_{\mathbb{R}} x \mu(dx \times \omega) \quad \text{by (6)'}
+\]
+\[
+\varphi(\mathbb{E}(X | \mathcal{G})(\omega)) = \varphi \left( \int_{\mathbb{R}} x \mu(dx \times \omega) \right) \quad \text{for a.a. } \omega \in \mathbb{R}
+\]
+On the other hand, by (6)
+\[
+\mathbb{E}[\varphi(X) | \mathcal{G}](\omega) = \int_{\mathbb{R}} \varphi(X) \mu(dx \times \omega) \quad \text{for a.a. } \omega \in \mathbb{R}
+\]
+So it suffices to prove that:
+\[
+\varphi \left( \int_{\mathbb{R}} x \mu(dx \times \omega) \right) \leq \int_{\mathbb{R}} \varphi(x) \mu(dx \times \omega) \quad \text{for a.a. } \omega
+\]
+This is in fact the \textbf{(Classical) Jensen's Inequality} which says that
+\[
+\varphi(\mathbb{E}(X')) \leq \mathbb{E}[\varphi(X')] \quad \text{for r.v. } X'
+\]
+So here we choose \(X'\) to be a r.v. with law \(\mu(dx, \omega)\) for fixed \(\omega\). Then
+\[
+\begin{cases}
+\mathbb{E}[X'] = \int_{\mathbb{R}} x \mu(dx, \omega) \\
+\mathbb{E}[\varphi(X')] = \int_{\mathbb{R}} \varphi(x) \mu(dx, \omega)
+\end{cases}
+\]
+

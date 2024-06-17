@@ -1,54 +1,209 @@
 \section{March 27, 2024}
+\subsection{Martingales Continued}
 
-Let $[ \alpha, \beta ]$ be an interval, and $X_1, \ldots, X_n$ be random variables.
-Inductively, we define variables $\tau_1, \tau_2, \ldots$ as follows:
+
+Let $[a, b]$ be an interval, and $X_1, X_2, \ldots, X_n$ are random variables. Inductively, we define variables $\sigma_1, \sigma_2, \ldots, \sigma_n$ as follows:
 \[
-\tau_1 = 
-\begin{cases} 
-\min \{ j \leqslant n \mid X_j \leqslant \alpha \}, & \text{if there exists } j \leqslant n \text{ such that } X_j \leqslant \alpha, \\
-n, & \text{otherwise}.
+\sigma_1 = \begin{cases} 
+\min \{j \leq n : X_j \leq \alpha \} & \text{if there exists } j \leq n \text{ s.t. } X_j \leq \alpha \\
+n & \text{otherwise}
 \end{cases}
 \]
 
-For any $k \leqslant n$:
+For any $k \leq n$:
 \begin{itemize}
-  \item If $k$ is even, then
-  \[
-  \tau_k = 
-  \begin{cases} 
-  \min \{ j \leqslant n \mid j > \tau_{k-1} \text{ and } X_j \geqslant \beta \}, & \text{if there exists } j \leqslant n \text{ such that } j > \tau_{k-1} \text{ and } X_j \geqslant \beta, \\
-  n, & \text{otherwise}.
-  \end{cases}
-  \]
-  
-  \item If $k$ is odd, then
-  \[
-  \tau_k = 
-  \begin{cases} 
-  \min \{ j \leqslant n \mid j > \tau_{k-1} \text{ and } X_j \leqslant \alpha \}, & \text{if there exists } j \leqslant n \text{ such that } j > \tau_{k-1} \text{ and } X_j \leqslant \alpha, \\
-  n, & \text{otherwise}.
-  \end{cases}
-  \]
+    \item if $k$ is even,
+    \[
+    \sigma_k = \begin{cases}
+    \min \{ j \leq n; j > \sigma_{k-1} \text{ and } X_j \geq \beta \} & \text{if there exists } j \leq n \text{ s.t. } j > \sigma_{k-1} \text{ and } X_j \geq \beta \\
+    n & \text{otherwise}
+    \end{cases}
+    \]
+    \item if $k$ is odd,
+    \[
+    \sigma_k = \begin{cases}
+    \min \{ j \leq n; j > \sigma_{k-1} \text{ and } X_j \leq \alpha \} & \text{if there exists } j \leq n \text{ s.t. } j > \sigma_{k-1} \text{ and } X_j \leq \alpha \\
+    n & \text{otherwise}
+    \end{cases}
+    \]
 \end{itemize}
 
-We define the number of upcrossings of $[\alpha,\beta]$ by $X_1, \ldots, X_n$ as the largest index $i$ such that:
+We define the number $U$ of upcrossings of $[a, b]$ by $X_1, \ldots, X_n$ as the largest index $i$ s.t.
 \[
-X_{2i} \leqslant \alpha < \beta \leqslant X_{2i+1} \quad (\text{from } \tau \text{ to be odd}).
+X_{\sigma_{2i-1}} \leq \alpha < \beta \leq X_{\sigma_{2i}}
+\]
+
+Example: $n=17$. Fix $\omega \in \Omega$.
+
+
+
+In this picture,
+\[
+U(\omega) = 2,
+\]
+\[
+\sigma_1(\omega) = 4, \quad \sigma_2(\omega) = 6, \quad \sigma_3(\omega) = 10, \quad \sigma_4(\omega) = 12, \quad \sigma_5(\omega) = 16, \quad \sigma_6 = \ldots = \sigma_{17} = 17
 \]
 
 \begin{theorem}[Doob's Upcrossing Theorem]
-Let $(X_k)_{k=1,\ldots,n}$ be a submartingale with respect to $(\mathcal{F}_k)_{k=1,\ldots,n}$ and let $U$ be the number of upcrossings of $[a,b]$ by $X_1,\ldots,X_n$. Then
-\[ \mathbb{E}(U) \leq \frac{\mathbb{E}(|X_n|) + |a|}{b-a}. \]
+Let $(X_k)_{k=1, \ldots, n}$ be a submartingale w.r.t. $(\mathcal{F}_k)_{k=1, \ldots, n}$ and $U$ be the number of upcrossings of $[a, b]$ by $X_1, \ldots, X_n$. Then
+\[
+E(U) \leq \frac{E(|X_n|) + |a|}{\beta - \alpha}
+\]
 \end{theorem}
 
+
 \begin{proof}
-    Let \( Y_k = \max\{0, X_k - \alpha\} \) and \( \theta = \beta - \alpha \). By Theorem 35.1(ii), \( Y_1, \ldots, Y_n \) is a submartingale. The \( \tau_k \) are unchanged if in the definitions \( X_j < \alpha \) is replaced by \( Y_j = 0 \) and \( X_j \geq \beta \) by \( Y_j \geq 0 \), and so \( U \) is also the number of upcrossings of \([0,\theta]\) by \( Y_1, \ldots, Y_n \). If \( k \) is even and \( \tau_{k-1} \) is a stopping time, then for \( j < n \),
-\[ [\tau_k = j] = \bigcap_{i=1}^{j-1} [\tau_{k-1} = i, Y_{i+1} < \theta, \ldots, Y_{j-1} < \theta, Y_j \geq \theta] \]
-lies in \( \mathcal{F}_j \) and \( [\tau_k = n] = [\tau_k \leq n - 1] \) lies in \( \mathcal{F}_{n-1} \), and so \( \tau_k \) is also a stopping time. With a similar argument for odd \( k \), this shows that the \( \tau_k \) are all stopping times. Since the \( \tau_k \) are strictly increasing until they reach \( n \), \( \tau_n = n \). Therefore,
-\[ Y_n = Y_{\tau_n} \geq Y_{\tau_1} - Y_1 = \sum_{k=2}^{n} (Y_{\tau_k} - Y_{\tau_{k-1}}) = \Sigma_e + \Sigma_o, \]
-where \( \Sigma_e \) and \( \Sigma_o \) are the sums over the even \( k \) and the odd \( k \) in the range \( 2 \leq k \leq n \). By Theorem 35.2, \( \Sigma_o \) has nonnegative expected value, and therefore, \( E[Y_n] \geq E[\Sigma_e] \).
+Let
+\[
+Y_k = \max \{ X_k - \alpha, 0 \}
+\]
+Note that $\psi(x) = \max \{ x - \alpha, 0 \}$ is a convex and non-decreasing function $\psi: \mathbb{R} \to \mathbb{R}$.
 
-If \( Y_{\tau_{i-1}} = 0 \) ( \( 0 \leq i \leq n \) ) and \( Y_{\tau_i} \geq \theta \) (which is the same thing as \( X_{\tau_{2i-1}} < \alpha < \beta \leq X_{\tau_{2i}} \)), then the difference \( Y_{\tau_i} - Y_{\tau_{i-1}} \) appears in the sum \( \Sigma_e \) and is at least \( \theta \). Since there are \( U \) of these differences, \( \Sigma_e \geq U\theta \), and therefore \( E[Y_n] \geq \theta E[U] \). In terms of the original variables, this is
-\[ (\beta - \alpha)E[U] \leq \int_{[X_n > \alpha]} (X_n - \alpha) \,dP \leq E[|X_n|] + |a|. \]
+By Theorem 35.1 (iii), $(Y_k)_{k=1, \ldots, n}$ is a submartingale w.r.t. $(\mathcal{F}_k)_{k=1, \ldots, n}$.
 
+Note that $\sigma_1, \ldots, \sigma_n$ are stopping times w.r.t. $(\mathcal{F}_k)_{k=1, \ldots, n}$ (exercise).
+
+Moreover,
+\begin{itemize}
+    \item for $k=1$,
+    \[
+    \sigma_k = \begin{cases} 
+    \min \{ j \leq n ; X_j = 0 \} & \text{if there exists } j \leq n \text{ s.t. } X_j = 0 \\
+    n & \text{otherwise}
+    \end{cases}
+    \]
+    \item for $k$ even,
+    \[
+    \sigma_k = \begin{cases}
+    \min \{ j \leq n ; j > \sigma_{k-1} \text{ and } X_j \geq \beta \} & \text{if there exists } j \leq n \text{ s.t. } j > \sigma_{k-1} \text{ and } X_j \geq \beta \\
+    n & \text{otherwise}
+    \end{cases}
+    \]
+    \item for $k$ odd,
+    \[
+    \sigma_k = \begin{cases}
+    \min \{ j \leq n ; j > \sigma_{k-1} \text{ and } X_j = 0 \} & \text{if there exists } j \leq n \text{ s.t. } j > \sigma_{k-1} \text{ and } X_j = 0 \\
+    n & \text{otherwise}
+    \end{cases}
+    \]
+\end{itemize}
+
+Then $U$ is the number of upcrossings of $[0, \theta]$ by $Y_1, \ldots, Y_n$.
+
+Note that $1 \leq \sigma_1 \leq \sigma_2 \leq \ldots \leq \sigma_n = n$. By the Optional Stopping Theorem (Th. 35.2),
+\[
+(Y_{\sigma_k})_{k=1, \ldots, n} \text{ is a submartingale w.r.t. } (\mathcal{F}_{\sigma_k})_{k=1, \ldots, n}.
+\]
+Hence,
+\[
+E(Y_{\sigma_k} \mid \mathcal{F}_{\sigma_{k-1}}) \geq Y_{\sigma_{k-1}} \quad \forall k=2, \ldots, n.
+\]
+
+In particular,
+\[
+E(Y_{\sigma_k}) \geq E(Y_{\sigma_{k-1}}) \quad \forall k=2, \ldots, n.
+\]
+
+It follows that
+\[
+Y_n \geq Y_{\sigma_n} \geq Y_{\sigma_n} - Y_{\sigma_1} = \sum_{k=2}^{n} (Y_{\sigma_k} - Y_{\sigma_{k-1}})
+\]
+
+\[
+\sum_{k=2}^{n} (Y_{\sigma_k} - Y_{\sigma_{k-1}}) = \sum_{\substack{k=2 \\ k \text{ even}}}^{n} (Y_{\sigma_k} - Y_{\sigma_{k-1}}) + \sum_{\substack{k=2 \\ k \text{ odd}}}^{n} (Y_{\sigma_k} - Y_{\sigma_{k-1}})
+\]
+
+Hence,
+\[
+E(Y_n) \geq E\left(\sum_{\substack{k=2 \\ k \text{ even}}}^{n} (Y_{\sigma_k} - Y_{\sigma_{k-1}})\right) + E\left(\sum_{\substack{k=2 \\ k \text{ odd}}}^{n} (Y_{\sigma_k} - Y_{\sigma_{k-1}})\right) \geq 0
+\]
+
+If $Y_{\sigma_{2i}} \geq \theta$, then
+\[
+Y_{\sigma_{2i}} - Y_{\sigma_{2i-1}} \geq \theta
+\]
+
+Since there are $U$ such differences, we get
+\[
+\sum_{e} \geq \theta U
+\]
+
+and so
+\[
+E(\sum_{e}) \geq \theta E(U) \tag{3}
+\]
+
+From (2) and (3), we get
+\[
+E(U) \leq \frac{E(|X_n|) + |a|}{\theta}
+\]
+
+Finally,
+\[
+E(Y_n) = \int_{\Omega} \max \{ X_n - \alpha, 0 \} dP \leq \int_{\Omega} |X_n - \alpha| dP \leq E(|X_n|) + |\alpha| \tag{5}
+\]
+
+So
+\[
+E(U) \leq \frac{E(|X_n|) + |\alpha|}{\beta - \alpha}
+\]
 \end{proof}
+
+\subsection{Martingale Convergence Theorem}
+
+If $(X_n)_{n \geq 1}$ is a submartingale w.r.t. $(\mathcal{F}_n)$ and
+\[ K := \sup_{n \geq 1} E(|X_n|) < \infty, \]
+then there exists an integrable random variable $X$ such that $X_n \to X$ a.s. Moreover, $E(|X|) \leq 1$.
+
+\section*{Proof}
+Fix $\alpha, \beta \in \mathbb{R}$ with $\alpha < \beta$. Let $U_n^{\alpha, \beta}$ be the number of upcrossings of $[\alpha, \beta]$ by $X_1, \ldots, X_n$. By Theorem 35.4,
+\[ E(U_n^{\alpha, \beta}) \leq \frac{E(|X_n|) + \alpha}{\beta - \alpha} \leq \frac{K + \alpha}{\beta - \alpha} \quad \forall n \geq 1. \]
+
+Note that $(U_n^{\alpha, \beta})$ is a non-decreasing sequence. Hence
+\[ \lim_{n \to \infty} U_n^{\alpha, \beta} \text{ exists (but may be } \infty). \]
+
+By Monotone Convergence Theorem,
+\[ E(U_n^{\alpha, \beta}) \uparrow E(\lim_{n \to \infty} U_n^{\alpha, \beta}). \]
+
+By $(7)$,
+\[ E(\lim_{n \to \infty} U_n^{\alpha, \beta}) \leq \frac{K + \alpha}{\beta - \alpha} < \infty. \]
+
+Hence
+\[ \lim_{n \to \infty} U_n^{\alpha, \beta} < \infty \text{ a.s.} \quad (8). \]
+
+For $\alpha, \beta \in \mathbb{R}$ with $\alpha < \beta$, let
+\[ X^* = \limsup_{n \to \infty} X_n \quad \text{and} \quad X_* = \liminf_{n \to \infty} X_n. \]
+
+Then,
+\[ X^* = \inf_{n \geq 1} \sup_{k \geq n} X_k \quad \text{and} \quad X_* = \sup_{n \geq 1} \inf_{k \geq n} X_k. \]
+
+\section*{Claim}
+\[ \{ \omega \in \Omega : X_*(\omega) < \alpha < \beta < X^*(\omega) \} \subset \{ \omega \in \Omega : \lim_{n \to \infty} U_n^{\alpha, \beta}(\omega) = \infty \} \]
+
+with probability $0$.
+
+\section*{Proof of Claim}
+\[ X_*(\omega) = \sup \inf_{k \geq n} X_k(\omega) < \alpha \]
+
+implies
+
+\[ \forall n, \inf_{k \geq n} X_k(\omega) < \alpha. \]
+
+Similarly,
+\[ X^*(\omega) > \beta \]
+
+implies
+
+\[ \forall n, \sup_{k \geq n} X_k(\omega) > \beta. \]
+
+By $(8)$,
+\[ P(X_* < \alpha < \beta < X^*) = 0 \quad \forall \alpha, \beta \in \mathbb{R}, \alpha < \beta. \]
+
+From here,
+\[ 0 \leq P(X_* < X^*) = P\left( \bigcup_{\alpha, \beta \in \mathbb{Q}, \alpha < \beta} \{X_* < \alpha < \beta < X^*\} \right) \leq \sum_{\alpha, \beta \in \mathbb{Q}, \alpha < \beta} P(X_* < \alpha < \beta < X^*) = 0. \]
+
+So,
+\[ P(X_* < X^*) = 0 \quad \text{and} \quad P(X_* = X^*) = 1. \]
+
+Hence, $\lim_{n \to \infty} X_n = X$ exists.

@@ -1,2 +1,173 @@
 \newpage
 \section{March 11, 2024}
+
+\section*{Recall from last time:}
+\begin{theorem}[Theorem 34.5]
+\[
+\mathbb{E}[\varphi(X)|\mathcal{G}] = \int_{\mathbb{R}} \varphi(z) \mu(dz;\omega)
+\]
+for almost all \(\omega\). For all \(\varphi : \mathbb{R} \to \mathbb{R}\) measurable s.t. \(\varphi(X)\) is integrable.
+\end{theorem}
+
+Here \(\mu(H,\omega)\) is the cond. distr. of \(X\) given \(\mathcal{G}\):
+\[
+\begin{cases}
+\text{(i)} & \mu(\cdot, \omega) \text{ is a probab. measure } \forall \omega \in \Omega \\
+\text{(ii)} & \mu(H, \cdot) = P(X \in H | \mathcal{G}) \text{ a.s.}
+\end{cases}
+\]
+
+We will use the following result (see the proof of Th 25.6):
+
+\begin{lemma}
+Let \(\mu\) be an arb. probab. measure on \((\mathbb{R}, \mathcal{R})\). Then there exists a probab. space \((\Omega, \mathcal{F}, P)\) and a r.v. \(X : \Omega \to \mathbb{R}\) s.t. \(\mu\) is the law of \(X\), i.e.
+\[
+P(X \in B) = \mu(B) \quad \forall B \in \mathcal{R},
+\]
+or equivalently
+\[
+P(X \leq x) = F(x) \quad \forall x \in \mathbb{R} \text{ where } F(x) = \mu((-\infty, x]).
+\]
+\end{lemma}
+
+\begin{proof}
+Let \((\Omega, \mathcal{F}, P) = ((0,1), \mathcal{B}(0,1), \lambda)\) where \(\lambda\) is the Lebesgue measure.
+
+Define the generalized inverse of \(F\) by:
+\[
+F^{-1}(u) = \inf \{ x \in \mathbb{R} ; F(x) \geq u \} \quad \forall u \in (0,1)
+\]
+It can be proved that: (exercise)
+\[
+u \leq F(x) \iff F^{-1}(u) \leq x \quad \forall x \in \mathbb{R} \forall u \in (0,1)
+\]
+Take \(X(\omega) := F^{-1}(\omega) \quad \forall \omega \in (0,1)\). Then (1) holds:
+\[
+P(X \leq x) = P(\{\omega \in (0,1); X(\omega) \leq x\}) = P(\{\omega \in (0,1); F^{-1}(\omega) \leq x\})
+\]
+\[
+= \lambda((0, F(x)]) = F(x)
+\]
+
+\end{proof}
+
+\subsection{Markov Inequality for Cond. Expectation}
+
+\begin{lemma}[Markov Inequality for Cond. Expectation]
+For any integr. r.v. \(X\) and any sub-\(\sigma\)-field \(\mathcal{G} \subseteq \mathcal{F}\), we have:
+\[
+P(|X| \geq \alpha | \mathcal{G}) \leq \frac{1}{\alpha^p} \mathbb{E}(|X|^p | \mathcal{G}) \quad a.s.
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(\varphi(x) = 1_{\{|X| \geq \alpha\}}, x \in \mathbb{R}\). Clearly \(\varphi : \mathbb{R} \to \mathbb{R}\) is measurable. Let \(\mu(H,\omega)\) be the conditional distr. of \(X\) given \(\mathcal{G}\).
+
+For every \(\omega \in \Omega\) fixed, let \(Z_\omega\) be a r.v. defined on probab. space \((\Omega', \mathcal{F}', P') = ((0,1), \mathcal{B}(0,1), \lambda)\) such that the law of \(Z_\omega\) (under \(P'\)) is \(\mu(\cdot; \omega)\), i.e. 
+\[
+P' \circ Z_\omega^{-1} = \mu(\cdot, \omega) \quad (\text{see Lemma 1})
+\]
+Then
+\[
+P(|X| \geq \alpha | \mathcal{G})(\omega) = \mathbb{E}\left[1_{\{|X| \geq \alpha\}} | \mathcal{G}\right](\omega) = \mathbb{E}[\varphi(X); \mathcal{G}](\omega)
+\]
+
+Applying Theorem 34.5,
+\[
+\int_{\mathbb{R}} \varphi(x) \mu(dx;\omega) = \int_{\Omega'} \varphi(Z_\omega) dP' = P'(|Z_\omega| \geq \alpha)
+\]
+By the classical Markov inequality,
+\[
+P'(|Z_\omega| \geq \alpha) \leq \frac{1}{\alpha^p} \mathbb{E}^{'}(|Z_\omega|^p) = \frac{1}{\alpha^p} \int_{\mathbb{R}} |x|^p \mu(dx;\omega)
+\]
+Thus,
+\[
+P(|X| \geq \alpha | \mathcal{G})(\omega) \leq \frac{1}{\alpha^p} \mathbb{E}(|X|^p | \mathcal{G})(\omega)
+\]
+\end{proof}
+\subsection{Inequalites for Cond. Expectation}
+\begin{corollary}[Chebyshev's Inequality for Cond. Expectation]
+For any integrable r.v. \(X\) and for any sub-\(\sigma\)-field \(\mathcal{G}\),
+\[
+P(|X - \mathbb{E}(X|\mathcal{G})| \geq \alpha | \mathcal{G}) \leq \frac{1}{\alpha^2} \text{Var}(X|\mathcal{G}) \quad \forall \alpha > 0, \text{ if } X^2 \text{ is integrable}
+\]
+where
+\[
+\text{Var}(X|\mathcal{G}) = \mathbb{E}((X - \mathbb{E}(X|\mathcal{G}))^2 | \mathcal{G})
+= \mathbb{E}(X^2|\mathcal{G}) - (\mathbb{E}(X|\mathcal{G}))^2
+\]
+\end{corollary}
+
+\begin{proof}
+Let \(Y = X - \mathbb{E}(X|\mathcal{G})\). Then \(Y\) is integrable since it is a linear combination of integrable r.v.'s. We apply Lemma 2 to \(Y\) with \(p = 2\). We obtain:
+\[
+P(|Y| \geq \alpha | \mathcal{G}) \leq \frac{1}{\alpha^2} \mathbb{E}(Y^2 | \mathcal{G}) = \frac{1}{\alpha^2} \text{Var}(X|\mathcal{G})
+\]
+\[
+P(|X - \mathbb{E}(X|\mathcal{G})| \geq \alpha | \mathcal{G})
+\]
+\end{proof}
+
+Note that Theorem 34.5 has a multivariate extension:
+\[
+\mathbb{E}[\varphi(X,Y) | \mathcal{G}](\omega) = \int_{\mathbb{R}^2} \varphi(x,y) \mu(dx,dy;\omega) \quad \text{for a.a. } \omega
+\]
+where \(\mu(H,\omega)\) is the cond. distribution of \((X,Y)\) given \(\mathcal{G}\), i.e.
+\[
+\begin{cases}
+\text{(i)} & \mu(\cdot, \omega) \text{ is a prob. measure on } \mathbb{R}^2 \forall \omega \in \Omega \\
+\text{(ii)} & \mu(H, \cdot) = P((X,Y) \in H | \mathcal{G}) \text{ a.s. } \forall H \in \mathcal{R}^2
+\end{cases}
+\]
+
+\begin{lemma}[Hölder Inequality for Cond. Expectations]
+Let \(X, Y\) be two r.v.'s s.t. \(XY\) is integrable \(\left(\mathbb{E}(|X|^p | \mathcal{G}) \text{ is integrable and } \mathbb{E}(|Y|^q | \mathcal{G}) \text{ is integrable} \right)\).
+
+For some \(p, q > 1\) s.t.
+\[
+\frac{1}{p} + \frac{1}{q} = 1
+\]
+let \(\mathcal{G}\) be an arb. sub-\(\sigma\)-field of \(\mathcal{F}\). Then
+\[
+\mathbb{E}[|XY| | \mathcal{G}] \leq \left( \mathbb{E}(|X|^p | \mathcal{G}) \right)^{\frac{1}{p}} \left( \mathbb{E}(|Y|^q | \mathcal{G}) \right)^{\frac{1}{q}}
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(\mu(H, \omega)\) be the cond. distr. of \((X,Y)\) given \(\mathcal{G}\). Let \(\varphi : \mathbb{R}^2 \to \mathbb{R}\) be given by
+\[
+\varphi(x,y) = |xy|
+\]
+Clearly \(\varphi\) is measurable. For any \(\omega \in \Omega\) fixed, let \(Z_\omega = (Z_\omega^1, Z_\omega^2)\) be a random vector defined on a probab. space \((\Omega', \mathcal{F}', P')\) s.t. the law of \(Z_\omega\) under \(P'\) is \(\mu(\cdot, \omega)\), i.e.
+\[
+P' \circ Z_\omega^{-1} = \mu(\cdot, \omega)
+\]
+Then
+\[
+\mathbb{E}[|XY| | \mathcal{G}](\omega) = \mathbb{E}[\varphi(X,Y) | \mathcal{G}](\omega) = \mathbb{E}[\varphi(Z_\omega^1, Z_\omega^2)]
+\]
+
+By change of variable,
+\[
+\int_{\mathbb{R}^2} \varphi(z_\omega^1, z_\omega^2) dP' = \int_{\mathbb{R}} |z_\omega^1 z_\omega^2| d\mu(z_\omega; \omega)
+\]
+
+By Hölder's inequality,
+\[
+\mathbb{E}[|XY| | \mathcal{G}] \leq \left( \mathbb{E}(|X|^p | \mathcal{G}) \right)^{\frac{1}{p}} \left( \mathbb{E}(|Y|^q | \mathcal{G}) \right)^{\frac{1}{q}}
+\]
+\end{proof}
+
+Finally, we define the Markov process:
+
+\begin{definition}
+Let \((\Omega, \mathcal{F}, P)\) be a prob. space and \(X_t : \Omega \to \mathbb{R}\) a r.v.
+
+For all \(t \geq 0\), the collection \((X_t)_{t \geq 0}\) is a Markov process if
+\[
+P(X_u \in H | X_s, s \leq t) = P(X_u \in H | X_t) \quad \forall t < u
+\]
+Here the cond. probab. is w.r.t. \(\sigma \{X_s; s \leq t\}\) on the RHS and \(\sigma \{X_t\}\) on the LHS.
+\end{definition}
+
+
